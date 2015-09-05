@@ -97,7 +97,7 @@ void frameGenerator(){
  if(isDataAvailable(&bufferOut)==1){
  disableTxInterrupt; 
  do{
-    //
+    
  getByte=getFromBuffer(&bufferOut);
   if(getByte<=FUNCTION_ID){
   setToBuffer(FRAME_START,&bufferTx);
