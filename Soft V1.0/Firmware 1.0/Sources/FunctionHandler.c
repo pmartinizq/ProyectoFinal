@@ -152,10 +152,10 @@ void functionHandler(void){
 		  	
 			//Tomo el parametro de isGoal
 		  	parameter = getFromBuffer(&bufferIn);
-			if(parameter != NOP){
+		  	
 				//Llamo funcion que setea el modo de meta
-				//setGoalMode(parameter); 
-			}
+				setGoalMode(parameter, setFunctionToExecutingVector(functionStructInstance)); 
+				
 		  	break;
 		
 		case setSteps:

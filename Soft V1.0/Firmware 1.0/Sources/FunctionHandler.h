@@ -15,15 +15,6 @@ void gyroMessure();
 void compassMessure();
 
 
-/**
-  @brief setea la reaccion al encontrar la meta. 
-
-  @param mode es el modo de reaccionar al encontrar la meta.
-
-  @returns void.
-
-  */
-void setGoalMode(uint8_t mode);
 
 /**
   @brief Inicializacion de buffer. 

@@ -98,6 +98,9 @@ extern uint8_t writePointerBufferOut;
 
 extern uint16_t measureUltrasonicCenterSensor16;
 
+//variables sensor meta
+extern int goalStatus;
+
 #pragma options align = packed
 typedef struct  
 {
