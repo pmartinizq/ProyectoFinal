@@ -20,7 +20,7 @@ int goalSensorStatus;
 
 /* 1 si debo leer datos del sensor
    0 si no. */
-static int readSensor = 1;
+static int sensorStatus = 1;
 
 interrupt VectorNumber_Vadc void adcInterrupt (void);
 
@@ -36,7 +36,7 @@ void switchSensor(void);
   */
 void setGoalMode(int parameter, FunctionStruct* currentFunction);
 
-void setReadSensor(int parameter);
+void setSensorStatus(int parameter);
 
 uint8_t getGoalRightStatus(void);
 

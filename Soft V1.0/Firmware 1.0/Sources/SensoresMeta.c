@@ -14,7 +14,15 @@ interrupt VectorNumber_Vadc void adcInterrupt (void){
       varSensorRight=ADCRL;
     }
   }
- switchSensor(); 
+ switchSensor();
+ left = getGoalLeftStatus(); 
+ right = getGoalRightStatus();
+  
+ if(left == 1 && right == 1){
+      goalSensorStatus = 1;
+ } else{
+      goalSensorStatus = 0;
+ } 
 }
 
 void switchSensor (void){
@@ -35,46 +43,29 @@ void switchSensor (void){
 }
 
 void setGoalMode(int parameter, FunctionStruct* currentFunction){
- currentFunction->status=RUNNING;
- setReadSensor(parameter);
- 
- left = getGoalLeftStatus(); 
- right = getGoalRightStatus();
- 
- if( left == 1 && right == 1){
-      goalSensorStatus = 1;
- } else{
-      goalSensorStatus = 0;
- }
+ currentFunction->status = RUNNING;
+ setSensorStatus(parameter);
  goalStatus = goalSensorStatus;
- currentFunction->status=AVAILABLE;
+ currentFunction->status = AVAILABLE;
 }
 
-void setReadSensor(int parameter){
- if(parameter != NOP){
-   if(parameter == STOP_ON_GOAL){
-    readSensor = 1;
-   } else if(parameter == CONTINUE){
-    readSensor = 0;
-   }
- }
+void setSensorStatus(int parameter){
+ sensorStatus = parameter;
 }
 
 uint8_t getGoalRightStatus(void){
- if(readSensor == 0){
-    return 0;
- }
  if(varSensorRight >= (varSensorRightRef + varSensorRightRefMargin)){
     return 1;
+ } else{
+    return 0;
  }
 }
 
 uint8_t getGoalLeftStatus(void){
-  if(readSensor == 0){
-    return 0;
- }
  if(varSensorLeft >= (varSensorLeftRef + varSensorLeftRefMargin)){
     return 1;
+ } else{
+    return 0;
  }
 }
 

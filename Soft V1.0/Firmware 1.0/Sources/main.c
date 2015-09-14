@@ -5,7 +5,6 @@
 void main(void) {
 
   
-  int t;
   /* include your code here */
   
   f1.functionId=ULTRASONIC_FRONT;
@@ -35,8 +34,6 @@ void main(void) {
   initGoalSensor();
   
   
-  
-  setVelocidad(50, 100);
   
   for(;;) {
   if(goalStatus == 0){
