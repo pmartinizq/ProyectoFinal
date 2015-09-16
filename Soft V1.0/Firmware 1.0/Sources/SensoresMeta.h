@@ -3,10 +3,12 @@
 #ifndef _SensoresMeta_h
 #define _SensoresMeta_h
 
+
 static uint8_t sensorNumber=1;
 
 static int varSensorLeft;
-static int varSensorRight; 
+static int varSensorRight;
+static int varSensorStepADC; 
 
 static int varSensorLeftRef;
 static int varSensorRightRef;
@@ -21,6 +23,14 @@ int goalSensorStatus;
 /* 1 si debo leer datos del sensor
    0 si no. */
 static int sensorStatus = 1;
+
+// --------------------------------------------------------
+
+static uint8_t lastStepValue;
+static uint8_t stepsWheelADC;
+static uint8_t diferencia;
+
+// --------------------------------------------------------
 
 interrupt VectorNumber_Vadc void adcInterrupt (void);
 

@@ -6,15 +6,17 @@ interrupt VectorNumber_Vadc void adcInterrupt (void){
   
  (void) ADCRH;
  
- if(sensorNumber==1){
-    varSensorLeft=ADCRL;
+ if(sensorNumber == 1){
+    varSensorLeft = ADCRL;
   } 
-  else{
-    if(sensorNumber==2){
-      varSensorRight=ADCRL;
-    }
+  else if(sensorNumber == 2){
+      varSensorRight = ADCRL;
+  } 
+  else if(sensorNumber == 3){
+      varSensorStepADC = ADCRL;
+      ADCSC1=0x00;
   }
- switchSensor();
+ switchSensor(); 
  left = getGoalLeftStatus(); 
  right = getGoalRightStatus();
   
@@ -22,8 +24,28 @@ interrupt VectorNumber_Vadc void adcInterrupt (void){
       goalSensorStatus = 1;
  } else{
       goalSensorStatus = 0;
- } 
+ }
+
+  if(varSensorStepADC!=lastStepValue){
+    if(lastStepValue>varSensorStepADC){
+      diferencia = lastStepValue - varSensorStepADC;
+    }else{
+      diferencia = varSensorStepADC - lastStepValue;
+    }
+    if(diferencia > 180){
+      stepsWheelADC++;
+          if(stepsWheelADC==40){
+        SENTIDO_M1_1=1;
+        SENTIDO_M1_2=1;
+        SENTIDO_M2_1=1;
+        SENTIDO_M2_2=1;
+        setPwmValue(0);
+      }             
+      lastStepValue=varSensorStepADC;
+    }
+  }
 }
+
 
 void switchSensor (void){
 
@@ -36,8 +58,15 @@ void switchSensor (void){
   else{
     if(sensorNumber==2){
       ADCSC1_ADCH=1111;
-      ADCSC1=11000000;
-      sensorNumber=1;
+      ADCSC1=11101001;
+      sensorNumber=3;
+    } 
+    else{
+      if(sensorNumber==3){
+        ADCSC1_ADCH=1111;
+        ADCSC1=11100000;
+        sensorNumber=1; 
+      }
     }
   }
 }
