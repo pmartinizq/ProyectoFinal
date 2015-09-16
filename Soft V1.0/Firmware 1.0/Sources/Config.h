@@ -64,6 +64,7 @@ extern uint8_t GLOBAL_STATUS;
 # define ERROR_FUNCTION 130
 
 
+
 //Estados de funciones
 # define READY 20
 # define RUNNING 21
@@ -95,7 +96,7 @@ extern uint8_t GLOBAL_STATUS;
 //Punteros de lectura y escritura
 extern uint8_t readPointerBufferOut;
 extern uint8_t writePointerBufferOut;
-
+static uint16_t kbiSampleFreq=1000,adcSampleFreq=1000;
 extern uint16_t measureUltrasonicCenterSensor16;
 
 //variables sensor meta

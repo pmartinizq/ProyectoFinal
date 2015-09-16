@@ -5,6 +5,8 @@
 void main(void) {
 
   
+
+  int t=15;
   /* include your code here */
   
   f1.functionId=ULTRASONIC_FRONT;
@@ -18,26 +20,39 @@ void main(void) {
   InitComunication();  
   InitPorts();
   InitInputCompare();
-  InitRtc();
+  
+  InitKbi();
   beginComunication();
   initExecutingVector();
   InitBuffer(&bufferIn);
   InitBuffer(&bufferOut);
   InitPwm();
-  InitADC();
+  InitADC();  
   EnableInterrupts;
+  InitRtc();
   /*  
     despues de habilitar interrupciones y
     antes de empezar a mover el robot debe calibrar sensores de meta
     no arrancar el motor sin antes ejecutar initGoalSensor()! 
   */
   initGoalSensor();
+
   
+  setPwmValue(t);
   
+  if(t>35){
+    kbiSampleFreq=1000;
+  }else{
+    kbiSampleFreq=1000+((35-t)*200);
+  }
+  
+
   
   for(;;) {
   if(goalStatus == 0){
   
+    PTDD_PTDD1;
+    
     setGoalMode(STOP_ON_GOAL);
     
     SENTIDO_M1_1=1;

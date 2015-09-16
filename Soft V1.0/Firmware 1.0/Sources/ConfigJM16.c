@@ -70,25 +70,45 @@ void InitPwm(){
   TPM2C0SC=0B00111000;
   TPM2C1SC=0B00111000;
   TPM2SC=0B00001111; 
-  TPM2C0VH=0x00;
-  TPM2C0VL=125;     
-  TPM2MODH=0x00;
-  TPM2MODL=125;
+  TPM2C0VH=0x08;
+  TPM2C0VL=0xC4;     
+  TPM2MODH=PWM_FREQ_HIGH;
+  TPM2MODL=PWM_FREQ_LOW;
   
-  TPM2C1VH=0x00;
-  TPM2C1VL=0;     
-          
-  
-  
-  
+  TPM2C1VH=0x09;
+  TPM2C1VL=0xC4;     
+            
 }
 
+void InitKbi(){
+  if(PTDD_PTDD2==0){
+    valorFlanco=1;
+  } else{
+    valorFlanco=0;
+  }
+  KBISC=0x04;
+  if(valorFlanco==1){
+    
+    KBIES_KBEDG2=1;
+  }else{
+    KBIES_KBEDG2=0;
+  }
+  KBIPE_KBIPE2=1;
+  KBISC_KBACK=1;
+  KBISC_KBIE=1;
+}
+  
+
 void InitADC(){
-  APCTL1_ADPC0=1;
-  APCTL1_ADPC1=1;
-  ADCCFG=11110001;
-  ADCSC2=10010000;
-  ADCSC1=11100000;
+  
+  APCTL1=0x03;
+  APCTL2=0x03;
+  ADCCFG=00110000;
+  ADCSC2=10000000;
+  ADCSC1=11101001;
+  (void)ADCRH;
+  (void)ADCRL;
+  
   
 }
   
@@ -98,7 +118,7 @@ void InitPorts(){
   PTADD=0X00;
   PTBDD=0XFF;
   PTCDD=0X03;
-  PTDDD=0X0F;
+  PTDDD=0X09;
   PTEDD=0X70;
   PTFDD=0XFF;
   PTGDD=0XFF;
@@ -107,6 +127,6 @@ void InitPorts(){
 
 void InitRtc(){
   RTCMOD=0x00;
-  RTCSC=0x78;
+  RTCSC=0xD8;
   
 }

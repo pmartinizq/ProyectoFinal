@@ -18,6 +18,11 @@
 #define statusSerialRegister1 SCI1S1
 #define statusSerialRegister2 SCI1S2
 
+//VALORES DE PWM
+
+#define PWM_FREQ_HIGH 0x09
+#define PWM_FREQ_LOW 0xC4
+
 //Funciones
 void InitComunication(void);
 void InitClock(void);
@@ -25,6 +30,7 @@ void InitReg(void);
 void InitInputCompare(void);
 void InitPorts(void);
 void InitRtc(void);
+void InitKbi(void);
 
 
 //SENSORES
@@ -67,6 +73,7 @@ void InitRtc(void);
 #define SENSOR_DE_META_ON PTBD_PTBD2=1
 #define SENSOR_DE_META_OFF PTBD_PTBD2=0
 
+static int valorFlanco=0;
 
 
 #endif
