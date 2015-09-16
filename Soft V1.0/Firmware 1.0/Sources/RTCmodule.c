@@ -3,7 +3,17 @@
 interrupt VectorNumber_Vrtc   void RTCInterrupt (void){
 uint8_t i=0;
 RTCSC=RTCSC|0x80;
+kbiTime++;
+adcTime++;
+if(kbiTime==kbiSampleFreq){      //5000 para bajas velocidades
+  KBIPE_KBIPE2=1;  
+  kbiTime=0;
+}
 
+if(adcTime==adcSampleFreq){      //5000 para bajas velocidades
+  ADCSC1=11101001;
+  adcTime=0;
+}
 for(i=0;i<=getExecutingVectorPointer();i++){
   decreaseTimer(getFromExecutingVectorOnIndex(i));
      
