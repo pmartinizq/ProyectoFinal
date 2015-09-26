@@ -4,11 +4,11 @@
 
 #define PENDIENTE 30
 
-uint16_t calculateValue=0;
- uint16_t actualValue=0,lastValue=0;
+uint16_t calculateValueRight=0,calculateValueLeft=0;
+ uint16_t actualValueRight=0,actualValueLeft=0,lastValueRight=0,lastValueLeft=0;
  uint8_t lowValue=0;
 
-void setPwmValue(int);
+void setPwmValue(int,int);
 
 
 #endif
