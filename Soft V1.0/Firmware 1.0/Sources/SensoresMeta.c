@@ -5,6 +5,7 @@
 interrupt VectorNumber_Vadc void adcInterrupt (void){
   
  (void) ADCRH;
+ //ADCSC1_AIEN=0;
  
  if(sensorNumber == 1){
     varSensorLeft = ADCRL;
@@ -15,17 +16,8 @@ interrupt VectorNumber_Vadc void adcInterrupt (void){
   else if(sensorNumber == 3){
       varSensorStepADC = ADCRL;
       ADCSC1=0x00;
-  }
- switchSensor(); 
- left = getGoalLeftStatus(); 
- right = getGoalRightStatus();
+ 
   
- if(left == 1 && right == 1){
-      goalSensorStatus = 1;
- } else{
-      goalSensorStatus = 0;
- }
-
   if(varSensorStepADC!=lastStepValue){
     if(lastStepValue>varSensorStepADC){
       diferencia = lastStepValue - varSensorStepADC;
@@ -44,32 +36,51 @@ interrupt VectorNumber_Vadc void adcInterrupt (void){
       lastStepValue=varSensorStepADC;
     }
   }
+  }  
+  
+  
+  if(left == 1 && right == 1){
+      goalSensorStatus = 1;
+ } else{
+      goalSensorStatus = 0;
+ }
+ left = getGoalLeftStatus(); 
+ right = getGoalRightStatus();
+ switchSensor(); 
+  
 }
 
+
+void initSample(void){
+  
+  
+}
 
 void switchSensor (void){
 
   
+
   if(sensorNumber==1){
-    ADCSC1_ADCH=1111;
-    ADCSC1=11000001;
+    //ADCSC1_ADCH=00001;
+    ADCSC1=11100001;
     sensorNumber=2;
   } 
   else{
     if(sensorNumber==2){
-      ADCSC1_ADCH=1111;
+      //ADCSC1_ADCH=01001;
       ADCSC1=11101001;
       sensorNumber=3;
     } 
     else{
       if(sensorNumber==3){
-        ADCSC1_ADCH=1111;
-        ADCSC1=11100000;
+        //ADCSC1_ADCH=00001;
+        //ADCSC1=11100000;
         sensorNumber=1; 
       }
     }
   }
 }
+
 
 void setGoalMode(int parameter, FunctionStruct* currentFunction){
  currentFunction->status = RUNNING;
