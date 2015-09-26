@@ -10,6 +10,8 @@
 //Definicion de tipos de datos
 #define uint8_t byte
 #define uint16_t word
+#define int32_t long
+#define int32 long
 
 //Definicion estados globales
 #define STATUS_START 0xB0
@@ -101,6 +103,9 @@ extern uint16_t measureUltrasonicCenterSensor16;
 
 //variables sensor meta
 extern int goalStatus;
+
+//motores
+static uint8_t pwmLeftValue=0,pwmRightValue=0;
 
 #pragma options align = packed
 typedef struct  
