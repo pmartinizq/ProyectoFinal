@@ -26,3 +26,34 @@ void setPwmValue(int valueToSetRight,int valueToSetLeft){
   
   
 }
+
+void calcularSentido(int sentido){
+  
+  if(sentido==robotAdelante){
+    SENTIDO_M1_1=1;
+    SENTIDO_M1_2=0;   
+    SENTIDO_M2_1=1;
+    SENTIDO_M2_2=0;  
+  }
+  if(sentido==robotAtras){
+    SENTIDO_M1_1=1;
+    SENTIDO_M1_2=0;    
+    SENTIDO_M2_1=1;
+    SENTIDO_M2_2=0;  
+    
+  }
+  if(sentido==robotGiroDerecha){
+    SENTIDO_M1_1=1;
+    SENTIDO_M1_2=0;    
+    SENTIDO_M2_1=1;
+    SENTIDO_M2_2=0; 
+  }
+  if(sentido==robotGiroIzquierda){
+    SENTIDO_M1_1=1;
+    SENTIDO_M1_2=0;    
+    SENTIDO_M2_1=1;
+    SENTIDO_M2_2=0; 
+    
+  }   
+  
+}
