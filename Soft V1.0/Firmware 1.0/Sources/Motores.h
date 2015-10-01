@@ -2,7 +2,7 @@
 #ifndef _Motores_h
 #define _Motores_h
 
-#define PENDIENTE 30
+#define PENDIENTE 10
 #define robotAdelante 0x00
 #define robotAtras 0x03
 #define robotGiroDerecha 0x01
