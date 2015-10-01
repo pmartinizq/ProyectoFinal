@@ -11,7 +11,7 @@
 #define uint8_t byte
 #define uint16_t word
 #define int32_t long
-#define int32 long
+#define int32   long
 
 //Definicion estados globales
 #define STATUS_START 0xB0
