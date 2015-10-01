@@ -38,12 +38,12 @@ extern uint8_t GLOBAL_STATUS;
 #define SENSOR_ULTRASONIC_RIGHT 3
 
 // Funciones 
-# define getMessure 1
-# define isGoal 2
-# define setSteps 3
-# define setVelocity 4
-# define error 5
-# define ACK 6
+# define getMessure 0x01
+# define isGoal 0x02
+# define setSteps 0x80
+# define setVelocity 0x81
+# define error 0x05
+# define ACK 0x06
 
 // parametros de getMessure
 # define ULTRASONIC_ALL 7
