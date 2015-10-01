@@ -55,6 +55,8 @@ if((inByte==FRAME_START)&&(STATUS_MEF==MEF_WAIT)){
       STATUS_MEF=MEF_WAIT;
       setToBuffer(inByte,&bufferRx);
       dataPointer=0;
+      setBufferOnBuffer(&bufferRx,&bufferIn);
+      InitBuffer(&bufferRx);
     }
       
       
