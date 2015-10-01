@@ -18,14 +18,14 @@ void functionHandler(void){
 	uint8_t iterationFlagVelocity = 0;
 	uint16_t leftSteps = 0;
 	uint16_t rightSteps = 0;
-	uint16_t leftVelocity = 0;
-	uint16_t rightVelocity = 0;
+	int tangencialVelocity = 0;
+	int angularVelocity = 0;
 	FunctionStruct functionStructInstance;
 	FunctionStruct *newFunction;
 
 	// Tomar funcion del buffer de entrada
 	if(isDataAvailable(&bufferIn)==1){
-	(void)SCI1S1; 
+//	(void)SCI1S1; 
 	idFunction = getFromBuffer(&bufferIn);
 	switch ( idFunction ) {
 		
@@ -188,8 +188,13 @@ void functionHandler(void){
 		  		velocityParameters[iterationFlagVelocity] = getFromBuffer(&bufferIn);
 		  		iterationFlagVelocity++;
 		  	}
-		  	leftVelocity = velocityParameters[0] * 16 + velocityParameters[1];
-		  	rightVelocity = velocityParameters[2] * 16 + velocityParameters[3];
+		  	tangencialVelocity=0;
+		  	tangencialVelocity = tangencialVelocity + velocityParameters[0];
+		  	tangencialVelocity=tangencialVelocity <<8 ;
+		  	tangencialVelocity=tangencialVelocity+ velocityParameters[1];
+		  	angularVelocity=0;
+		  	angularVelocity = angularVelocity+velocityParameters[2];
+		  	angularVelocity=angularVelocity <<8 + velocityParameters[3];
 		  	// ¿faltan parametros?!!
 
 		  	functionStructInstance.functionId = setVelocity;
@@ -198,6 +203,8 @@ void functionHandler(void){
 		  	setToExecutingVector(&functionStructInstance);
 			setToBuffer(ACK, &bufferOut);
 			setToBuffer(setVelocity, &bufferOut);
+			calcularSentido(robot_speed_to_pwm(tangencialVelocity,angularVelocity,&pwmRightValue,&pwmLeftValue));
+      setPwmValue(pwmRightValue,pwmLeftValue);
 			
 		  	//funcion que setea las velocidades mandando los parametros leftVelocity y rightVelocity
 		  	//setVelocity(leftVelocity, rightVelocity);
