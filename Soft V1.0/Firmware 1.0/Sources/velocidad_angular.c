@@ -13,15 +13,15 @@
  * \hideinitializer */
 #define HALF_WHEEL_DISTANCE 64
 
-#define MAX_LEFT_WHEEL_PWM  100
-#define MAX_RIGHT_WHEEL_PWM 100
+#define MAX_LEFT_WHEEL_PWM  255
+#define MAX_RIGHT_WHEEL_PWM 255
 
-#define MIN_LEFT_WHEEL_PWM 10
-#define MIN_RIGHT_WHEEL_PWM 10
+#define MIN_LEFT_WHEEL_PWM 50
+#define MIN_RIGHT_WHEEL_PWM 50
 
 
-#define THRESHOLD_LEFT_WHEEL_PWM    1
-#define THRESHOLD_RIGHT_WHEEL_PWM   1 
+#define THRESHOLD_LEFT_WHEEL_PWM    18
+#define THRESHOLD_RIGHT_WHEEL_PWM   16
 
 #define MAX_TANGENTIAL_SPEED 120
 
@@ -59,8 +59,8 @@
  */
 static void _robot_speed_to_wheel_speed(
     /* parametros */
-    int tangential_speed,
-    int angular_speed,
+    int32_t tangential_speed,
+    int32_t angular_speed,
     int32_t *left_wheel_angular_speed,
     int32_t *right_wheel_angular_speed ) {
 
