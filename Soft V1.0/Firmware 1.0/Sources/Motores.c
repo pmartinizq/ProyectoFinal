@@ -8,6 +8,37 @@ void setPwmValue(int valueToSetRight,int valueToSetLeft){
  
  calculateValueRight=PENDIENTE*valueToSetRight;
  calculateValueLeft=PENDIENTE*valueToSetLeft;
+ 
+ if(calculateValueRight==0){
+  TPM2C0SC=TPM2C0SC&0xf0;
+  lastValueRight=0;
+ } else{
+    if(lastValueRight==0){
+       TPM2C0SC=PWM_CH0_CONFIG;
+    }
+    if(calculateValueRight!=TPM2C0V){
+    
+      TPM2C0V=calculateValueRight;
+      lastValueRight=calculateValueRight;
+   }
+ }
+ 
+ if(calculateValueLeft==0){
+  TPM2C1SC=TPM2C1SC&0xf0;
+  lastValueLeft=0;
+ } else{
+    if(lastValueLeft==0){
+       TPM2C1SC=PWM_CH1_CONFIG;
+    }
+    if(calculateValueLeft!=TPM2C1V){
+    
+      TPM2C1V=calculateValueLeft;
+      lastValueLeft=calculateValueLeft;
+   }
+ }
+    
+ /* 
+ 
  if(calculateValueRight!=lastValueRight&&calculateValueRight!=0){
   lastValueRight=calculateValueRight;  
    if(calculateValueRight!=TPM2C0V&&calculateValueRight!=0){
@@ -37,7 +68,7 @@ void setPwmValue(int valueToSetRight,int valueToSetLeft){
     
    }
   
-  
+   */
 }
 
 void calcularSentido(int sentido){
