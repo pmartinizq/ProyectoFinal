@@ -29,47 +29,47 @@ void functionHandler(void){
 	idFunction = getFromBuffer(&bufferIn);
 	switch ( idFunction ) {
 		
-		case getMessure:
-			//tomo el parametro de getMessure
+		case getMeasure:
+			//tomo el parametro de getMeasure
 			  (void)SCI1S1;
 		  	parameter = getFromBuffer(&bufferIn);
 		  	switch ( parameter ) {
 				
 				case ULTRASONIC_ALL:
-
+            functionStructInstance.functionParameter=getMeasureResponse;
 				  	functionStructInstance.functionId = ULTRASONIC_ALL;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = 0;
 				  	functionStructInstance.root = MORE_FUNCTION;
-				  	getUltrasonic(setFunctionToExecutingVector(functionStructInstance));
+				  	setFunctionToExecutingVector(functionStructInstance);
 				  	
+				  	//getUltrasonic(setFunctionToExecutingVector(functionStructInstance));
+				  	functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_LEFT;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_LEFT_TIMER;
 				  	functionStructInstance.root = ULTRASONIC_ALL;
 				  	getUltrasonic(setFunctionToExecutingVector(functionStructInstance));
 				  	
+				  	functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_FRONT;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_FRONT_TIMER;
 				  	functionStructInstance.root = ULTRASONIC_ALL;
 				  	getUltrasonic(setFunctionToExecutingVector(functionStructInstance));
+				  	
+				  	functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_RIGHT;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_RIGHT_TIMER;
 				  	functionStructInstance.root = ULTRASONIC_ALL;
 				  	getUltrasonic(setFunctionToExecutingVector(functionStructInstance));
 				  	
-				  	/*
-  					setToBuffer(ACK, &bufferOut);
-  					setToBuffer(getMessure, &bufferOut);
-  					*/
-
-					//Llamo la funcion que toma la medicion
-					//ultrasonicAllMessure();
+				  
 				  	break;
 
 				case ULTRASONIC_LEFT:
+				    functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_LEFT;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_LEFT_TIMER;
@@ -79,6 +79,7 @@ void functionHandler(void){
 
 				
 				case ULTRASONIC_RIGHT:
+				    functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_RIGHT;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_RIGHT_TIMER;
@@ -88,7 +89,7 @@ void functionHandler(void){
 
 				
 				case ULTRASONIC_FRONT:
-				    
+				    functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_FRONT;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_FRONT_TIMER;
@@ -104,7 +105,7 @@ void functionHandler(void){
 				  	functionStructInstance.timerCount = ACCEL_TIMER;
 				  	setToExecutingVector(&functionStructInstance);
 					setToBuffer(ACK, &bufferOut);
-					setToBuffer(getMessure, &bufferOut);
+					setToBuffer(getMeasure, &bufferOut);
 
 					//Llamo la funcion que toma la medicion
 					//accelMessure();
@@ -116,7 +117,7 @@ void functionHandler(void){
 				  	functionStructInstance.timerCount = GYRO_TIMER;
 				  	setToExecutingVector(&functionStructInstance);
 					setToBuffer(ACK, &bufferOut);
-					setToBuffer(getMessure, &bufferOut);
+					setToBuffer(getMeasure, &bufferOut);
 
 					//Llamo la funcion que toma la medicion
 					//gyroMessure();
@@ -128,7 +129,7 @@ void functionHandler(void){
 				  	functionStructInstance.timerCount = COMPASS_TIMER;
 				  	setToExecutingVector(&functionStructInstance);
 					setToBuffer(ACK, &bufferOut);
-					setToBuffer(getMessure, &bufferOut);
+					setToBuffer(getMeasure, &bufferOut);
 
 					//Llamo la funcion que toma la medicion
 					//compassMessure();
