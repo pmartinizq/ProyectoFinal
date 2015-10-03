@@ -28,8 +28,8 @@ extern uint8_t GLOBAL_STATUS;
 //Buffer de entrada
 #define BUFFERIN_LENGTH 30
 
-#define BUFFER_DATA_SIZE 10
-#define EXECUTING_STRUCT_SIZE 15
+#define BUFFER_DATA_SIZE 5
+#define EXECUTING_STRUCT_SIZE 10
 
 
 //definiciones para sensores ultrasonicos
@@ -38,14 +38,15 @@ extern uint8_t GLOBAL_STATUS;
 #define SENSOR_ULTRASONIC_RIGHT 3
 
 // Funciones 
-# define getMessure 0x01
+# define getMeasure 0x01
+# define getMeasureResponse 0x82
 # define isGoal 0x02
 # define setSteps 0x80
 # define setVelocity 0x81
 # define error 0x05
 # define ACK 0x06
 
-// parametros de getMessure
+// parametros de getMeasure
 # define ULTRASONIC_ALL 7
 # define ULTRASONIC_LEFT 8
 # define ULTRASONIC_RIGHT 9
@@ -90,10 +91,11 @@ extern uint8_t GLOBAL_STATUS;
 //Definiciones para funciones con mas de una funcion
 #define MORE_FUNCTION 0xff
 #define UNIQUE_FUNCTION 0x00
+#define MAX_CHILDREN 0x03
 
 
 //timers funciones
-#define GETMESSURE_TIMER 20
+#define getMeasure_TIMER 20
 
 //Punteros de lectura y escritura
 extern uint8_t readPointerBufferOut;
@@ -124,6 +126,7 @@ uint8_t pointer;
 
 typedef struct  
 {
+uint8_t functionParameter;
 uint8_t functionId;
 uint8_t status;
 uint8_t timerCount;
