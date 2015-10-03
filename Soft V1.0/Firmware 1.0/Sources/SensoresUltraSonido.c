@@ -15,7 +15,7 @@ void getUltrasonic(FunctionStruct* currentFunction){
                                   break;
                                   
   case ULTRASONIC_LEFT:   sensorLeftFunctionStruct=currentFunction;
-                                  (void)(TPM1C1SC);
+                                  (void)(TPM1C1SC==0);
                                   TPM1C1SC_CH1F=0;
                                   SENSOR_LEFT_ENABLE_INTERRUPT;
                                   SENSOR_LEFT_TRIGGER=1;
@@ -23,7 +23,7 @@ void getUltrasonic(FunctionStruct* currentFunction){
                                   SENSOR_LEFT_TRIGGER=0;                                  
                                   break;
   case ULTRASONIC_RIGHT:   sensorRightFunctionStruct=currentFunction;
-                                  (void)(TPM1C2SC);
+                                  (void)(TPM1C2SC==0);
                                   TPM1C2SC_CH2F=0;
                                   SENSOR_RIGHT_ENABLE_INTERRUPT;
                                   SENSOR_RIGHT_TRIGGER=1;
@@ -75,7 +75,7 @@ interrupt VectorNumber_Vtpm1ch0 void interruptSensorFront (void)                
     }
     sensorFrontDatos.pointer=1;
     sensorFrontFunctionStruct->data=&sensorFrontDatos;
-    sensorFrontFunctionStruct->status=AVAILABLE;
+    sensorFrontFunctionStruct->status=AVAILABLE;    
     SENSOR_FRONT_DISABLE_INTERRUPT;
     
   }
@@ -87,7 +87,7 @@ interrupt VectorNumber_Vtpm1ch1 void interruptSensorLeft (void)
 {
   
   
-  (void)TPM1C1SC;//Borra el flag de interrupcion
+  (void)(TPM1C1SC==0);//Borra el flag de interrupcion
   TPM1C1SC_CH1F = 0;
   
   if(mefSensorLeftStatus==MEF_STATUS_WAIT) 
@@ -122,7 +122,7 @@ interrupt VectorNumber_Vtpm1ch2 void interruptSensorRight (void)
 {
   
   
-  (void)TPM1C2SC;//Borra el flag de interrupcion
+  (void)(TPM1C2SC==0);//Borra el flag de interrupcion
   TPM1C2SC_CH2F = 0;
   
   if(mefSensorRightStatus==MEF_STATUS_WAIT) 
