@@ -28,8 +28,8 @@ extern uint8_t GLOBAL_STATUS;
 //Buffer de entrada
 #define BUFFERIN_LENGTH 30
 
-#define BUFFER_DATA_SIZE 5
-#define EXECUTING_STRUCT_SIZE 10
+#define BUFFER_DATA_SIZE 4
+#define EXECUTING_STRUCT_SIZE 15
 
 
 //definiciones para sensores ultrasonicos
@@ -43,7 +43,7 @@ extern uint8_t GLOBAL_STATUS;
 # define isGoal 0x02
 # define setSteps 0x80
 # define setVelocity 0x81
-# define error 0x05
+# define error 0x85
 # define ACK 0x06
 
 // parametros de getMeasure
@@ -77,9 +77,9 @@ extern uint8_t GLOBAL_STATUS;
 # define DONE 25
 
 //timers funciones
-# define ULTRASONIC_ALL_TIMER 17
+# define ULTRASONIC_ALL_TIMER 255
 # define ULTRASONIC_LEFT_TIMER 50
-# define ULTRASONIC_RIGHT_TIMER 5
+# define ULTRASONIC_RIGHT_TIMER 50
 # define ULTRASONIC_FRONT_TIMER 50
 # define ACCEL_TIMER 200
 # define GYRO_TIMER 200
@@ -87,6 +87,7 @@ extern uint8_t GLOBAL_STATUS;
 # define IS_GOAL_TIMER 200
 # define SET_STEPS_TIMER 200
 # define SET_VELOCITY_TIMER 200
+#define NO_TIMER 255
 
 //Definiciones para funciones con mas de una funcion
 #define MORE_FUNCTION 0xff
@@ -108,6 +109,22 @@ extern int goalStatus;
 
 //motores
 static uint8_t pwmLeftValue=0,pwmRightValue=0;
+
+
+static uint8_t STATUS_MEF;
+
+
+//Definicion estados MEF
+
+#define MEF_WAIT 0x01
+#define MEF_START 0x02
+#define MEF_FUNCTION 0x03
+#define MEF_N_BYTES 0x04
+#define MEF_DATA 0x05
+#define MEF_TIME_OUT 0x06
+#define MEF_ERROR 0x07
+#define FUNCTION_ID 0x7F
+
 
 #pragma options align = packed
 typedef struct  
