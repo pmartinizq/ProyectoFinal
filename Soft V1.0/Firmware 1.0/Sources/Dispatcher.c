@@ -11,9 +11,13 @@ void dispatcher(ExecutingStruct* executingVector, BufferStruct* functionBuffer){
 	uint8_t variableAux1;
 	uint8_t variableAux2;
 	uint8_t variableAux3;
-	if(getFromExecutingVector()->functionId!=0){
+	FunctionStruct* functionAux;
+	//if(functionAux->functionId!=0&&){
 	  
 	for(counter = 0; counter <= vectorSize; counter++){
+	  functionAux=getFromExecutingVectorOnIndex(counter);
+	  if(functionAux->status!=0&&functionAux->status!=DONE){
+	    
 		variable = getFromExecutingVectorOnIndex(counter)->status;
 		functionID = getFromExecutingVectorOnIndex(counter)->functionId;
 		functionParameter = getFromExecutingVectorOnIndex(counter)->functionParameter;
@@ -36,18 +40,26 @@ void dispatcher(ExecutingStruct* executingVector, BufferStruct* functionBuffer){
 						getFromExecutingVectorOnIndex(counter+2)->status = DONE;
 						getFromExecutingVectorOnIndex(counter+3)->status = DONE;
 					}
-					else{
+					
+					if(variableAux1 == INACCESSIBLE_DEVICE || variableAux2 == INACCESSIBLE_DEVICE || variableAux3 == INACCESSIBLE_DEVICE){
+						variable = INACCESSIBLE_DEVICE;
+						getFromExecutingVectorOnIndex(counter+1)->status = DONE;
+						getFromExecutingVectorOnIndex(counter+2)->status = DONE;
+						getFromExecutingVectorOnIndex(counter+3)->status = DONE;
+					}
+					
 						if(variableAux1 == AVAILABLE && variableAux2 == AVAILABLE && variableAux3 == AVAILABLE){
 							variable = AVAILABLE;
 							//revistar estooo!!!
 							getFromExecutingVectorOnIndex(counter)->data->data[0] = getFromExecutingVectorOnIndex(counter+1)->data->data[0];
 							getFromExecutingVectorOnIndex(counter)->data->data[1] = getFromExecutingVectorOnIndex(counter+2)->data->data[0];
 							getFromExecutingVectorOnIndex(counter)->data->data[2] = getFromExecutingVectorOnIndex(counter+3)->data->data[0];
+							getFromExecutingVectorOnIndex(counter)->data->pointer=3;
 							getFromExecutingVectorOnIndex(counter+1)->status = DONE;
 							getFromExecutingVectorOnIndex(counter+2)->status = DONE;
 							getFromExecutingVectorOnIndex(counter+3)->status = DONE;
 						}
-					}
+					
 				}
 				//counter = counter+3;
 			}
@@ -55,11 +67,9 @@ void dispatcher(ExecutingStruct* executingVector, BufferStruct* functionBuffer){
 				case AVAILABLE:
 							
 							if(functionParameter >= 128){
-							  if(functionParameter==getMeasureResponse){
-							    
-							    setToBuffer(getMeasure, functionBuffer);
-							  }
-								variableAux1 = getFromExecutingVectorOnIndex(counter)->data->pointer;
+							  setToBuffer(functionParameter, functionBuffer);
+		
+								variableAux1 = 3;//getFromExecutingVectorOnIndex(counter)->data->pointer;
 								variableAux2 = 0;
 								setToBuffer(variableAux1, functionBuffer);
 								for(variableAux2 = 0; variableAux2 < variableAux1; variableAux2++){
@@ -74,16 +84,16 @@ void dispatcher(ExecutingStruct* executingVector, BufferStruct* functionBuffer){
 							break;
 
 				case INACCESSIBLE_DEVICE:
-							setToBuffer(ERROR_FUNCTION, functionBuffer);
+							setToBuffer(error, functionBuffer);
 							setToBuffer(2,functionBuffer);
-							setToBuffer(functionID, functionBuffer);
+							setToBuffer(functionParameter, functionBuffer);
 							setToBuffer(INACCESSIBLE_DEVICE, functionBuffer);
 							getFromExecutingVectorOnIndex(counter)->status = DONE;
 							break; 							
 			
 							
 				case TIMEOUT:
-							setToBuffer(ERROR_FUNCTION, functionBuffer);
+							setToBuffer(error, functionBuffer);
 							setToBuffer(2,functionBuffer);
 							setToBuffer(functionID, functionBuffer);
 							setToBuffer(TIMEOUT, functionBuffer);
@@ -93,4 +103,5 @@ void dispatcher(ExecutingStruct* executingVector, BufferStruct* functionBuffer){
 		}
 	}
 	}
+	
 }
