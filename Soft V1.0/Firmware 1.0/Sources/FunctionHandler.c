@@ -9,6 +9,7 @@
   
 void functionHandler(void){
 
+  long time = 0,t=0;
 	uint8_t idFunction = 0; 
 	uint8_t parameter = 0;
 	uint8_t numberOfBytes = 0;
@@ -22,6 +23,7 @@ void functionHandler(void){
 	int angularVelocity = 0;
 	FunctionStruct functionStructInstance;
 	FunctionStruct *newFunction;
+	FunctionStruct *lastFunction;
 
 	// Tomar funcion del buffer de entrada
 	if(isDataAvailable(&bufferIn)==1){
@@ -39,32 +41,51 @@ void functionHandler(void){
             functionStructInstance.functionParameter=getMeasureResponse;
 				  	functionStructInstance.functionId = ULTRASONIC_ALL;
 				  	functionStructInstance.status = READY;
-				  	functionStructInstance.timerCount = 0;
+				  	functionStructInstance.timerCount = NO_TIMER;
 				  	functionStructInstance.root = MORE_FUNCTION;
 				  	setFunctionToExecutingVector(functionStructInstance);
 				  	
-				  	//getUltrasonic(setFunctionToExecutingVector(functionStructInstance));
-				  	functionStructInstance.functionParameter=getMeasure;
-				  	functionStructInstance.functionId = ULTRASONIC_LEFT;
-				  	functionStructInstance.status = READY;
-				  	functionStructInstance.timerCount = ULTRASONIC_LEFT_TIMER;
-				  	functionStructInstance.root = ULTRASONIC_ALL;
-				  	getUltrasonic(setFunctionToExecutingVector(functionStructInstance));
+				  	
+				  	
+				  
 				  	
 				  	functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_FRONT;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_FRONT_TIMER;
 				  	functionStructInstance.root = ULTRASONIC_ALL;
-				  	getUltrasonic(setFunctionToExecutingVector(functionStructInstance));
+				  	lastFunction=setFunctionToExecutingVector(functionStructInstance);
+				  	getUltrasonic(lastFunction);
+				  	/*
+				  	while(lastFunction->status==RUNNING||lastFunction->status==READY);
+				  	t=10000;
+				  	while(t!=0){
+				  	  t--;
+				  	} */
+				  	
+				  	functionStructInstance.functionParameter=getMeasure;
+				  	functionStructInstance.functionId = ULTRASONIC_LEFT;
+				  	functionStructInstance.status = READY;
+				  	functionStructInstance.timerCount = ULTRASONIC_LEFT_TIMER;
+				  	functionStructInstance.root = ULTRASONIC_ALL;
+				  	lastFunction=setFunctionToExecutingVector(functionStructInstance);
+				  	getUltrasonic(lastFunction);
+				  	
+				  	/*
+				  	while(lastFunction->status==RUNNING||lastFunction->status==READY);
+				  	t=10000;
+				  	while(t!=0){
+				  	  t--;
+				  	} */
 				  	
 				  	functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_RIGHT;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_RIGHT_TIMER;
 				  	functionStructInstance.root = ULTRASONIC_ALL;
-				  	getUltrasonic(setFunctionToExecutingVector(functionStructInstance));
-				  	
+				  	lastFunction=setFunctionToExecutingVector(functionStructInstance);
+				  	getUltrasonic(lastFunction);
+				  	//while(lastFunction->status==RUNNING||lastFunction->status==READY);
 				  
 				  	break;
 
@@ -144,12 +165,14 @@ void functionHandler(void){
 		
 		case isGoal:
 			
+		  	functionStructInstance.functionParameter=isGoal;
 		  	functionStructInstance.functionId = isGoal;
+		  	functionStructInstance.root=UNIQUE_FUNCTION;
 		  	functionStructInstance.status = READY;
 		  	functionStructInstance.timerCount = IS_GOAL_TIMER;
-		  	setToExecutingVector(&functionStructInstance);
-			setToBuffer(ACK, &bufferOut);
-			setToBuffer(isGoal, &bufferOut);
+		  //	setToExecutingVector(&functionStructInstance);
+		//	setToBuffer(ACK, &bufferOut);
+		//	setToBuffer(isGoal, &bufferOut);
 		  	
 			//Tomo el parametro de isGoal
 		  	parameter = getFromBuffer(&bufferIn);
@@ -196,16 +219,18 @@ void functionHandler(void){
 		  	angularVelocity=0;
 		  	angularVelocity = angularVelocity+velocityParameters[2];
 		  	angularVelocity=angularVelocity <<8 + velocityParameters[3];
-		  	// ¿faltan parametros?!!
+		  	
 
-		  	functionStructInstance.functionId = setVelocity;
-		  	functionStructInstance.status = READY;
-		  	functionStructInstance.timerCount = SET_VELOCITY_TIMER;
-		  	setToExecutingVector(&functionStructInstance);
-			setToBuffer(ACK, &bufferOut);
-			setToBuffer(setVelocity, &bufferOut);
-			calcularSentido(robot_speed_to_pwm(tangencialVelocity,angularVelocity,&pwmRightValue,&pwmLeftValue));
-      setPwmValue(pwmRightValue,pwmLeftValue);
+		  	
+		  	setToBuffer(ACK, &bufferOut);
+			  setToBuffer(setVelocity, &bufferOut);
+		  	
+		  	calcularSentido(robot_speed_to_pwm(tangencialVelocity,angularVelocity,&pwmRightValue,&pwmLeftValue));
+        setPwmValue(pwmRightValue,pwmLeftValue);
+      
+		    //setToExecutingVector(&functionStructInstance);
+			
+			
 			
 		  	//funcion que setea las velocidades mandando los parametros leftVelocity y rightVelocity
 		  	//setVelocity(leftVelocity, rightVelocity);
