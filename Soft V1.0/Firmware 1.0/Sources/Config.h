@@ -28,8 +28,8 @@ extern uint8_t GLOBAL_STATUS;
 //Buffer de entrada
 #define BUFFERIN_LENGTH 30
 
-#define BUFFER_DATA_SIZE 4
-#define EXECUTING_STRUCT_SIZE 15
+#define BUFFER_DATA_SIZE 6
+#define EXECUTING_STRUCT_SIZE 20
 
 
 //definiciones para sensores ultrasonicos
@@ -78,9 +78,9 @@ extern uint8_t GLOBAL_STATUS;
 
 //timers funciones
 # define ULTRASONIC_ALL_TIMER 255
-# define ULTRASONIC_LEFT_TIMER 50
-# define ULTRASONIC_RIGHT_TIMER 50
-# define ULTRASONIC_FRONT_TIMER 50
+# define ULTRASONIC_LEFT_TIMER 100
+# define ULTRASONIC_RIGHT_TIMER 100
+# define ULTRASONIC_FRONT_TIMER 100
 # define ACCEL_TIMER 200
 # define GYRO_TIMER 200
 # define COMPASS_TIMER 200

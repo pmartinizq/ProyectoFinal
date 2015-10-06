@@ -127,6 +127,6 @@ void InitPorts(){
 
 void InitRtc(){
   RTCMOD=0x00;
-  RTCSC=0xD8;
+  RTCSC=0xDA;
   
 }

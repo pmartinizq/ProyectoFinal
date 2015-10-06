@@ -52,6 +52,9 @@ void InitKbi(void);
 #define SENSOR_DE_META_OFF PTBD_PTBD2=0
 
 static int valorFlanco=0;
+//TIMER
+static int tickTime=0;
+
 
 
 #endif
