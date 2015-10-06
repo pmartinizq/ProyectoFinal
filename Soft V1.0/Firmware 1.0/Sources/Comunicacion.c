@@ -53,10 +53,10 @@ if((inByte==FRAME_START)&&(STATUS_MEF==MEF_WAIT)){
     
     if((STATUS_MEF==MEF_DATA)&&(dataPointer>=nBytes)){
       STATUS_MEF=MEF_WAIT;
-      setToBuffer(inByte,&bufferRx);
+      //setToBuffer(inByte,&bufferRx);
       dataPointer=0;
       setBufferOnBuffer(&bufferRx,&bufferIn);
-      InitBuffer(&bufferRx);
+     // InitBuffer(&bufferRx);
     }
       
       
@@ -78,7 +78,7 @@ if((inByte==FRAME_START)&&(STATUS_MEF==MEF_WAIT)){
         setToBuffer(inByte,&bufferRx);
         STATUS_MEF=MEF_WAIT;
         setBufferOnBuffer(&bufferRx,&bufferIn);
-        InitBuffer(&bufferRx);
+        //InitBuffer(&bufferRx);
         //Llamar a funcion para meter en el buffer
       }
         
@@ -92,6 +92,17 @@ if((inByte==FRAME_START)&&(STATUS_MEF==MEF_WAIT)){
   
   }
 }
+
+
+interrupt VectorNumber_Vsci1err  void ErrorInterrupt (void) {
+
+(void)(SCI1S1==0);
+
+
+}
+
+
+
 
 void frameGenerator(){
   
@@ -110,8 +121,12 @@ void frameGenerator(){
   setToBuffer(getByte,&bufferTx);
   txDataLength++;
 }else{
+  
   setToBuffer(FRAME_START,&bufferTx);
   txDataLength++;
+  if(getByte==getMeasureResponse){ 
+   getByte=getMeasure;
+  }
   setToBuffer(getByte,&bufferTx);
   txDataLength++;
   nbytes=getFromBuffer(&bufferOut);
