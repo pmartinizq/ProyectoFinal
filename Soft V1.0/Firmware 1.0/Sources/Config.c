@@ -31,6 +31,7 @@ void InitBuffer(BufferStruct* BufferToInit){
 uint8_t getFromBuffer(BufferStruct* BufferToGet){
 	
 	//controla que el buffer tenga algun valor cargado
+	
 	if(BufferToGet->BufferFlags[BufferToGet->readPointer] == 1){
 		//toma el dato al que apunta readPointer
 		uint8_t data = BufferToGet->Buffer[BufferToGet->readPointer];
@@ -61,7 +62,9 @@ uint8_t getFromBuffer(BufferStruct* BufferToGet){
   */
 void setToBuffer(uint8_t data, BufferStruct* BufferToSet){
 	//controla si la celda del buffer esta vacia
-	if(BufferToSet->BufferFlags[BufferToSet->writePointer] == 0){
+	
+	
+	if(BufferToSet->BufferFlags[BufferToSet->writePointer] != 1){
 		// setea la celda con 'data'
 		BufferToSet->Buffer[BufferToSet->writePointer] = data;
 		BufferToSet->BufferFlags[BufferToSet->writePointer] = 1;

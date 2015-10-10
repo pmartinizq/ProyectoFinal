@@ -1,11 +1,13 @@
 
+
+
+#ifndef _CONFIG_H_
+#define _CONFIG_H_
+
+
 #include "ConfigJM16.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-#ifndef _Config_h
-#define _Config_h
-
 
 //Definicion de tipos de datos
 #define uint8_t byte
@@ -18,7 +20,7 @@
 #define STATUS_RESET 0xB1
 #define STATUS_STAND_BY 0xB2
 
-#define BUFFER_SIZE 15
+#define BUFFER_SIZE 30
 
 //Definiciones 
 extern uint8_t GLOBAL_STATUS;
@@ -111,7 +113,9 @@ extern int goalStatus;
 static uint8_t pwmLeftValue=0,pwmRightValue=0;
 
 
-static uint8_t STATUS_MEF;
+
+
+///PASOS
 
 
 //Definicion estados MEF
