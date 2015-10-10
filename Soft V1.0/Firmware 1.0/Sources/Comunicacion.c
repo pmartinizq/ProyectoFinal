@@ -41,9 +41,11 @@ byte inByte=0;
 (void) statusSerialRegister1; //borra flags de interrupcion
 inByte=serialData;
 
-enableRxInterrupt;
+//enableRxInterrupt;
+
 if((inByte==FRAME_START)&&(STATUS_MEF==MEF_WAIT)){
   STATUS_MEF=MEF_START;
+  InitBuffer(&bufferRx);
 } else{
   
     if((STATUS_MEF==MEF_DATA)&&(dataPointer<nBytes)){

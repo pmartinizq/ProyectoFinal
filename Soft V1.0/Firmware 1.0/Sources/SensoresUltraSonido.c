@@ -69,7 +69,7 @@ interrupt VectorNumber_Vtpm1ch0 void interruptSensorFront (void)                
     sensorFrontTime=fallingEdgeTimeSensorFront-risingEdgeTimeSensorFront;//d es la medicion, resta los tiempos de muuestra de ambos flancos
     measureSensorFront16=(sensorFrontTime*10)/58;
     if(measureSensorFront16>255){
-      sensorFrontDatos.data[0];
+      sensorFrontDatos.data[0]=255;
     } else{
       sensorFrontDatos.data[0]=(byte)measureSensorFront16;
     }
@@ -104,7 +104,7 @@ interrupt VectorNumber_Vtpm1ch1 void interruptSensorLeft (void)
     sensorLeftTime=fallingEdgeTimeSensorLeft-risingEdgeTimeSensorLeft;
     measureSensorLeft16=(sensorLeftTime*10)/58;
     if(measureSensorLeft16>255){
-      sensorLeftDatos.data[0];
+      sensorLeftDatos.data[0]=255;
     } else{
       sensorLeftDatos.data[0]=(byte)measureSensorLeft16;
     }
@@ -139,7 +139,7 @@ interrupt VectorNumber_Vtpm1ch2 void interruptSensorRight (void)
     sensorRightTime=fallingEdgeTimeSensorRight-risingEdgeTimeSensorRight;
     measureSensorRight16=(sensorRightTime*10)/58;
     if(measureSensorRight16>255){
-      sensorRightDatos.data[0];
+      sensorRightDatos.data[0]=255;
     } else{
       sensorRightDatos.data[0]=(byte)measureSensorRight16;
     }

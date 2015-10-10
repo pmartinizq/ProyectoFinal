@@ -1,9 +1,9 @@
+
+#ifndef _COMUNICACION_H_
+#define _COMUNICACION_H_
 #include "Config.h"
-#ifndef _Comunicacion_h
-#define _Comunicacion_h
 
 
-#endif
 
 
 
@@ -19,6 +19,7 @@ static uint8_t singleData;
 static uint8_t nData[30];
 static uint8_t dataPointer=0;
 static uint8_t txDataLength=0;
+static uint8_t STATUS_MEF;
 
 //Definicion de estructuras
 BufferStruct bufferTx;
@@ -35,4 +36,6 @@ void beginComunication();
 void putDataIntoBuffer(void);
 void sendDataAvailable (void);
 void frameGenerator(void);
+
+#endif
 
