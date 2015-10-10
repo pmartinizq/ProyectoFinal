@@ -3,6 +3,18 @@
 #ifndef _SensoresMeta_h
 #define _SensoresMeta_h
 
+//------------------DEFINICIONES---------------------------------
+
+#define SENSOR_META_1 1
+#define SENSOR_META_2 2
+#define SENSOR_RUEDA_1 3
+#define SENSOR_RUEDA_2 4
+
+
+
+
+// -------------------VARIABLES-------------------------------------
+
 
 static uint8_t sensorNumber=1;
 
@@ -20,18 +32,15 @@ int whileFlag;
 
 int goalSensorStatus;
 
-/* 1 si debo leer datos del sensor
-   0 si no. */
 static int sensorStatus = 1;
 
-// --------------------------------------------------------
-
-static uint8_t lastStepValue;
+static uint8_t lastStepValue=255;
 static uint8_t stepsWheelADC;
 static uint8_t diferencia;
+static uint8_t signoPendiente,ultimoSigno=0,first=0;
 FunctionStruct *adcFunctionStruct;
 
-// --------------------------------------------------------
+// -----------------FUNCIONES---------------------------------------
 
 interrupt VectorNumber_Vadc void adcInterrupt (void);
 
@@ -54,6 +63,7 @@ void setSensorStatus(int parameter);
 uint8_t getGoalRightStatus(void);
 
 uint8_t getGoalLeftStatus(void);
+uint8_t min=255,max=0,maximos[100],minimos[100],indice=0,indiceM=0,ultimoValor=0,pendientes[120],indice2=0;
 
 void initGoalSensor(void);
 

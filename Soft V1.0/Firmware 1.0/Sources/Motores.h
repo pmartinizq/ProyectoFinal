@@ -1,6 +1,8 @@
-#include "Config.h"
+
 #ifndef _Motores_h
 #define _Motores_h
+
+#include "Config.h"
 
 #define PENDIENTE 10
 #define robotAdelante 0x00
