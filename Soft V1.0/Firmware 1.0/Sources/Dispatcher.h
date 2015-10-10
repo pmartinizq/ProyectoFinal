@@ -1,8 +1,11 @@
-#include "Config.h"
+
 
 
 #ifndef _Dispatcher_h
 #define _Dispatcher_h
-#endif
+
+#include "Config.h"
+
 
 void dispatcher(ExecutingStruct* executingVector, BufferStruct* functionBuffer);
+#endif

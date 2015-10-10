@@ -193,12 +193,9 @@ void functionHandler(void){
 		  	leftSteps = stepParameters[0] * 16 + stepParameters[1];
 		  	rightSteps = stepParameters[2] * 16 + stepParameters[3];
 
-		  	functionStructInstance.functionId = setSteps;
-		  	functionStructInstance.status = READY;
-		  	functionStructInstance.timerCount = SET_STEPS_TIMER;
-		  	setToExecutingVector(&functionStructInstance);
-			setToBuffer(ACK, &bufferOut);
-			setToBuffer(setSteps, &bufferOut);
+		  	
+  			setToBuffer(ACK, &bufferOut);
+  			setToBuffer(setSteps, &bufferOut);
 
 		  	//funcion que setea los pasos mandando los parametros leftSteps y rightSteps
 		  	//setSteps(leftSteps, rightSteps);
