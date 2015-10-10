@@ -105,7 +105,7 @@ void InitADC(){
   APCTL2=0x03;
   ADCCFG=00110000;
   ADCSC2=10000000;
-  ADCSC1=11101001;
+ //  ADCSC1=11100000;
   (void)ADCRH;
   (void)ADCRL;
   
@@ -118,7 +118,7 @@ void InitPorts(){
   PTADD=0X00;
   PTBDD=0XFF;
   PTCDD=0X03;
-  PTDDD=0X09;
+  PTDDD=0X08;
   PTEDD=0X70;
   PTFDD=0XFF;
   PTGDD=0XFF;
@@ -127,6 +127,6 @@ void InitPorts(){
 
 void InitRtc(){
   RTCMOD=0x00;
-  RTCSC=0xDA;
+  RTCSC=0xD8;
   
 }

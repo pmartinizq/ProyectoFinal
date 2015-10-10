@@ -21,44 +21,42 @@ void main(void) {
   InitPorts();
   InitInputCompare();
   
-  InitKbi();
+  //InitKbi();
   beginComunication();
   initExecutingVector();
   InitBuffer(&bufferIn);
   InitBuffer(&bufferOut);
   InitPwm();
-  InitADC();  
+  //InitADC();  
   EnableInterrupts;
-  InitRtc();
+  //InitRtc();
   /*  
     despues de habilitar interrupciones y
     antes de empezar a mover el robot debe calibrar sensores de meta
     no arrancar el motor sin antes ejecutar initGoalSensor()! 
   */
-  initGoalSensor();
-
+  //initGoalSensor();
+  //calcularSentido(robot_speed_to_pwm(t,0,&pwmRightValue,&pwmLeftValue));
+  //setPwmValue(pwmRightValue,pwmLeftValue);
   
   
+ 
   
-  if(t>35){
-    kbiSampleFreq=1000;
-  }else{
-    kbiSampleFreq=1000+((35-t)*200);
-  }
+  adcSampleFreq=5;
   
 
   
   for(;;) {
   if(goalStatus == 0){
-    /*
-    PTDD_PTDD1;
     
-    setGoalMode(STOP_ON_GOAL);
+    
+    
+    //setGoalMode(STOP_ON_GOAL);
     
     
     
     SENSOR_DE_META_ON;
-    PTDD_PTDD0=1;  */
+     
 
     
     
