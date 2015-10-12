@@ -3,167 +3,207 @@
 
 
 interrupt VectorNumber_Vadc void adcInterrupt (void){
-  
- (void) ADCRH;
- //ADCSC1_AIEN=0;
- 
- if(sensorNumber == 1){
-    varSensorLeft = ADCRL;
-  } 
-  else if(sensorNumber == 2){
-      varSensorRight = ADCRL;
-  } 
-  else if(sensorNumber == 3&&sensorNumber == 4){
-      varSensorStepADC = ADCRL;
-      ADCSC1=0x00;
-    
-      
-  /*    
-  if(varSensorStepADC>max){
-   max=varSensorStepADC; 
-    
-  }else if(varSensorStepADC<max){
-    maximos[indice]=max;
-    indice++;
-    max=0;
-  }
-  
-  if(varSensorStepADC<min){
-   min=varSensorStepADC; 
-    
-  }else if(varSensorStepADC>min){
-    minimos[indiceM]=min;
-    indiceM++;
-    min=255;
-  }   */
- 
-  if(first==0){
-     if(varSensorStepADC>150){
-      lastStepValue=0;
-     }else{
-      lastStepValue=255;
-     }
-     
-  }
- 
+uint8_t adcWheelSensor1,adcWheelSensor2; 
+static uint8_t firstTimeSensor1=0,firstTimeSensor2=0;
+static uint8_t lastAdcValueSensor1,lastAdcValueSensor2;
+static uint8_t slopeSensor1,slopeSensor2,signSlopeSensor1,signSlopeSensor2;
+static uint8_t lastSignSlopeSensor1,lastSignSlopeSensor2; 
 
-  if(varSensorStepADC!=lastStepValue){
-    if(lastStepValue>varSensorStepADC){
-      diferencia = lastStepValue - varSensorStepADC;
-      signoPendiente=0;
-    }else{
-      diferencia = varSensorStepADC - lastStepValue;
-      signoPendiente=1;
-    }
-    lastStepValue=varSensorStepADC;
-    
-    
-    if(first==0){
-      first=1;
-      ultimoSigno=signoPendiente;
-    }
-    
-      
-    if(diferencia > 10){
-    pendientes[indice2]=varSensorStepADC;
-    indice2++;
-    
-    if(signoPendiente==1&&ultimoSigno==0){
-        stepsWheelADC++;
-        ultimoSigno=signoPendiente;
-    }else if(signoPendiente==0&&ultimoSigno==1){
-      stepsWheelADC++;
-      ultimoSigno=signoPendiente;
-    
-    }
-    /*
-    if(signoPendiente==1){
-      
-      if(varSensorStepADC>max){
-       max=varSensorStepADC; 
-      
-      }else if(varSensorStepADC<max){
-        maximos[indice]=max;
-        indice++;
-        max=0;
-        stepsWheelADC++;
+(void) ADCRH;
+ 
+ if(sensorNumber == SENSOR_META_1||sensorNumber == SENSOR_META_2){
+  
+     if(sensorNumber == SENSOR_META_1){
+        varSensorLeft = ADCRL;
+      } 
+      else if(sensorNumber == SENSOR_META_2){
+          varSensorRight = ADCRL;
       }
-    }
-    else{      
-    
-    if(varSensorStepADC<min){
-    min=varSensorStepADC; 
-    
-    }else if(varSensorStepADC>min){
-      minimos[indiceM]=min;
-      indiceM++;
-      stepsWheelADC++;
-      min=255;
-    }
-    }*/
       
-         if(stepsWheelADC==40){
-        SENTIDO_M1_1=1;
-        SENTIDO_M1_2=1;
-        SENTIDO_M2_1=1;
-        SENTIDO_M2_2=1;
-        setPwmValue(0);
-      }          
-    }
-  }
-  }  
-  
-  
-  if(left == 1 && right == 1){
-      goalSensorStatus = 1;
- } else{
-      goalSensorStatus = 0;
+      if(left == 1 && right == 1){
+         goalSensorStatus = 1;
+       } else{
+            goalSensorStatus = 0;
+       }
+       left = getGoalLeftStatus(); 
+       right = getGoalRightStatus();
+       
  }
- left = getGoalLeftStatus(); 
- right = getGoalRightStatus();
- switchSensor(); 
+  else if(sensorNumber == SENSOR_RUEDA_1||sensorNumber == SENSOR_RUEDA_2){
+    
+      if(sensorNumber == SENSOR_RUEDA_1){
+        adcWheelSensor1 = ADCRL;
+        
+        
+        if(firstTimeSensor1==0){
+           if(adcWheelSensor1>150){
+            lastAdcValueSensor1=0;
+           }else{
+            lastAdcValueSensor1=255;
+           }         
+        }
+ 
+
+        if(adcWheelSensor1!=lastAdcValueSensor1){
+          if(lastAdcValueSensor1>adcWheelSensor1){
+            slopeSensor1 = lastAdcValueSensor1 - adcWheelSensor1;
+            signSlopeSensor1=0;
+         }else{
+            slopeSensor1 = adcWheelSensor1 - lastAdcValueSensor1;
+            signSlopeSensor1=1;
+         }
+         lastAdcValueSensor1=adcWheelSensor1;
+    
+    
+          if(firstTimeSensor1==0){
+            firstTimeSensor1=1;
+            lastSignSlopeSensor1=signSlopeSensor1;
+          }
+    
+      
+          if(slopeSensor1 > MIN_SLOPE){
+          
+          
+          if(signSlopeSensor1==1&&lastSignSlopeSensor1==0){
+              rightWheelStepValue++;
+              lastSignSlopeSensor1=signSlopeSensor1;
+          }else if(signSlopeSensor1==0&&lastSignSlopeSensor1==1){
+              rightWheelStepValue++;
+            lastSignSlopeSensor1=signSlopeSensor1;
+          
+          }
+    
+          if(verifyStepsRight()==TRUE){
+            setPwmValue(0,0);    
+          }
+                
+          }
+        }
+      } else if(sensorNumber == SENSOR_RUEDA_2){
+        adcWheelSensor2 = ADCRL;
+        //ADC_OFF;
+        
+        if(firstTimeSensor2==0){
+           if(adcWheelSensor2>150){
+            lastAdcValueSensor2=0;
+           }else{
+            lastAdcValueSensor2=255;
+           }         
+        }
+ 
+
+        if(adcWheelSensor2!=lastAdcValueSensor2){
+          if(lastAdcValueSensor2>adcWheelSensor2){
+            slopeSensor2 = lastAdcValueSensor2 - adcWheelSensor2;
+            signSlopeSensor2=0;
+         }else{
+            slopeSensor2 = adcWheelSensor2 - lastAdcValueSensor2;
+            signSlopeSensor2=1;
+         }
+         lastAdcValueSensor2=adcWheelSensor2;
+    
+    
+          if(firstTimeSensor2==0){
+            firstTimeSensor2=1;
+            lastSignSlopeSensor2=signSlopeSensor2;
+          }
+    
+      
+          if(slopeSensor2 > MIN_SLOPE){
+          
+          
+          if(signSlopeSensor2==1&&lastSignSlopeSensor2==0){
+              leftWheelStepValue++;
+              lastSignSlopeSensor2=signSlopeSensor2;
+              
+          }else if(signSlopeSensor2==0&&lastSignSlopeSensor2==1){
+              leftWheelStepValue++;
+            lastSignSlopeSensor2=signSlopeSensor2;
+          
+          }
+          
+          if(verifyStepsLeft()==TRUE){
+            setPwmValue(0,0);     
+          }
+    
+      
+                
+          }
+        }
+      }
+      
+      
+      
+      
+  }
+  
+  
+switchSensor();  
   
 }
 
+//DEVUELVE TRUE SI LOS PASOS SON IGUALES A LOS PASOS TO SET
+Bool verifyStepsRight (){
+Bool result=FALSE;
+  if(rightWheelStepValueToSet!=0){
+   if(rightWheelStepValueToSet>=rightWheelStepValue){
+    result=TRUE;
+   }
+    
+  }else{
+    return FALSE;
+  }
+  return result;
+}
 
-void initSample(void){
-  
+
+Bool verifyStepsLeft (){
+Bool result=FALSE;
+  if(leftWheelStepValueToSet!=0){
+   if(leftWheelStepValueToSet>=leftWheelStepValue){
+    result=TRUE;
+   }
+    
+  }else{
+    return FALSE;
+  }
+  return result;    
   
 }
+
 
 void switchSensor (void){
-
+ 
  switch(sensorNumber){
   
   case SENSOR_META_1:   sensorNumber=SENSOR_META_2;
-                        ADCSC1_ADCH=00001;
+                        ADCSC1_ADCH4=0;
+                        ADCSC1_ADCH3=0;
+                        ADCSC1_ADCH2=0;
+                        ADCSC1_ADCH1=0;
+                        ADCSC1_ADCH0=1;
                         break;
   case SENSOR_META_2:   sensorNumber=SENSOR_RUEDA_1;
-                        ADCSC1_ADCH=01000;
+                        ADCSC1_ADCH4=0;
+                        ADCSC1_ADCH3=1;
+                        ADCSC1_ADCH2=0;
+                        ADCSC1_ADCH1=0;
+                        ADCSC1_ADCH0=0;
+                        break;
+  case SENSOR_RUEDA_1:   sensorNumber=SENSOR_RUEDA_2;
+                        ADCSC1_ADCH4=0;
+                        ADCSC1_ADCH3=1;
+                        ADCSC1_ADCH2=0;
+                        ADCSC1_ADCH1=0;
+                        ADCSC1_ADCH0=1;
+                        break;
+  case SENSOR_RUEDA_2:  sensorNumber=SENSOR_META_1;
+                        
+                        ADC_OFF;
                         break;
                         
  }
- /*
-
-  if(sensorNumber==1){
-    ADCSC1_ADCH=01001;
-    //ADCSC1=11100001;
-    sensorNumber=3;
-  } 
-  else{
-    if(sensorNumber==2){
-      ADCSC1_ADCH=01001;
-      //ADCSC1=11101001;
-      sensorNumber=3;
-    } 
-    else{
-      if(sensorNumber==3){
-        ADCSC1_ADCH=01001;
-        //ADCSC1=11100000;
-        sensorNumber=3; 
-      }
-    }
-  }*/
+ 
 }
 
 

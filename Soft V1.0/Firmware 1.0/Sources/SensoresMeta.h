@@ -9,6 +9,8 @@
 #define SENSOR_META_2 2
 #define SENSOR_RUEDA_1 3
 #define SENSOR_RUEDA_2 4
+#define MIN_SLOPE 10
+#define ADC_OFF ADCSC1_ADCH=0xff;
 
 
 
@@ -20,7 +22,7 @@ static uint8_t sensorNumber=1;
 
 static int varSensorLeft;
 static int varSensorRight;
-static int varSensorStepADC; 
+ 
 
 static int varSensorLeftRef;
 static int varSensorRightRef;
@@ -34,10 +36,7 @@ int goalSensorStatus;
 
 static int sensorStatus = 1;
 
-static uint8_t lastStepValue=255;
-static uint8_t stepsWheelADC;
-static uint8_t diferencia;
-static uint8_t signoPendiente,ultimoSigno=0,first=0;
+
 FunctionStruct *adcFunctionStruct;
 
 // -----------------FUNCIONES---------------------------------------

@@ -21,9 +21,9 @@ if(velocityMeassureTimer==VELOCITY_MEASSURE_FREQ){
 }
   */
 
-/*
+
 if(adcTime==adcSampleFreq){      //5000 para bajas velocidades
-  ADCSC1=11101001;
+  ADCSC1_ADCH=0b00000;
   adcTime=0;
 } 
 /*
@@ -54,7 +54,7 @@ void decreaseTimer(FunctionStruct* currentFunction){
          currentFunction->status=INACCESSIBLE_DEVICE;
     }
     if((currentFunction->status==RUNNING)||(currentFunction->status==READY&&currentFunction->timerCount>0)){
-          currentFunction->timerCount=currentFunction->timerCount-1;
+          currentFunction->timerCount--;
      } 
   }
    
