@@ -102,7 +102,7 @@ uint8_t getSpaceOfBuffer(BufferStruct* BufferToCalculate){
 }
 
 
-void setToExecutingVector(FunctionStruct FunctionToSet){
+/*void setToExecutingVector(FunctionStruct FunctionToSet){
 int i=0;
 if(executingVector.vector[executingVector.pointer].functionId==0){
   executingVector.vector[executingVector.pointer]=FunctionToSet;
@@ -121,10 +121,27 @@ if(executingVector.vector[executingVector.pointer].functionId==0){
 } 
   
 
+}*/
+
+uint8_t isFunctionOnExecutingVector(FunctionStruct FunctionToSet){
+  uint8_t flag = 0;
+  int i = 0;
+  for(i=0;i<=executingVector.pointer;i++){
+  if(executingVector.vector[i].status != DONE && executingVector.vector[i].status != 0){
+      if(executingVector.vector[i].functionId == FunctionToSet.functionId &&
+         executingVector.vector[i].functionParameter == FunctionToSet.functionParameter){
+        flag= 1;
+      }
+  }
+  }
+  return flag;
 }
 
 FunctionStruct* setFunctionToExecutingVector(FunctionStruct FunctionToSet){
 int i=0,j=0,n=0;
+if(isFunctionOnExecutingVector(FunctionToSet)){
+  return;
+} 
 if(FunctionToSet.root==UNIQUE_FUNCTION){
   
     for(i=0;i<=executingVector.pointer;i++){
@@ -134,10 +151,12 @@ if(FunctionToSet.root==UNIQUE_FUNCTION){
           return &executingVector.vector[i];
         }
       }
-       executingVector.pointer=executingVector.pointer+1;
-       executingVector.vector[executingVector.pointer]=FunctionToSet;
-       return &executingVector.vector[executingVector.pointer];
-    
+      if(executingVector.pointer <= EXECUTING_STRUCT_SIZE){
+         executingVector.pointer=executingVector.pointer+1;
+         executingVector.vector[executingVector.pointer]=FunctionToSet;
+         return &executingVector.vector[executingVector.pointer];    
+       }
+      return NULL;
 }
 else{
     if(FunctionToSet.root==MORE_FUNCTION){ //SI ES LA FUNCION PADRE BUSCO QUE TENGA LUGAR CONTIGUO PARA LOS HIJOS
@@ -171,7 +190,8 @@ else{
         
         
         if(executingVector.vector[i].root==MORE_FUNCTION&&executingVector.vector[i].status!=DONE){//ECUENTRA AL PADRE
-          if(FunctionToSet.root==executingVector.vector[i].functionId){//PREGUNTA SI ES EL PADRE
+          if(FunctionToSet.root==executingVector.vector[i].functionId && 
+             executingVector.vector[i].IDNumber == FunctionToSet.IDNumber){//PREGUNTA SI ES EL PADRE
               for(j=1;j<=MAX_CHILDREN;j++){//NO SOBRE ESCRIBE A LOS HIJOS
                   if((executingVector.vector[i+j].root!=FunctionToSet.root)||executingVector.vector[i+j].status==DONE){
                      // executingVector.pointer=executingVector.pointer+1;
@@ -392,11 +412,29 @@ uint8_t isDataAvailable(BufferStruct *bufferToEvaluate){
 }
 
 
-FunctionStruct* newFunctionInExecutingVector(){
+/*FunctionStruct* newFunctionInExecutingVector(){
   
   FunctionStruct newFunction;
   setToExecutingVector(newFunction);
   return &newFunction;
+}
+     */
+
+void initIDNumber(void){
+  IDNumberExtern = 1;
+}
+
+
+uint8_t getIDNumber(){
+ uint8_t var = 0;
+ var =  IDNumberExtern;
+ if(IDNumberExtern <= 100){
+  IDNumberExtern++;
+ }
+ else{
+  IDNumberExtern = 1;
+ }
+ return var; 
 }
 
       

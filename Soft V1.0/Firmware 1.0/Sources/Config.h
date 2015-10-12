@@ -112,7 +112,8 @@ extern int goalStatus;
 //motores
 static uint8_t pwmLeftValue=0,pwmRightValue=0;
 
-
+// IDnumber
+extern uint8_t IDNumberExtern;
 
 
 ///PASOS
@@ -147,6 +148,7 @@ uint8_t pointer;
 
 typedef struct  
 {
+uint8_t IDNumber;
 uint8_t functionParameter;
 uint8_t functionId;
 uint8_t status;
@@ -245,5 +247,11 @@ FunctionStruct* getChildOf(uint8_t);
 uint8_t isDataAvailable(BufferStruct *);
 FunctionStruct* newFunctionInExecutingVector(void);
 FunctionStruct* setFunctionToExecutingVector(FunctionStruct);
+
+uint8_t isFunctionOnExecutingVector(FunctionStruct);
+
+void initIDNumber(void);
+
+uint8_t getIDNumber(void);
 
 #endif
