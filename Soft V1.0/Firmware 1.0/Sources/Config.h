@@ -79,17 +79,17 @@ extern uint8_t GLOBAL_STATUS;
 # define DONE 25
 
 //timers funciones
-# define ULTRASONIC_ALL_TIMER 255
-# define ULTRASONIC_LEFT_TIMER 100
-# define ULTRASONIC_RIGHT_TIMER 100
-# define ULTRASONIC_FRONT_TIMER 100
+# define ULTRASONIC_ALL_TIMER NO_TIMER
+# define ULTRASONIC_LEFT_TIMER 1600
+# define ULTRASONIC_RIGHT_TIMER 1600
+# define ULTRASONIC_FRONT_TIMER 1600
 # define ACCEL_TIMER 200
 # define GYRO_TIMER 200
 # define COMPASS_TIMER 200
 # define IS_GOAL_TIMER 200
 # define SET_STEPS_TIMER 200
 # define SET_VELOCITY_TIMER 200
-#define NO_TIMER 255
+#define NO_TIMER 0xffff
 
 //Definiciones para funciones con mas de una funcion
 #define MORE_FUNCTION 0xff
@@ -118,6 +118,8 @@ extern uint8_t IDNumberExtern;
 
 ///PASOS
 
+static uint16_t leftWheelStepValue,rightWheelStepValue;
+static int leftWheelStepValueToSet,rightWheelStepValueToSet; 
 
 //Definicion estados MEF
 
@@ -152,8 +154,9 @@ uint8_t IDNumber;
 uint8_t functionParameter;
 uint8_t functionId;
 uint8_t status;
-uint8_t timerCount;
+uint16_t timerCount;
 DataStruct* data;
+uint8_t datos[BUFFER_DATA_SIZE];
 uint8_t root;
 }FunctionStruct;
 

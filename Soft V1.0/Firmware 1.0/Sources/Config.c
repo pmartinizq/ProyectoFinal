@@ -151,7 +151,7 @@ if(FunctionToSet.root==UNIQUE_FUNCTION){
           return &executingVector.vector[i];
         }
       }
-      if(executingVector.pointer <= EXECUTING_STRUCT_SIZE){
+      if(executingVector.pointer < EXECUTING_STRUCT_SIZE){
          executingVector.pointer=executingVector.pointer+1;
          executingVector.vector[executingVector.pointer]=FunctionToSet;
          return &executingVector.vector[executingVector.pointer];    
@@ -218,115 +218,7 @@ else{
 
 
 
-/*
-FunctionStruct* setFunctionToExecutingVector(FunctionStruct FunctionToSet){
-int i=0,j=0,n=0;
-if(FunctionToSet.root==UNIQUE_FUNCTION){
-  
-    if(executingVector.vector[executingVector.pointer].functionId==0){
-      executingVector.vector[executingVector.pointer]=FunctionToSet;
-      return &executingVector.vector[executingVector.pointer];
-      //executingVector.pointer=executingVector.pointer+1;
-    } else{
-      for(i=0;i<executingVector.pointer;i++){
-        
-        if(executingVector.vector[i].status==DONE||executingVector.vector[i].status==0){
-          executingVector.vector[i]=FunctionToSet;
-          //executingVector.pointer=executingVector.pointer+1;
-          return &executingVector.vector[i];
-        }
-      }
-       executingVector.pointer=executingVector.pointer+1;
-       executingVector.vector[executingVector.pointer]=FunctionToSet;
-       return &executingVector.vector[executingVector.pointer];
-    }
-}
-else{
-    if(FunctionToSet.root==MORE_FUNCTION){ //SI ES LA FUNCION PADRE BUSCO QUE TENGA LUGAR CONTIGUO PARA LOS HIJOS
-       //SI es la primera funcion la pone en el primer lugar
-       if(executingVector.vector[executingVector.pointer].functionId==0){
-      executingVector.vector[executingVector.pointer]=FunctionToSet;
-      return &executingVector.vector[executingVector.pointer];
-       }else{//SINO TENGO QUE BUSCAR LUGAR
-            for(i=0;i<=executingVector.pointer;i++){
-        
-              if(executingVector.vector[i].status==DONE||executingVector.vector[i].status==0){
-              //BUSCO 3 LUGARES
-                for(j=0;j<MAX_CHILDREN;j++){
-                  if(executingVector.vector[i+j].status==DONE||executingVector.vector[i+j].status==0){
-                     n++;
-                  }
-                }
-              //SI ENCUENTRA 3 LUGARES LO PONE AL PADRE Y RETORNA
-                if(n==MAX_CHILDREN){
-                //executingVector.pointer=executingVector.pointer+1;
-                executingVector.vector[i]=FunctionToSet;
-                return &executingVector.vector[i];
-              }
-             }
-            }
-       
-          //SINO ENCUENTRA LOS 3 LUGARES PONE UNO NUEVO
-           executingVector.pointer=executingVector.pointer+1;
-           executingVector.vector[executingVector.pointer]=FunctionToSet;
-           return &executingVector.vector[executingVector.pointer];
-       }
-    }
-    
-    else{ //SI SON LOS HIJOS LOS PONGO AL LADO DE LA FUNCION PADRE
-       for(i=0;i<executingVector.pointer;i++){
-        
-        
-        if(executingVector.vector[i].root==MORE_FUNCTION&&executingVector.vector[i].status!=DONE){
-          if(FunctionToSet.root==executingVector.vector[i].functionId){
-              for(j=1;j<=MAX_CHILDREN;j++){
-                  if((executingVector.vector[i+j].root!=FunctionToSet.root)||executingVector.vector[i+j].status==DONE){
-                     // executingVector.pointer=executingVector.pointer+1;
-                      executingVector.vector[i+j]=FunctionToSet;
-                      return &executingVector.vector[i+j];
-                  }
-              }
-            
-          }
-        }
-       }
-       executingVector.pointer=executingVector.pointer+1;
-       executingVector.vector[executingVector.pointer]=FunctionToSet;
-       return &executingVector.vector[executingVector.pointer];
-            
-      
-    }
-}
-      
-  
-  
 
-}
-
-
-/*FunctionStruct* setFunctionToExecutingVector(FunctionStruct FunctionToSet){
-int i=0;
-if(executingVector.vector[executingVector.pointer].functionId==0){
-  executingVector.vector[executingVector.pointer]=FunctionToSet;
-  return &executingVector.vector[executingVector.pointer];
-  //executingVector.pointer=executingVector.pointer+1;
-} else{
-  for(i=0;i<executingVector.pointer;i++){
-    
-    if(executingVector.vector[i].status==DONE){
-      executingVector.vector[i]=FunctionToSet;
-      //executingVector.pointer=executingVector.pointer+1;
-      return &executingVector.vector[i];
-    }
-  }
-   executingVector.pointer=executingVector.pointer+1;
-   executingVector.vector[executingVector.pointer]=FunctionToSet;
-   return &executingVector.vector[executingVector.pointer];
-}
-  
-
-}
-*/
 
 
 FunctionStruct* getFromExecutingVector(){
