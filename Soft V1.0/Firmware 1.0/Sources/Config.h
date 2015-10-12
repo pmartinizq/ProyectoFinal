@@ -142,11 +142,6 @@ uint8_t Buffer[ BUFFER_SIZE ];
 uint8_t BufferFlags[ BUFFER_SIZE ];
 }BufferStruct;
 
-typedef struct  
-{
-uint8_t data[BUFFER_DATA_SIZE];
-uint8_t pointer;
-}DataStruct;
 
 typedef struct  
 {
@@ -155,8 +150,7 @@ uint8_t functionParameter;
 uint8_t functionId;
 uint8_t status;
 uint16_t timerCount;
-DataStruct* data;
-uint8_t datos[BUFFER_DATA_SIZE];
+uint8_t data[BUFFER_DATA_SIZE];
 uint8_t root;
 }FunctionStruct;
 

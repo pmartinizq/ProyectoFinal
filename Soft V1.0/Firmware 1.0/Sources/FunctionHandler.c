@@ -26,7 +26,6 @@ void functionHandler(void){
 	FunctionStruct *rootFunction;	
 	FunctionStruct *newFunction;
 	FunctionStruct *lastFunction;
-	DataStruct datos1;
 
 	// Tomar funcion del buffer de entrada
 	if(isDataAvailable(&bufferIn)==1){
@@ -49,12 +48,7 @@ void functionHandler(void){
 				  	functionStructInstance.timerCount = NO_TIMER;
 				  	functionStructInstance.root = UNIQUE_FUNCTION;
 				  	rootFunction=setFunctionToExecutingVector(functionStructInstance);
-				  
-				  	
-				  
-				  
-				  	
-				  	
+
 				    functionStructInstance.IDNumber = IDnumber; 
 				  	functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_FRONT;
@@ -66,7 +60,7 @@ void functionHandler(void){
 				  	
 				  	while(lastFunction->status==RUNNING||lastFunction->status==READY);
 				  	if(lastFunction->status==AVAILABLE){
-				  	  rootFunction->datos[0]=lastFunction->data->data[0];
+				  	  rootFunction->data[0]=lastFunction->data[0];
 				  	  lastFunction->status=DONE;
 				  	}else if(lastFunction->status==TIMEOUT){
 				  	  rootFunction->status=TIMEOUT;
@@ -89,7 +83,7 @@ void functionHandler(void){
 				  	
 				    while(lastFunction->status==RUNNING||lastFunction->status==READY);
 				  	if(lastFunction->status==AVAILABLE){
-				  	  rootFunction->datos[1]=lastFunction->data->data[0];
+				  	  rootFunction->data[1]=lastFunction->data[0];
 				  	  lastFunction->status=DONE;
 				  	}else if(lastFunction->status==TIMEOUT){
 				  	  rootFunction->status=TIMEOUT;
@@ -99,9 +93,7 @@ void functionHandler(void){
 				  	  break;
 				  	  
 				  	}
-				  
-				  
-				  	
+				 
 				    functionStructInstance.IDNumber = IDnumber; 
 				  	functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_RIGHT;
@@ -113,7 +105,7 @@ void functionHandler(void){
 				  
 				    while(lastFunction->status==RUNNING||lastFunction->status==READY);
 				  	if(lastFunction->status==AVAILABLE){
-				  	  rootFunction->datos[2]=lastFunction->data->data[0];
+				  	  rootFunction->data[2]=lastFunction->data[0];
 				  	  rootFunction->status=AVAILABLE;
 				  	  lastFunction->status=DONE;
 				  	}else if(lastFunction->status==TIMEOUT){
@@ -265,8 +257,8 @@ void functionHandler(void){
 		  	setToBuffer(ACK, &bufferOut);
 			  setToBuffer(setVelocity, &bufferOut);
 		  	
-		  	calcularSentido(robot_speed_to_pwm(tangencialVelocity,angularVelocity,&pwmRightValue,&pwmLeftValue));
-        setPwmValue(pwmRightValue,pwmLeftValue);
+		  //	calcularSentido(robot_speed_to_pwm(tangencialVelocity,angularVelocity,&pwmRightValue,&pwmLeftValue));
+       // setPwmValue(pwmRightValue,pwmLeftValue);
       
 		    //setToExecutingVector(&functionStructInstance);
 			

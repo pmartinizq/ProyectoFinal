@@ -50,19 +50,19 @@
 uint8_t mefSensorFrontStatus=0;
 uint16_t sensorFrontTime,risingEdgeTimeSensorFront,fallingEdgeTimeSensorFront,measureSensorFront16;
 FunctionStruct* sensorFrontFunctionStruct;
-DataStruct sensorFrontDatos;
+uint8_t sensorFrontDatos;
 
 //Declaracion de variables para Sensor Izquierdo
 uint8_t mefSensorLeftStatus=0;
 uint16_t sensorLeftTime,risingEdgeTimeSensorLeft,fallingEdgeTimeSensorLeft,measureSensorLeft16;
 FunctionStruct* sensorLeftFunctionStruct;
-DataStruct sensorLeftDatos;
+uint8_t sensorLeftDatos;
 
 //Declaracion de variables para Sensor Derecho
 uint8_t mefSensorRightStatus=0;
 uint16_t sensorRightTime,risingEdgeTimeSensorRight,fallingEdgeTimeSensorRight,measureSensorRight16;
 FunctionStruct* sensorRightFunctionStruct;
-DataStruct sensorRightDatos;
+uint8_t sensorRightDatos;
 
 //Declaracion de funciones
 interrupt VectorNumber_Vtpm1ch0 void interruptSensorFront (void);

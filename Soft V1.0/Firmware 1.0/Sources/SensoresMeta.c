@@ -210,7 +210,7 @@ void switchSensor (void){
 void setGoalMode(int parameter, FunctionStruct* currentFunction){
  currentFunction->status = RUNNING;
  setSensorStatus(parameter);
- currentFunction->data->data[0] = goalSensorStatus;
+ currentFunction->data[0] = goalSensorStatus;
  currentFunction->status = AVAILABLE;
 }
 

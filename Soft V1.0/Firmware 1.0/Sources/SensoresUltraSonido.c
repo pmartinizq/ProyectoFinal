@@ -69,12 +69,11 @@ interrupt VectorNumber_Vtpm1ch0 void interruptSensorFront (void)                
     sensorFrontTime=fallingEdgeTimeSensorFront-risingEdgeTimeSensorFront;//d es la medicion, resta los tiempos de muuestra de ambos flancos
     measureSensorFront16=(sensorFrontTime*10)/58;
     if(measureSensorFront16>255){
-      sensorFrontDatos.data[0]=255;
+      sensorFrontDatos=255;
     } else{
-      sensorFrontDatos.data[0]=(byte)measureSensorFront16;
+      sensorFrontDatos=(byte)measureSensorFront16;
     }
-    sensorFrontDatos.pointer=1;
-    sensorFrontFunctionStruct->data=&sensorFrontDatos;
+    sensorFrontFunctionStruct->data[0]=sensorFrontDatos;
     sensorFrontFunctionStruct->status=AVAILABLE;    
     SENSOR_FRONT_DISABLE_INTERRUPT;
     
@@ -104,12 +103,11 @@ interrupt VectorNumber_Vtpm1ch1 void interruptSensorLeft (void)
     sensorLeftTime=fallingEdgeTimeSensorLeft-risingEdgeTimeSensorLeft;
     measureSensorLeft16=(sensorLeftTime*10)/58;
     if(measureSensorLeft16>255){
-      sensorLeftDatos.data[0]=255;
+      sensorLeftDatos=255;
     } else{
-      sensorLeftDatos.data[0]=(byte)measureSensorLeft16;
+      sensorLeftDatos=(byte)measureSensorLeft16;
     }
-    sensorLeftDatos.pointer=1;
-    sensorLeftFunctionStruct->data=&sensorLeftDatos;
+    sensorLeftFunctionStruct->data[0]=sensorLeftDatos;
     sensorLeftFunctionStruct->status=AVAILABLE;
     SENSOR_LEFT_DISABLE_INTERRUPT;
     
@@ -139,12 +137,11 @@ interrupt VectorNumber_Vtpm1ch2 void interruptSensorRight (void)
     sensorRightTime=fallingEdgeTimeSensorRight-risingEdgeTimeSensorRight;
     measureSensorRight16=(sensorRightTime*10)/58;
     if(measureSensorRight16>255){
-      sensorRightDatos.data[0]=255;
+      sensorRightDatos=255;
     } else{
-      sensorRightDatos.data[0]=(byte)measureSensorRight16;
+      sensorRightDatos=(byte)measureSensorRight16;
     }
-    sensorRightDatos.pointer=1;
-    sensorRightFunctionStruct->data=&sensorRightDatos;
+    sensorRightFunctionStruct->data[0]=sensorRightDatos;
     sensorRightFunctionStruct->status=AVAILABLE;
     SENSOR_RIGHT_DISABLE_INTERRUPT;
     
