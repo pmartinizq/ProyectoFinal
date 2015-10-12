@@ -26,6 +26,7 @@ void main(void) {
   initExecutingVector();
   InitBuffer(&bufferIn);
   InitBuffer(&bufferOut);
+  initIDNumber();
   InitPwm();
   //InitADC();  
   EnableInterrupts;

@@ -19,6 +19,7 @@ void functionHandler(void){
 	uint8_t iterationFlagVelocity = 0;
 	uint16_t leftSteps = 0;
 	uint16_t rightSteps = 0;
+	uint8_t IDnumber;
 	int tangencialVelocity = 0;
 	int angularVelocity = 0;
 	FunctionStruct functionStructInstance;
@@ -38,6 +39,8 @@ void functionHandler(void){
 		  	switch ( parameter ) {
 				
 				case ULTRASONIC_ALL:
+				    IDnumber = getIDNumber();
+				    functionStructInstance.IDNumber = IDnumber; 
             functionStructInstance.functionParameter=getMeasureResponse;
 				  	functionStructInstance.functionId = ULTRASONIC_ALL;
 				  	functionStructInstance.status = READY;
@@ -46,9 +49,7 @@ void functionHandler(void){
 				  	setFunctionToExecutingVector(functionStructInstance);
 				  	
 				  	
-				  	
-				  
-				  	
+				    functionStructInstance.IDNumber = IDnumber; 
 				  	functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_FRONT;
 				  	functionStructInstance.status = READY;
@@ -63,6 +64,7 @@ void functionHandler(void){
 				  	  t--;
 				  	} */
 				  	
+				    functionStructInstance.IDNumber = IDnumber; 
 				  	functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_LEFT;
 				  	functionStructInstance.status = READY;
@@ -78,6 +80,7 @@ void functionHandler(void){
 				  	  t--;
 				  	} */
 				  	
+				    functionStructInstance.IDNumber = IDnumber; 
 				  	functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_RIGHT;
 				  	functionStructInstance.status = READY;
@@ -90,6 +93,7 @@ void functionHandler(void){
 				  	break;
 
 				case ULTRASONIC_LEFT:
+				    functionStructInstance.IDNumber = 0;
 				    functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_LEFT;
 				  	functionStructInstance.status = READY;
@@ -100,6 +104,7 @@ void functionHandler(void){
 
 				
 				case ULTRASONIC_RIGHT:
+				functionStructInstance.IDNumber = 0;
 				    functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_RIGHT;
 				  	functionStructInstance.status = READY;
@@ -110,6 +115,7 @@ void functionHandler(void){
 
 				
 				case ULTRASONIC_FRONT:
+				functionStructInstance.IDNumber = 0;
 				    functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_FRONT;
 				  	functionStructInstance.status = READY;
@@ -121,7 +127,7 @@ void functionHandler(void){
 
 
 				case ACCEL:
-				  	functionStructInstance.functionId = ACCEL;
+				  	/*functionStructInstance.functionId = ACCEL;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ACCEL_TIMER;
 				  	setToExecutingVector(&functionStructInstance);
@@ -129,11 +135,11 @@ void functionHandler(void){
 					setToBuffer(getMeasure, &bufferOut);
 
 					//Llamo la funcion que toma la medicion
-					//accelMessure();
+					//accelMessure();*/
 				  	break;
 				
 				case GYRO:
-				  	functionStructInstance.functionId = GYRO;
+				  /*	functionStructInstance.functionId = GYRO;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = GYRO_TIMER;
 				  	setToExecutingVector(&functionStructInstance);
@@ -141,11 +147,11 @@ void functionHandler(void){
 					setToBuffer(getMeasure, &bufferOut);
 
 					//Llamo la funcion que toma la medicion
-					//gyroMessure();
+					//gyroMessure();*/
 				  	break;
 				
 				case COMPASS:
-				  	functionStructInstance.functionId = COMPASS;
+				  /*	functionStructInstance.functionId = COMPASS;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = COMPASS_TIMER;
 				  	setToExecutingVector(&functionStructInstance);
@@ -153,27 +159,23 @@ void functionHandler(void){
 					setToBuffer(getMeasure, &bufferOut);
 
 					//Llamo la funcion que toma la medicion
-					//compassMessure();
+					//compassMessure();*/
 				  	break;
 
 				default:
-					setToBuffer(ERROR, &bufferOut);
+					setToBuffer(error, &bufferOut);
 					setToBuffer(COMMAND_ERROR, &bufferOut);
 				  	break;
 			}
 		  	break;
 		
 		case isGoal:
-			
+			  functionStructInstance.IDNumber = 0;
 		  	functionStructInstance.functionParameter=isGoal;
 		  	functionStructInstance.functionId = isGoal;
 		  	functionStructInstance.root=UNIQUE_FUNCTION;
 		  	functionStructInstance.status = READY;
 		  	functionStructInstance.timerCount = IS_GOAL_TIMER;
-		  //	setToExecutingVector(&functionStructInstance);
-		//	setToBuffer(ACK, &bufferOut);
-		//	setToBuffer(isGoal, &bufferOut);
-		  	
 			//Tomo el parametro de isGoal
 		  	parameter = getFromBuffer(&bufferIn);
 		  	
@@ -190,15 +192,19 @@ void functionHandler(void){
 		  		stepParameters[ iterationFlagSteps ] = getFromBuffer(&bufferIn);
 		  		iterationFlagSteps++;
 		  	}
-		  	leftSteps = stepParameters[0] * 16 + stepParameters[1];
-		  	rightSteps = stepParameters[2] * 16 + stepParameters[3];
-
+		    leftWheelStepValue = 0;
+		  	leftWheelStepValue = leftWheelStepValue + stepParameters[0];
+		  	leftWheelStepValue = leftWheelStepValue << 8;
+		  	leftWheelStepValue = leftWheelStepValue + stepParameters[1];
+		  	rightWheelStepValue =0;
+		  	rightWheelStepValue = rightWheelStepValue + stepParameters[2];
+		  	rightWheelStepValue = rightWheelStepValue << 8 + stepParameters[3];
 		  	
   			setToBuffer(ACK, &bufferOut);
   			setToBuffer(setSteps, &bufferOut);
 
 		  	//funcion que setea los pasos mandando los parametros leftSteps y rightSteps
-		  	//setSteps(leftSteps, rightSteps);
+		  	//setSteps(leftWheelStepValue, rightWheelStepValue);
 		  	break;
 		
 		case setVelocity:
@@ -234,7 +240,7 @@ void functionHandler(void){
 		  	break;
 		
 		default:
-			setToBuffer(ERROR, &bufferOut);
+			setToBuffer(error, &bufferOut);
 			setToBuffer(COMMAND_ERROR, &bufferOut);
 		  	break;
 	}

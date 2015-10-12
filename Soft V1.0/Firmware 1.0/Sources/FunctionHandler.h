@@ -6,8 +6,8 @@
 
 
 
-uint16_t leftWheelSteps = 0;
-uint16_t rightWheelSteps = 0;
+int leftWheelStepValue = 0;
+int rightWheelStepValue = 0;
 uint16_t leftWheelVelocity = 0;
 uint16_t rightWheelVelocity = 0;
 
