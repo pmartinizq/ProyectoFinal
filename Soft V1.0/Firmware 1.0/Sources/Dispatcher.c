@@ -54,7 +54,6 @@ void dispatcher(ExecutingStruct* executingVector, BufferStruct* functionBuffer){
 							getFromExecutingVectorOnIndex(counter)->data->data[0] = getFromExecutingVectorOnIndex(counter+1)->data->data[0];
 							getFromExecutingVectorOnIndex(counter)->data->data[1] = getFromExecutingVectorOnIndex(counter+2)->data->data[0];
 							getFromExecutingVectorOnIndex(counter)->data->data[2] = getFromExecutingVectorOnIndex(counter+3)->data->data[0];
-							getFromExecutingVectorOnIndex(counter)->data->pointer=3;
 							getFromExecutingVectorOnIndex(counter+1)->status = DONE;
 							getFromExecutingVectorOnIndex(counter+2)->status = DONE;
 							getFromExecutingVectorOnIndex(counter+3)->status = DONE;
@@ -71,9 +70,12 @@ void dispatcher(ExecutingStruct* executingVector, BufferStruct* functionBuffer){
 		
 								variableAux1 = 3;//getFromExecutingVectorOnIndex(counter)->data->pointer;
 								variableAux2 = 0;
+								
 								setToBuffer(variableAux1, functionBuffer);
-								for(variableAux2 = 0; variableAux2 < variableAux1; variableAux2++){
-									setToBuffer(getFromExecutingVectorOnIndex(counter)->data->data[variableAux2], functionBuffer);
+								
+								for(variableAux2 = 0; variableAux2 <= variableAux1-1; variableAux2++){
+									setToBuffer(getFromExecutingVectorOnIndex(counter)->datos[variableAux2], functionBuffer);
+									//setToBuffer(variableAux2, functionBuffer);
 								}	
 							}
 							else{
