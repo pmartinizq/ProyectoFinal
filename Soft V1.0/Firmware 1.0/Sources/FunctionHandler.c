@@ -23,8 +23,10 @@ void functionHandler(void){
 	int tangencialVelocity = 0;
 	int angularVelocity = 0;
 	FunctionStruct functionStructInstance;
+	FunctionStruct *rootFunction;	
 	FunctionStruct *newFunction;
 	FunctionStruct *lastFunction;
+	DataStruct datos1;
 
 	// Tomar funcion del buffer de entrada
 	if(isDataAvailable(&bufferIn)==1){
@@ -34,19 +36,23 @@ void functionHandler(void){
 		
 		case getMeasure:
 			//tomo el parametro de getMeasure
-			  (void)SCI1S1;
 		  	parameter = getFromBuffer(&bufferIn);
 		  	switch ( parameter ) {
 				
 				case ULTRASONIC_ALL:
+				    
 				    IDnumber = getIDNumber();
 				    functionStructInstance.IDNumber = IDnumber; 
             functionStructInstance.functionParameter=getMeasureResponse;
 				  	functionStructInstance.functionId = ULTRASONIC_ALL;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = NO_TIMER;
-				  	functionStructInstance.root = MORE_FUNCTION;
-				  	setFunctionToExecutingVector(functionStructInstance);
+				  	functionStructInstance.root = UNIQUE_FUNCTION;
+				  	rootFunction=setFunctionToExecutingVector(functionStructInstance);
+				  
+				  	
+				  
+				  
 				  	
 				  	
 				    functionStructInstance.IDNumber = IDnumber; 
@@ -54,41 +60,72 @@ void functionHandler(void){
 				  	functionStructInstance.functionId = ULTRASONIC_FRONT;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_FRONT_TIMER;
-				  	functionStructInstance.root = ULTRASONIC_ALL;
+				  	functionStructInstance.root = UNIQUE_FUNCTION;
 				  	lastFunction=setFunctionToExecutingVector(functionStructInstance);
 				  	getUltrasonic(lastFunction);
-				  	/*
-				  	while(lastFunction->status==RUNNING||lastFunction->status==READY);
-				  	t=10000;
-				  	while(t!=0){
-				  	  t--;
-				  	} */
 				  	
+				  	while(lastFunction->status==RUNNING||lastFunction->status==READY);
+				  	if(lastFunction->status==AVAILABLE){
+				  	  rootFunction->datos[0]=lastFunction->data->data[0];
+				  	  lastFunction->status=DONE;
+				  	}else if(lastFunction->status==TIMEOUT){
+				  	  rootFunction->status=TIMEOUT;
+				  	  break;
+				  	
+				  	}else if(lastFunction->status==INACCESSIBLE_DEVICE){
+				  	  rootFunction->status=INACCESSIBLE_DEVICE;
+				  	  break;
+				  	  
+				  	}
+				  
 				    functionStructInstance.IDNumber = IDnumber; 
 				  	functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_LEFT;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_LEFT_TIMER;
-				  	functionStructInstance.root = ULTRASONIC_ALL;
+				  	functionStructInstance.root = UNIQUE_FUNCTION;
 				  	lastFunction=setFunctionToExecutingVector(functionStructInstance);
 				  	getUltrasonic(lastFunction);
 				  	
-				  	/*
-				  	while(lastFunction->status==RUNNING||lastFunction->status==READY);
-				  	t=10000;
-				  	while(t!=0){
-				  	  t--;
-				  	} */
+				    while(lastFunction->status==RUNNING||lastFunction->status==READY);
+				  	if(lastFunction->status==AVAILABLE){
+				  	  rootFunction->datos[1]=lastFunction->data->data[0];
+				  	  lastFunction->status=DONE;
+				  	}else if(lastFunction->status==TIMEOUT){
+				  	  rootFunction->status=TIMEOUT;
+				  	  break;
+				  	}else if(lastFunction->status==INACCESSIBLE_DEVICE){
+				  	  rootFunction->status=INACCESSIBLE_DEVICE;
+				  	  break;
+				  	  
+				  	}
+				  
+				  
 				  	
 				    functionStructInstance.IDNumber = IDnumber; 
 				  	functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_RIGHT;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_RIGHT_TIMER;
-				  	functionStructInstance.root = ULTRASONIC_ALL;
+				  	functionStructInstance.root = UNIQUE_FUNCTION;
 				  	lastFunction=setFunctionToExecutingVector(functionStructInstance);
 				  	getUltrasonic(lastFunction);
-				  	//while(lastFunction->status==RUNNING||lastFunction->status==READY);
+				  
+				    while(lastFunction->status==RUNNING||lastFunction->status==READY);
+				  	if(lastFunction->status==AVAILABLE){
+				  	  rootFunction->datos[2]=lastFunction->data->data[0];
+				  	  rootFunction->status=AVAILABLE;
+				  	  lastFunction->status=DONE;
+				  	}else if(lastFunction->status==TIMEOUT){
+				  	  rootFunction->status=TIMEOUT;
+				  	  break;
+				  	}else if(lastFunction->status==INACCESSIBLE_DEVICE){
+				  	  rootFunction->status=INACCESSIBLE_DEVICE;
+				  	  break;
+				  	  
+				  	}
+				  
+				     
 				  
 				  	break;
 
