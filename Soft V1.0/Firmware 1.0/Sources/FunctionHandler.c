@@ -42,11 +42,12 @@ void functionHandler(void){
 				    
 				    IDnumber = getIDNumber();
 				    functionStructInstance.IDNumber = IDnumber; 
-            functionStructInstance.functionParameter=getMeasureResponse;
+            		functionStructInstance.functionParameter=getMeasureResponse;
 				  	functionStructInstance.functionId = ULTRASONIC_ALL;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = NO_TIMER;
 				  	functionStructInstance.root = UNIQUE_FUNCTION;
+				  	functionStructInstance.dataSize = 3;
 				  	rootFunction=setFunctionToExecutingVector(functionStructInstance);
 
 				    functionStructInstance.IDNumber = IDnumber; 
@@ -55,6 +56,7 @@ void functionHandler(void){
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_FRONT_TIMER;
 				  	functionStructInstance.root = UNIQUE_FUNCTION;
+				  	functionStructInstance.dataSize = 1;
 				  	lastFunction=setFunctionToExecutingVector(functionStructInstance);
 				  	getUltrasonic(lastFunction);
 				  	
@@ -62,14 +64,14 @@ void functionHandler(void){
 				  	if(lastFunction->status==AVAILABLE){
 				  	  rootFunction->data[0]=lastFunction->data[0];
 				  	  lastFunction->status=DONE;
-				  	}else if(lastFunction->status==TIMEOUT){
+				  	}
+				  	else if(lastFunction->status==TIMEOUT){
 				  	  rootFunction->status=TIMEOUT;
 				  	  break;
-				  	
-				  	}else if(lastFunction->status==INACCESSIBLE_DEVICE){
+				  	}
+				  	else if(lastFunction->status==INACCESSIBLE_DEVICE){
 				  	  rootFunction->status=INACCESSIBLE_DEVICE;
-				  	  break;
-				  	  
+				  	  break;  
 				  	}
 				  
 				    functionStructInstance.IDNumber = IDnumber; 
@@ -78,6 +80,7 @@ void functionHandler(void){
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_LEFT_TIMER;
 				  	functionStructInstance.root = UNIQUE_FUNCTION;
+				  	functionStructInstance.dataSize = 1;
 				  	lastFunction=setFunctionToExecutingVector(functionStructInstance);
 				  	getUltrasonic(lastFunction);
 				  	
@@ -85,13 +88,14 @@ void functionHandler(void){
 				  	if(lastFunction->status==AVAILABLE){
 				  	  rootFunction->data[1]=lastFunction->data[0];
 				  	  lastFunction->status=DONE;
-				  	}else if(lastFunction->status==TIMEOUT){
+				  	}
+				  	else if(lastFunction->status==TIMEOUT){
 				  	  rootFunction->status=TIMEOUT;
 				  	  break;
-				  	}else if(lastFunction->status==INACCESSIBLE_DEVICE){
+				  	}
+				  	else if(lastFunction->status==INACCESSIBLE_DEVICE){
 				  	  rootFunction->status=INACCESSIBLE_DEVICE;
-				  	  break;
-				  	  
+				  	  break;  
 				  	}
 				 
 				    functionStructInstance.IDNumber = IDnumber; 
@@ -100,6 +104,7 @@ void functionHandler(void){
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_RIGHT_TIMER;
 				  	functionStructInstance.root = UNIQUE_FUNCTION;
+				  	functionStructInstance.dataSize = 1;
 				  	lastFunction=setFunctionToExecutingVector(functionStructInstance);
 				  	getUltrasonic(lastFunction);
 				  
@@ -108,17 +113,15 @@ void functionHandler(void){
 				  	  rootFunction->data[2]=lastFunction->data[0];
 				  	  rootFunction->status=AVAILABLE;
 				  	  lastFunction->status=DONE;
-				  	}else if(lastFunction->status==TIMEOUT){
+				  	}
+				  	else if(lastFunction->status==TIMEOUT){
 				  	  rootFunction->status=TIMEOUT;
 				  	  break;
-				  	}else if(lastFunction->status==INACCESSIBLE_DEVICE){
-				  	  rootFunction->status=INACCESSIBLE_DEVICE;
-				  	  break;
-				  	  
 				  	}
-				  
-				     
-				  
+				  	else if(lastFunction->status==INACCESSIBLE_DEVICE){
+				  	  rootFunction->status=INACCESSIBLE_DEVICE;
+				  	  break;				  	  
+				  	}
 				  	break;
 
 				case ULTRASONIC_LEFT:
@@ -128,6 +131,7 @@ void functionHandler(void){
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_LEFT_TIMER;
 				  	functionStructInstance.root=UNIQUE_FUNCTION;
+				  	functionStructInstance.dataSize = 1;
 				  	getUltrasonic(setFunctionToExecutingVector(functionStructInstance));
 				  	break;
 
@@ -139,56 +143,60 @@ void functionHandler(void){
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_RIGHT_TIMER;
 				  	functionStructInstance.root=UNIQUE_FUNCTION;
-	          getUltrasonic(setFunctionToExecutingVector(functionStructInstance));
+				  	functionStructInstance.dataSize = 1;
+	          		getUltrasonic(setFunctionToExecutingVector(functionStructInstance));
 				  	break;
 
 				
 				case ULTRASONIC_FRONT:
-				functionStructInstance.IDNumber = 0;
+					functionStructInstance.IDNumber = 0;
 				    functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_FRONT;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ULTRASONIC_FRONT_TIMER;
 				  	functionStructInstance.root=UNIQUE_FUNCTION;
-				  	getUltrasonic(setFunctionToExecutingVector(functionStructInstance));
-				  	
+				  	functionStructInstance.dataSize = 1;
+				  	getUltrasonic(setFunctionToExecutingVector(functionStructInstance));				  	
 				  	break;
 
 
 				case ACCEL:
-				  	/*functionStructInstance.functionId = ACCEL;
+					functionStructInstance.IDNumber = 0;
+				    functionStructInstance.functionParameter=getMeasureResponse;
+				  	functionStructInstance.functionId = ACCEL;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = ACCEL_TIMER;
-				  	setToExecutingVector(&functionStructInstance);
-					setToBuffer(ACK, &bufferOut);
-					setToBuffer(getMeasure, &bufferOut);
-
+				  	functionStructInstance.root=UNIQUE_FUNCTION;
 					//Llamo la funcion que toma la medicion
-					//accelMessure();*/
+				  	//getAccelMeasure(setFunctionToExecutingVector(functionStructInstance));
+				  	functionStructInstance.dataSize = 6;
+				  	testFunction1(setFunctionToExecutingVector(functionStructInstance));
 				  	break;
 				
 				case GYRO:
-				  /*	functionStructInstance.functionId = GYRO;
+					functionStructInstance.IDNumber = 0;
+				    functionStructInstance.functionParameter=getMeasureResponse;
+				  	functionStructInstance.functionId = GYRO;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = GYRO_TIMER;
-				  	setToExecutingVector(&functionStructInstance);
-					setToBuffer(ACK, &bufferOut);
-					setToBuffer(getMeasure, &bufferOut);
-
+				  	functionStructInstance.root=UNIQUE_FUNCTION;
 					//Llamo la funcion que toma la medicion
-					//gyroMessure();*/
+				  	//getGyroMeasure(setFunctionToExecutingVector(functionStructInstance));
+				  	functionStructInstance.dataSize = 6;
+				  	testFunction2(setFunctionToExecutingVector(functionStructInstance));
 				  	break;
 				
 				case COMPASS:
-				  /*	functionStructInstance.functionId = COMPASS;
+					functionStructInstance.IDNumber = 0;
+				    functionStructInstance.functionParameter=getMeasureResponse;
+				  	functionStructInstance.functionId = COMPASS;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = COMPASS_TIMER;
-				  	setToExecutingVector(&functionStructInstance);
-					setToBuffer(ACK, &bufferOut);
-					setToBuffer(getMeasure, &bufferOut);
-
+				  	functionStructInstance.root=UNIQUE_FUNCTION;
 					//Llamo la funcion que toma la medicion
-					//compassMessure();*/
+				  	//getCompassMeasure(setFunctionToExecutingVector(functionStructInstance));
+				  	functionStructInstance.dataSize = 2;
+				  	testFunction3(setFunctionToExecutingVector(functionStructInstance));
 				  	break;
 
 				default:
@@ -205,12 +213,11 @@ void functionHandler(void){
 		  	functionStructInstance.root=UNIQUE_FUNCTION;
 		  	functionStructInstance.status = READY;
 		  	functionStructInstance.timerCount = IS_GOAL_TIMER;
+			functionStructInstance.dataSize = 1;
 			//Tomo el parametro de isGoal
 		  	parameter = getFromBuffer(&bufferIn);
-		  	
-				//Llamo funcion que setea el modo de meta
-				setGoalMode(parameter, setFunctionToExecutingVector(functionStructInstance)); 
-				
+			//Llamo funcion que setea el modo de meta
+			setGoalMode(parameter, setFunctionToExecutingVector(functionStructInstance)); 	
 		  	break;
 		
 		case setSteps:
@@ -228,10 +235,8 @@ void functionHandler(void){
 		  	rightWheelStepValue =0;
 		  	rightWheelStepValue = rightWheelStepValue + stepParameters[2];
 		  	rightWheelStepValue = rightWheelStepValue << 8 + stepParameters[3];
-		  	
   			setToBuffer(ACK, &bufferOut);
   			setToBuffer(setSteps, &bufferOut);
-
 		  	//funcion que setea los pasos mandando los parametros leftSteps y rightSteps
 		  	//setSteps(leftWheelStepValue, rightWheelStepValue);
 		  	break;
@@ -251,21 +256,10 @@ void functionHandler(void){
 		  	angularVelocity=0;
 		  	angularVelocity = angularVelocity+velocityParameters[2];
 		  	angularVelocity=angularVelocity <<8 + velocityParameters[3];
-		  	
-
-		  	
 		  	setToBuffer(ACK, &bufferOut);
-			  setToBuffer(setVelocity, &bufferOut);
-		  	
-		  //	calcularSentido(robot_speed_to_pwm(tangencialVelocity,angularVelocity,&pwmRightValue,&pwmLeftValue));
-       // setPwmValue(pwmRightValue,pwmLeftValue);
-      
-		    //setToExecutingVector(&functionStructInstance);
-			
-			
-			
-		  	//funcion que setea las velocidades mandando los parametros leftVelocity y rightVelocity
-		  	//setVelocity(leftVelocity, rightVelocity);
+			setToBuffer(setVelocity, &bufferOut);
+		  	calcularSentido(robot_speed_to_pwm(tangencialVelocity,angularVelocity,&pwmRightValue,&pwmLeftValue));
+       		setPwmValue(pwmRightValue,pwmLeftValue);
 		  	break;
 		
 		default:

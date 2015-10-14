@@ -68,7 +68,7 @@ void dispatcher(ExecutingStruct* executingVector, BufferStruct* functionBuffer){
 							if(functionParameter >= 128){
 							  setToBuffer(functionParameter, functionBuffer);
 		
-								variableAux1 = 3;//getFromExecutingVectorOnIndex(counter)->data->pointer;
+								variableAux1 = getFromExecutingVectorOnIndex(counter)->dataSize;
 								variableAux2 = 0;
 								
 								setToBuffer(variableAux1, functionBuffer);

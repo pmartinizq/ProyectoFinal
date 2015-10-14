@@ -66,4 +66,9 @@ uint8_t min=255,max=0,maximos[100],minimos[100],indice=0,indiceM=0,ultimoValor=0
 
 void initGoalSensor(void);
 
+
+void testFunction1(FunctionStruct* currentFunction);
+void testFunction2(FunctionStruct* currentFunction);
+void testFunction3(FunctionStruct* currentFunction);
+
 #endif

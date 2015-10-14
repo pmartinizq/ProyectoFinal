@@ -242,3 +242,40 @@ void initGoalSensor(void){
    varSensorLeftRef = varSensorLeft;
    varSensorRightRef = varSensorRight;
 }
+
+int varToCast = 0;
+void testFunction1(FunctionStruct* currentFunction){
+ currentFunction->status = RUNNING;
+ varToCast = 122;
+ currentFunction->data[0] = varToCast >> 8;
+ currentFunction->data[1] = varToCast;
+ varToCast = 133;
+ currentFunction->data[2] = varToCast >> 8;
+ currentFunction->data[3] = varToCast; 
+ varToCast = 144;
+ currentFunction->data[4] = varToCast >> 8;
+ currentFunction->data[5] = varToCast;
+ currentFunction->status = AVAILABLE;
+}
+
+void testFunction2(FunctionStruct* currentFunction){
+ currentFunction->status = RUNNING;
+ varToCast = 155;
+ currentFunction->data[0] = varToCast >> 8;
+ currentFunction->data[1] = varToCast;
+ varToCast = 166;
+ currentFunction->data[2] = varToCast >> 8;
+ currentFunction->data[3] = varToCast; 
+ varToCast = 177;
+ currentFunction->data[4] = varToCast >> 8;
+ currentFunction->data[5] = varToCast;
+ currentFunction->status = AVAILABLE;
+}
+
+void testFunction3(FunctionStruct* currentFunction){
+ currentFunction->status = RUNNING;
+ varToCast = 299;
+ currentFunction->data[0] = varToCast >> 8;
+ currentFunction->data[1] = varToCast;
+ currentFunction->status = AVAILABLE;
+}

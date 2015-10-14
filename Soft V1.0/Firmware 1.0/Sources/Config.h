@@ -151,6 +151,7 @@ uint8_t functionId;
 uint8_t status;
 uint16_t timerCount;
 uint8_t data[BUFFER_DATA_SIZE];
+uint8_t dataSize;
 uint8_t root;
 }FunctionStruct;
 
