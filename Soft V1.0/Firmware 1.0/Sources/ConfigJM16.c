@@ -1,5 +1,48 @@
+/*==================[inclusions]=============================================*/
 #include "ConfigJM16.h"
- 
+
+
+/*==================[macros and definitions]=================================*/
+
+/*==================[internal data declaration]==============================*/
+
+/*==================[internal functions declaration]=========================*/
+
+void InitReg(void);
+void InitClock(void);
+void InitComunication(void);
+void InitInputCompare(void);
+void InitPwm(void);
+void InitADC(void);
+void InitPorts(void);
+void InitRtc(void);
+
+
+/*==================[internal data definition]===============================*/
+
+/*==================[external data definition]===============================*/
+
+
+/*==================[external functions definition]==========================*/
+
+
+extern void InitDevice(void){
+  DisableInterrupts;
+  InitReg();  
+  InitClock();
+  InitComunication();  
+  InitPorts();
+  InitInputCompare();
+  beginComunication();
+  initExecutingVector();
+  //InitBuffer(&bufferIn);
+  //InitBuffer(&bufferOut);
+  initIDNumber();
+  EnableInterrupts;
+  InitPwm();
+  InitADC();  
+  InitRtc();
+}
 
 void InitReg(void){
   EnableInterrupts;
@@ -7,6 +50,10 @@ void InitReg(void){
   USBCTL0_USBVREN=1;
   
 }
+
+
+/*==================[internal functions definition]==========================*/
+
 
 /**
 @brief Inicializa y ajusta el reloj interno del microcontrolador
@@ -58,46 +105,20 @@ void InitInputCompare(){
  TPM1C1SC=0B00001100;
  TPM1C2SC=0B00001100;
  TPM1C3SC=0B00001100; 
- /*
- TPM2SC=0B00001100;  
- TPM2C0SC=0B00001100;
- TPM2C1SC=0B00001100;*/
+ 
  
 }
 
 void InitPwm(){
 
-  //TPM2C0SC=PWM_CH0_CONFIG;
-  //TPM2C1SC=PWM_CH0_CONFIG;
+  
   TPM2SC=0B00001111; 
-  //TPM2C0VH=0x08;
-  //TPM2C0VL=0xC4;     
   TPM2MODH=PWM_FREQ_HIGH;
   TPM2MODL=PWM_FREQ_LOW;
-  
-  //TPM2C1VH=0x09;
-  //TPM2C1VL=0xC4;     
             
 }
 
-void InitKbi(){
-  if(PTDD_PTDD2==0){
-    valorFlanco=1;
-  } else{
-    valorFlanco=0;
-  }
-  KBISC=0x04;
-  if(valorFlanco==1){
-    
-    KBIES_KBEDG2=1;
-  }else{
-    KBIES_KBEDG2=0;
-  }
-  KBIPE_KBIPE2=1;
-  KBISC_KBACK=1;
-  KBISC_KBIE=1;
-}
-  
+
 
 void InitADC(){
   
