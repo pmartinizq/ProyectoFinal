@@ -1,6 +1,16 @@
 #include "Config.h"
 
 
+uint8_t pwmLeftValue=0,pwmRightValue=0;
+uint16_t kbiSampleFreq=1000,adcSampleFreq=1000;
+uint16_t velocidad=0;
+uint8_t moveBy=NO_MOVE;
+
+uint16_t leftWheelStepValue,rightWheelStepValue;
+int leftWheelStepValueToSet,rightWheelStepValueToSet;
+uint8_t isAdcRunning=0;
+Bool adcEnable=TRUE;
+
 /**
   \brief Inicializacion de buffer. 
 

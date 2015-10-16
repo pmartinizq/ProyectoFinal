@@ -228,17 +228,36 @@ void functionHandler(void){
 		  		stepParameters[ iterationFlagSteps ] = getFromBuffer(&bufferIn);
 		  		iterationFlagSteps++;
 		  	}
-		    leftWheelStepValue = 0;
-		  	leftWheelStepValue = leftWheelStepValue + stepParameters[0];
-		  	leftWheelStepValue = leftWheelStepValue << 8;
-		  	leftWheelStepValue = leftWheelStepValue + stepParameters[1];
-		  	rightWheelStepValue =0;
-		  	rightWheelStepValue = rightWheelStepValue + stepParameters[2];
-		  	rightWheelStepValue = rightWheelStepValue << 8 + stepParameters[3];
+		    leftWheelStepValueToSet = 0;
+		  	leftWheelStepValueToSet = leftWheelStepValueToSet + stepParameters[0];
+		  	leftWheelStepValueToSet = leftWheelStepValueToSet << 8;
+		  	leftWheelStepValueToSet = leftWheelStepValueToSet + stepParameters[1];
+		  	rightWheelStepValueToSet =0;
+		  	rightWheelStepValueToSet = rightWheelStepValueToSet + stepParameters[2];
+		  	rightWheelStepValueToSet = rightWheelStepValueToSet <<8;
+		  	rightWheelStepValueToSet = rightWheelStepValueToSet + stepParameters[3];
   			setToBuffer(ACK, &bufferOut);
   			setToBuffer(setSteps, &bufferOut);
+  			
+  			moveBy=STEPS;
+  			leftWheelStepValue=0;
+  			rightWheelStepValue=0;
+  			
+  		  if(leftWheelStepValueToSet>=0&&rightWheelStepValueToSet>=0){
+  		    calcularSentido(FORWARD);
+  		  }else if(leftWheelStepValueToSet<0&&rightWheelStepValueToSet<0){
+  		    calcularSentido(REVERSE);
+  		  }else if(leftWheelStepValueToSet<0&&rightWheelStepValueToSet>0){
+  		    calcularSentido(TURN_RIGHT);
+  		  }else if(leftWheelStepValueToSet>0&&rightWheelStepValueToSet<0){
+  		    calcularSentido(TURN_LEFT);
+  		  }
+  		  //robot_speed_to_pwm(100,0,&pwmRightValue,&pwmLeftValue);
+  		  //setPwmValue(pwmRightValue,pwmLeftValue);
+        setPwmValue(100,100);
+
 		  	//funcion que setea los pasos mandando los parametros leftSteps y rightSteps
-		  	//setSteps(leftWheelStepValue, rightWheelStepValue);
+		  	//setSteps(leftWheelStepValueToSet, rightWheelStepValueToSet);
 		  	break;
 		
 		case setVelocity:
@@ -258,8 +277,11 @@ void functionHandler(void){
 		  	angularVelocity=angularVelocity <<8 + velocityParameters[3];
 		  	setToBuffer(ACK, &bufferOut);
 			setToBuffer(setVelocity, &bufferOut);
+			moveBy=LINEAR_VELOCITY;
+			
 		  	calcularSentido(robot_speed_to_pwm(tangencialVelocity,angularVelocity,&pwmRightValue,&pwmLeftValue));
-       		setPwmValue(pwmRightValue,pwmLeftValue);
+       	setPwmValue(pwmRightValue,pwmLeftValue);
+       	//setPwmValue(tangencialVelocity,tangencialVelocity);
 		  	break;
 		
 		default:

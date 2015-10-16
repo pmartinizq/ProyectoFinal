@@ -1,15 +1,16 @@
 #include "SensoresMeta.h"
 
-
-
-interrupt VectorNumber_Vadc void adcInterrupt (void){
-uint8_t adcWheelSensor1,adcWheelSensor2; 
 static uint8_t firstTimeSensor1=0,firstTimeSensor2=0;
 static uint8_t lastAdcValueSensor1,lastAdcValueSensor2;
 static uint8_t slopeSensor1,slopeSensor2,signSlopeSensor1,signSlopeSensor2;
 static uint8_t lastSignSlopeSensor1,lastSignSlopeSensor2; 
 
+interrupt VectorNumber_Vadc void adcInterrupt (void){
+//uint8_t adcWheelSensor1,adcWheelSensor2; 
+
+isAdcRunning=1;
 (void) ADCRH;
+
  
  if(sensorNumber == SENSOR_META_1||sensorNumber == SENSOR_META_2){
   
@@ -73,15 +74,15 @@ static uint8_t lastSignSlopeSensor1,lastSignSlopeSensor2;
           
           }
     
-          if(verifyStepsRight()==TRUE){
-            setPwmValue(0,0);    
+          if(verifyStepsRight()&&moveBy==STEPS){
+            stopRightWheel();
           }
+          
                 
           }
         }
       } else if(sensorNumber == SENSOR_RUEDA_2){
         adcWheelSensor2 = ADCRL;
-        //ADC_OFF;
         
         if(firstTimeSensor2==0){
            if(adcWheelSensor2>150){
@@ -96,7 +97,7 @@ static uint8_t lastSignSlopeSensor1,lastSignSlopeSensor2;
           if(lastAdcValueSensor2>adcWheelSensor2){
             slopeSensor2 = lastAdcValueSensor2 - adcWheelSensor2;
             signSlopeSensor2=0;
-         }else{
+         }else if(lastAdcValueSensor2<adcWheelSensor2){
             slopeSensor2 = adcWheelSensor2 - lastAdcValueSensor2;
             signSlopeSensor2=1;
          }
@@ -110,7 +111,7 @@ static uint8_t lastSignSlopeSensor1,lastSignSlopeSensor2;
     
       
           if(slopeSensor2 > MIN_SLOPE){
-          
+            
           
           if(signSlopeSensor2==1&&lastSignSlopeSensor2==0){
               leftWheelStepValue++;
@@ -118,12 +119,12 @@ static uint8_t lastSignSlopeSensor1,lastSignSlopeSensor2;
               
           }else if(signSlopeSensor2==0&&lastSignSlopeSensor2==1){
               leftWheelStepValue++;
-            lastSignSlopeSensor2=signSlopeSensor2;
+              lastSignSlopeSensor2=signSlopeSensor2;
           
           }
           
-          if(verifyStepsLeft()==TRUE){
-            setPwmValue(0,0);     
+          if(verifyStepsLeft()&&moveBy==STEPS){
+            stopLeftWheel();
           }
     
       
@@ -137,8 +138,13 @@ static uint8_t lastSignSlopeSensor1,lastSignSlopeSensor2;
       
   }
   
+
+isAdcRunning=0; 
   
-switchSensor();  
+}
+
+int getVelocity(){
+  
   
 }
 
@@ -146,7 +152,7 @@ switchSensor();
 Bool verifyStepsRight (){
 Bool result=FALSE;
   if(rightWheelStepValueToSet!=0){
-   if(rightWheelStepValueToSet>=rightWheelStepValue){
+   if(rightWheelStepValue>=rightWheelStepValueToSet){
     result=TRUE;
    }
     
@@ -160,7 +166,7 @@ Bool result=FALSE;
 Bool verifyStepsLeft (){
 Bool result=FALSE;
   if(leftWheelStepValueToSet!=0){
-   if(leftWheelStepValueToSet>=leftWheelStepValue){
+   if(leftWheelStepValue>=leftWheelStepValueToSet){
     result=TRUE;
    }
     
@@ -173,36 +179,35 @@ Bool result=FALSE;
 
 
 void switchSensor (void){
- 
+uint8_t channel=0;
+
+
  switch(sensorNumber){
   
   case SENSOR_META_1:   sensorNumber=SENSOR_META_2;
-                        ADCSC1_ADCH4=0;
-                        ADCSC1_ADCH3=0;
-                        ADCSC1_ADCH2=0;
-                        ADCSC1_ADCH1=0;
-                        ADCSC1_ADCH0=1;
+                        channel=0b00001;
+                        //ADCSC1_ADCH=00001;
                         break;
   case SENSOR_META_2:   sensorNumber=SENSOR_RUEDA_1;
-                        ADCSC1_ADCH4=0;
-                        ADCSC1_ADCH3=1;
-                        ADCSC1_ADCH2=0;
-                        ADCSC1_ADCH1=0;
-                        ADCSC1_ADCH0=0;
+                        channel=0b01001;
+                        //ADCSC1_ADCH=01000;
                         break;
-  case SENSOR_RUEDA_1:   sensorNumber=SENSOR_RUEDA_2;
-                        ADCSC1_ADCH4=0;
-                        ADCSC1_ADCH3=1;
-                        ADCSC1_ADCH2=0;
-                        ADCSC1_ADCH1=0;
-                        ADCSC1_ADCH0=1;
-                        break;
+                           
+  case SENSOR_RUEDA_1:  sensorNumber=SENSOR_RUEDA_2;
+                        channel=0b01000;
+                        //ADCSC1_ADCH=01001;
+                        break;  
   case SENSOR_RUEDA_2:  sensorNumber=SENSOR_META_1;
-                        
-                        ADC_OFF;
-                        break;
-                        
- }
+                        //isAdcRunning=0;
+                        channel=0b00000;
+                        //ADC_OFF;
+                        break;    
+                          
+ }                       
+ APCTL1=0x03;
+ APCTL2=0x03;
+ isAdcRunning=1;
+ ADCSC1_ADCH=channel;
  
 }
 

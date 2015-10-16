@@ -8,9 +8,13 @@
 #define SENSOR_META_1 1
 #define SENSOR_META_2 2
 #define SENSOR_RUEDA_1 3
-#define SENSOR_RUEDA_2 4
+#define SENSOR_RUEDA_2 5
 #define MIN_SLOPE 10
 #define ADC_OFF ADCSC1_ADCH=0xff;
+#define RTC_BASE_TIME 3125
+#define DEGREES_FOR_STEP 9
+
+
 
 
 
@@ -22,7 +26,8 @@ static uint8_t sensorNumber=1;
 
 static int varSensorLeft;
 static int varSensorRight;
- 
+
+static uint8_t adcWheelSensor1,adcWheelSensor2; 
 
 static int varSensorLeftRef;
 static int varSensorRightRef;

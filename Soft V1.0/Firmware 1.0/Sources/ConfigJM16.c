@@ -101,14 +101,14 @@ void InitKbi(){
 
 void InitADC(){
   
-  
-  ADCCFG=0b00000000;
-  ADCSC2=0b00000000;
-  ADCSC1=0b11100000;
-  (void)ADCRH;
-  (void)ADCRL;
   APCTL1=0x03;
   APCTL2=0x03;
+  ADCCFG=0b00010000;
+  ADCSC2=0b10000000;
+  ADCSC1=0b11011111;
+  (void)ADCRH;
+  (void)ADCRL;
+  
   
   
   

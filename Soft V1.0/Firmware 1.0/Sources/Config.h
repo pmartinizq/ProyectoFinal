@@ -1,8 +1,8 @@
 
 
 
-#ifndef _CONFIG_H_
-#define _CONFIG_H_
+#ifndef CONFIG_H_
+#define CONFIG_H_
 
 
 #include "ConfigJM16.h"
@@ -80,9 +80,9 @@ extern uint8_t GLOBAL_STATUS;
 
 //timers funciones
 # define ULTRASONIC_ALL_TIMER NO_TIMER
-# define ULTRASONIC_LEFT_TIMER 1600
-# define ULTRASONIC_RIGHT_TIMER 1600
-# define ULTRASONIC_FRONT_TIMER 1600
+# define ULTRASONIC_LEFT_TIMER 3200
+# define ULTRASONIC_RIGHT_TIMER 3200
+# define ULTRASONIC_FRONT_TIMER 3200
 # define ACCEL_TIMER 200
 # define GYRO_TIMER 200
 # define COMPASS_TIMER 200
@@ -96,6 +96,18 @@ extern uint8_t GLOBAL_STATUS;
 #define UNIQUE_FUNCTION 0x00
 #define MAX_CHILDREN 0x03
 
+//definiciones de tipo de movimiento
+#define STEPS 0x01
+#define LINEAR_VELOCITY 0x02
+#define NO_MOVE 0x03
+
+//Motores
+#define PENDIENTE 10
+#define FORWARD 0x00
+#define REVERSE 0x03
+#define TURN_RIGHT 0x01
+#define TURN_LEFT 0x02
+
 
 //timers funciones
 #define getMeasure_TIMER 20
@@ -103,23 +115,29 @@ extern uint8_t GLOBAL_STATUS;
 //Punteros de lectura y escritura
 extern uint8_t readPointerBufferOut;
 extern uint8_t writePointerBufferOut;
-static uint16_t kbiSampleFreq=1000,adcSampleFreq=1000;
+extern uint16_t kbiSampleFreq,adcSampleFreq;
 extern uint16_t measureUltrasonicCenterSensor16;
+extern uint8_t isAdcRunning;
+extern uint16_t velocidad;
 
 //variables sensor meta
 extern int goalStatus;
 
 //motores
-static uint8_t pwmLeftValue=0,pwmRightValue=0;
+extern uint8_t pwmLeftValue,pwmRightValue;
+
+//Tipo de movimiento
+extern uint8_t moveBy;
+
 
 // IDnumber
 extern uint8_t IDNumberExtern;
 
 
 ///PASOS
-
-static uint16_t leftWheelStepValue,rightWheelStepValue;
-static int leftWheelStepValueToSet,rightWheelStepValueToSet; 
+extern uint16_t leftWheelStepValue,rightWheelStepValue;
+extern int leftWheelStepValueToSet,rightWheelStepValueToSet; 
+extern Bool adcEnable;
 
 //Definicion estados MEF
 
