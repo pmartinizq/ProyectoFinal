@@ -1,5 +1,5 @@
 /*==================[inclusions]=============================================*/
-#include "ConfigJM16.h"
+#include "ConfigMicro.h"
 
 
 /*==================[macros and definitions]=================================*/
@@ -35,8 +35,6 @@ extern void InitDevice(void){
   InitInputCompare();
   beginComunication();
   initExecutingVector();
-  //InitBuffer(&bufferIn);
-  //InitBuffer(&bufferOut);
   initIDNumber();
   EnableInterrupts;
   InitPwm();

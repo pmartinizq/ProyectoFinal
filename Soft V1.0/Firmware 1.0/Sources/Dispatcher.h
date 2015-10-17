@@ -1,11 +1,26 @@
 
 
 
-#ifndef _Dispatcher_h
-#define _Dispatcher_h
+#ifndef DISPACHER_H
+#define DISPACHER_H
+/*==================[inclusions]=============================================*/
+#include "Linker.h"
 
-#include "Config.h"
+/*==================[macros]=================================================*/
+
+/*==================[typedef]================================================*/
+
+/*==================[external data declaration]==============================*/
 
 
-void dispatcher(ExecutingStruct* executingVector, BufferStruct* functionBuffer);
+/*==================[external functions declaration]=========================*/
+
+extern void dispatcher(ExecutingStruct* executingVector, BufferStruct* functionBuffer);
 #endif
+
+
+
+
+
+
+

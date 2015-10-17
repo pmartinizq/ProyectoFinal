@@ -1,23 +1,47 @@
-#include "Comunicacion.h"
-/**
-@brief Envia una trama de datos por el puerto serial obtenida por el buffer de salida
+/*==================[inclusions]=============================================*/
 
-*/
-
-void SendByte(byte dato){
+#include "SerialPort.h" 
 
 
-(void)statusSerialRegister1;
-serialData=dato;
-enableTxInterrupt;
-return; 
+/*==================[macros and definitions]=================================*/
 
-}
+//Definiciones Trama de datos
+#define FRAME_START 0xAA
+#define DATA_IN_SIZE 0x1D;
 
-void beginComunication(){
-  STATUS_MEF=MEF_WAIT;
-}
+//COMUNICACION
+#define serialData SCI1D
+#define clockRegister(x,y) (y=SCI1BDL,x=SCI1BDH)
+#define enableTxInterrupt (SCI1C2_TCIE=1)
+#define enableRxInterrupt (SCI1C2_RIE=1)
+#define disableTxInterrupt (SCI1C2_TCIE=0)
+#define disableRxInterrupt (SCI1C2_RIE=0)
+#define statusSerialRegister1 SCI1S1
+#define statusSerialRegister2 SCI1S2
 
+/*==================[internal data declaration]==============================*/
+
+static uint8_t nBytes;
+uint8_t function;
+static uint8_t dataPointer=0;
+static uint8_t txDataLength=0;
+
+
+BufferStruct bufferTx;
+BufferStruct bufferRx;
+
+/*==================[internal functions declaration]=========================*/
+
+void SendByte(byte);
+void beginComunication();
+
+
+/*==================[internal data definition]===============================*/
+
+/*==================[external data definition]===============================*/
+uint8_t STATUS_MEF=MEF_WAIT;
+
+/*==================[external functions definition]==========================*/
 
 interrupt VectorNumber_Vsci1tx  void TxInterrupt (void) {   //rutina para enviar datos por interrupciones
 
@@ -41,7 +65,6 @@ byte inByte=0;
 (void) statusSerialRegister1; //borra flags de interrupcion
 inByte=serialData;
 
-//enableRxInterrupt;
 
 if((inByte==FRAME_START)&&(STATUS_MEF==MEF_WAIT)){
   STATUS_MEF=MEF_START;
@@ -55,10 +78,8 @@ if((inByte==FRAME_START)&&(STATUS_MEF==MEF_WAIT)){
     
     if((STATUS_MEF==MEF_DATA)&&(dataPointer>=nBytes)){
       STATUS_MEF=MEF_WAIT;
-      //setToBuffer(inByte,&bufferRx);
       dataPointer=0;
       setBufferOnBuffer(&bufferRx,&bufferIn);
-     // InitBuffer(&bufferRx);
     }
       
       
@@ -80,8 +101,7 @@ if((inByte==FRAME_START)&&(STATUS_MEF==MEF_WAIT)){
         setToBuffer(inByte,&bufferRx);
         STATUS_MEF=MEF_WAIT;
         setBufferOnBuffer(&bufferRx,&bufferIn);
-        //InitBuffer(&bufferRx);
-        //Llamar a funcion para meter en el buffer
+        
       }
         
     }
@@ -147,5 +167,30 @@ void frameGenerator(){
  }
   
 }
+
+/*==================[internal functions definition]==========================*/
+
+
+/**
+@brief Envia una trama de datos por el puerto serial obtenida por el buffer de salida
+
+*/
+
+void SendByte(byte dato){
+
+
+(void)statusSerialRegister1;
+serialData=dato;
+enableTxInterrupt;
+return; 
+
+}
+
+void beginComunication(){
+  STATUS_MEF=MEF_WAIT;
+}
+
+
+
 
 

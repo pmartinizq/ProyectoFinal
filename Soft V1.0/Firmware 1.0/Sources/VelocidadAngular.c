@@ -1,4 +1,4 @@
-#include "velocidad_angular.h"
+#include "VelocidadAngular.h"
 
 /** \file velocidad_angular.c */
 
@@ -70,8 +70,8 @@ static void _robot_speed_to_wheel_speed(
     int32_t mw_ang_speed;
 
     mw_ang_speed    = tangential_speed  * 1000  / WHEEL_RADIUS; /* [mrad/s] */
-    *left_wheel_angular_speed   = mw_ang_speed  + (angular_speed     * HALF_WHEEL_DISTANCE  + ( WHEEL_RADIUS    >> 1 ) )  / WHEEL_RADIUS; /* [mrad/s] */
-    *right_wheel_angular_speed  = mw_ang_speed  - (angular_speed     * HALF_WHEEL_DISTANCE  + ( WHEEL_RADIUS    >> 1 ) )  / WHEEL_RADIUS; /* [mrad/s] */
+   *left_wheel_angular_speed   =mw_ang_speed  + (angular_speed     * HALF_WHEEL_DISTANCE  + ( WHEEL_RADIUS    >> 1 ) )  / WHEEL_RADIUS; /* [mrad/s] */
+   *right_wheel_angular_speed  =mw_ang_speed  - (angular_speed     * HALF_WHEEL_DISTANCE  + ( WHEEL_RADIUS    >> 1 ) )  / WHEEL_RADIUS; /* [mrad/s] */
 }
 /**
  * \brief Convierte la velocidad angular de las ruedas a valores PWM.
@@ -172,8 +172,8 @@ int robot_speed_to_pwm(
     uint8_t *right_wheel_pwm ) {
 
     /* variables */
-    int32_t lw_angular_speed = 0;
-    int32_t rw_angular_speed = 0;
+    int32_t lw_angular_speed;
+    int32_t rw_angular_speed;
 
     /* transformar velocidades tangencial y angular del robot, en velocidades angulares de las ruedas */
     _robot_speed_to_wheel_speed( tangential_speed, angular_speed, &lw_angular_speed, &rw_angular_speed );

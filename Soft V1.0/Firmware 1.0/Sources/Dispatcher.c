@@ -1,5 +1,25 @@
+/*==================[inclusions]=============================================*/
 #include "Dispatcher.h"
 
+
+
+
+
+
+/*==================[macros and definitions]=================================*/
+
+/*==================[internal data declaration]==============================*/
+
+/*==================[internal functions declaration]=========================*/
+
+
+
+/*==================[internal data definition]===============================*/
+
+/*==================[external data definition]===============================*/
+
+
+/*==================[external functions definition]==========================*/
 
 void dispatcher(ExecutingStruct* executingVector, BufferStruct* functionBuffer){
 	uint8_t vectorSize = getExecutingVectorPointer();
@@ -107,3 +127,6 @@ void dispatcher(ExecutingStruct* executingVector, BufferStruct* functionBuffer){
 	}
 	
 }
+
+
+/*==================[internal functions definition]==========================*/

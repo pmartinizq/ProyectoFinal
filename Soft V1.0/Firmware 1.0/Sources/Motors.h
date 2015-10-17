@@ -1,19 +1,11 @@
 
-#ifndef FUNCTIONHANDLER_H
-#define FUNCTIONHANDLER_H
-
+#ifndef MOTORS_H
+#define MOTORS_H
 /*==================[inclusions]=============================================*/
 
 #include "Linker.h"
 
-
-
-
-
 /*==================[macros]=================================================*/
-
-
-
 
 /*==================[typedef]================================================*/
 
@@ -24,7 +16,11 @@
 
 /*==================[external functions declaration]=========================*/
 
-extern void functionHandler(void);
+
+void setPwmValue(int,int);
+void calcularSentido(int);
+void stopLeftWheel(void);
+void stopLeftWheel(void);
 
 
 #endif

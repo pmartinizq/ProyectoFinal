@@ -1,8 +1,40 @@
+
+/*==================[inclusions]=============================================*/
 #include "RTCmodule.h"
 
+/*==================[macros and definitions]=================================*/
+
+#define VELOCITY_MEASSURE_FREQ 12000
+
+
+/*==================[internal data declaration]==============================*/
+
+uint8_t timeCounter;
+uint16_t kbiTime,adcTime;
+uint16_t velocityMeassureTimer;
+uint16_t diferencia; 
+uint8_t lastStatus;
+uint16_t lastPasos=0;
+
+/*==================[internal functions declaration]=========================*/
+
+
+void decreaseTimer(FunctionStruct*);
+
+
+/*==================[internal data definition]===============================*/
+
+/*==================[external data definition]===============================*/
+
+
+/*==================[external functions definition]==========================*/
+
+
+
+/*==================[internal functions definition]==========================*/
 
 interrupt VectorNumber_Vrtc   void RTCInterrupt (void){
-unsigned long long velocidadAux=0,velocidadAux1=0;
+unsigned long long leftWheelVelocityAux=0,leftWheelVelocityAux1=0;
 uint8_t i=0;
 
 static calibrar,apagar=0;
@@ -33,14 +65,14 @@ if(velocityMeassureTimer==VELOCITY_MEASSURE_FREQ){
   }*/
 
   
-  velocidadAux=diferencia;
-  velocidadAux1=(diferencia*58)/10;
-  velocidadAux1=(velocidadAux1*10);
-  velocidad=velocidadAux1;
+  leftWheelVelocityAux=diferencia;
+  leftWheelVelocityAux1=(diferencia*58)/10;
+  leftWheelVelocityAux1=(leftWheelVelocityAux1*10);
+  leftWheelVelocity=leftWheelVelocityAux1;
   /*
-  velocidadAux=9*diferencia;
-  velocidadAux=10000*velocidadAux;
-  velocidad=velocidadAux/3125;*/
+  leftWheelVelocityAux=9*diferencia;
+  leftWheelVelocityAux=10000*leftWheelVelocityAux;
+  leftWheelVelocity=leftWheelVelocityAux/3125;*/
   lastPasos=leftWheelStepValue;
   
   
@@ -66,7 +98,7 @@ for(i=0;i<=getExecutingVectorPointer();i++){
  
  
 
-if((adcTime>=adcSampleFreq)&&isAdcRunning!=1){
+if((adcTime>=ADC_SAMPLE_FREQUENCY)&&isAdcRunning!=1){
   adcEnable=TRUE;
   adcTime=0;
   isAdcRunning=0;

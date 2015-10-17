@@ -2,8 +2,8 @@
 
 
 
-#ifndef CONFIGJM16_H
-#define CONFIGJM16_H
+#ifndef CONFIGMICRO_H
+#define CONFIGMICRO_H
 
 /*==================[inclusions]=============================================*/
 
@@ -14,15 +14,7 @@
 
 /*==================[macros]=================================================*/
 
-//COMUNICACION
-#define serialData SCI1D
-#define clockRegister(x,y) (y=SCI1BDL,x=SCI1BDH)
-#define enableTxInterrupt (SCI1C2_TCIE=1)
-#define enableRxInterrupt (SCI1C2_RIE=1)
-#define disableTxInterrupt (SCI1C2_TCIE=0)
-#define disableRxInterrupt (SCI1C2_RIE=0)
-#define statusSerialRegister1 SCI1S1
-#define statusSerialRegister2 SCI1S2
+
 
 //VALORES DE PWM
 
@@ -32,12 +24,6 @@
 #define PWM_CH1_CONFIG 0B00111000
 
 
-//MOTORES
-
-#define SENTIDO_M1_1  PTGD_PTGD4
-#define SENTIDO_M1_2  PTGD_PTGD5 
-#define SENTIDO_M2_1  PTBD_PTBD4
-#define SENTIDO_M2_2  PTBD_PTBD5
 
 
 //SENSOR DE META

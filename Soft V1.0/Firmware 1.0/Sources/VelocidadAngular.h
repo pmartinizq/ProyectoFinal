@@ -1,12 +1,9 @@
 
-#ifndef FUNCTIONHANDLER_H
-#define FUNCTIONHANDLER_H
+#ifndef VELOCIDADANGULAR_H_
+#define VELOCIDADANGULAR_H_
 
 /*==================[inclusions]=============================================*/
-
 #include "Linker.h"
-
-
 
 
 
@@ -24,7 +21,12 @@
 
 /*==================[external functions declaration]=========================*/
 
-extern void functionHandler(void);
+int robot_speed_to_pwm(
+    int tangential_speed,
+    int angular_speed,
+    uint8_t* left_wheel_pwm,
+    uint8_t* right_wheel_pwm );
 
 
-#endif
+
+#endif // _VELOCIDAD_ANGULAR_H_

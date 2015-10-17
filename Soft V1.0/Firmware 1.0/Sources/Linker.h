@@ -1,13 +1,10 @@
-
-#ifndef FUNCTIONHANDLER_H
-#define FUNCTIONHANDLER_H
+#ifndef LINKER_H_
+#define LINKER_H_
 
 /*==================[inclusions]=============================================*/
-
-#include "Linker.h"
-
-
-
+#include "Configuration.h"
+#include "Structures.h"
+#include "GlobalVariables.h"
 
 
 /*==================[macros]=================================================*/
@@ -23,8 +20,6 @@
 
 
 /*==================[external functions declaration]=========================*/
-
-extern void functionHandler(void);
 
 
 #endif
