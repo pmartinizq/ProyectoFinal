@@ -4,8 +4,9 @@ NAMES END /* CodeWarrior will pass all the needed files to the linker by command
 
 SEGMENTS /* Here all RAM/ROM areas of the device are listed. Used in PLACEMENT below. */
     Z_RAM                    =  READ_WRITE   0x00B0 TO 0x00FF;
-    RAM                      =  READ_WRITE   0x0100 TO 0x08AF;
+    RAM                      =  READ_WRITE   0x0100 TO 0x04FF;
     RAM1                     =  READ_WRITE   0x1860 TO 0x195F;
+    SSTACK2                  =  READ_WRITE   0x0500 TO 0x08AF;
     ROM                      =  READ_ONLY    0x8000 TO 0xFFAD;
     ROM1                     =  READ_ONLY    0xFFC0 TO 0xFFC3;
  /* INTVECTS                 =  READ_ONLY    0xFFC4 TO 0xFFFF; Reserved for Interrupt Vectors */
@@ -28,6 +29,6 @@ PLACEMENT /* Here all predefined and user segments are placed into the SEGMENTS 
     MY_ZEROPAGE                         INTO  Z_RAM;
 END
 
-STACKSIZE 0x80
+STACKTOP  0x08AF
 
 VECTOR 0 _Startup /* Reset vector: this is the default entry point for an application. */
