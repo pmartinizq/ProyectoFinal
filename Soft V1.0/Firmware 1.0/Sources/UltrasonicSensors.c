@@ -1,6 +1,6 @@
 /*==================[inclusions]=============================================*/
-#include "UltrasonicSensors.h"
 
+#include "UltrasonicSensors.h"
 
 /*==================[macros and definitions]=================================*/
 
@@ -11,6 +11,7 @@
 #define MEF_STATUS_ERROR 2
 
 //SENSORES
+
 #define SENSOR_FRONT_TIMER_VALUE TPM1C0V
 #define SENSOR_LEFT_TIMER_VALUE TPM1C1V
 #define SENSOR_RIGHT_TIMER_VALUE TPM1C2V
@@ -28,7 +29,6 @@
 #define SENSOR_BACK_ENABLE_INTERRUPT (TPM1C3SC_CH3IE=1)
 #define SENSOR_BACK_DISABLE_INTERRUPT (TPM1C3SC_CH3IE=0)
 
-
 #define SENSOR_FRONT_TRIGGER PTGD_PTGD0
 #define SENSOR_LEFT_TRIGGER PTGD_PTGD1
 #define SENSOR_RIGHT_TRIGGER PTGD_PTGD2
@@ -39,31 +39,44 @@
 /*==================[internal data declaration]==============================*/
 
 //Declaracion de variables para Sensor Frente
+
 uint8_t mefSensorFrontStatus=0;
-uint16_t sensorFrontTime,risingEdgeTimeSensorFront,fallingEdgeTimeSensorFront,measureSensorFront16;
+uint16_t sensorFrontTime;
+uint16_t risingEdgeTimeSensorFront;
+uint16_t fallingEdgeTimeSensorFront;
+uint16_t measureSensorFront16;
 FunctionStruct* sensorFrontFunctionStruct;
 uint8_t sensorFrontDatos;
 
 //Declaracion de variables para Sensor Izquierdo
 uint8_t mefSensorLeftStatus=0;
-uint16_t sensorLeftTime,risingEdgeTimeSensorLeft,fallingEdgeTimeSensorLeft,measureSensorLeft16;
+uint16_t sensorLeftTime;
+uint16_t risingEdgeTimeSensorLeft;
+uint16_t fallingEdgeTimeSensorLeft;
+uint16_t measureSensorLeft16;
 FunctionStruct* sensorLeftFunctionStruct;
 uint8_t sensorLeftDatos;
 
 //Declaracion de variables para Sensor Derecho
 uint8_t mefSensorRightStatus=0;
-uint16_t sensorRightTime,risingEdgeTimeSensorRight,fallingEdgeTimeSensorRight,measureSensorRight16;
+uint16_t sensorRightTime;
+uint16_t risingEdgeTimeSensorRight;
+uint16_t fallingEdgeTimeSensorRight;
+uint16_t measureSensorRight16;
 FunctionStruct* sensorRightFunctionStruct;
 uint8_t sensorRightDatos;
 
 /*==================[internal functions declaration]=========================*/
 
+/**
+  @brief retardo para mandar la señal al trigger.
+
+  */
 void triggerDelay(void);
 
 /*==================[internal data definition]===============================*/
 
 /*==================[external data definition]===============================*/
-
 
 /*==================[external functions definition]==========================*/
 
@@ -102,15 +115,8 @@ extern void getUltrasonic(FunctionStruct* currentFunction){
   }
 }
 
-
-
-  
-
-
 interrupt VectorNumber_Vtpm1ch0 void interruptSensorFront (void)                        //sensor1 (frente)
-{
-  
-  
+{ 
   (void)(TPM1C0SC==0);//Borra el flag de interrupcion
   TPM1C0SC_CH0F = 0;
   
@@ -174,11 +180,8 @@ interrupt VectorNumber_Vtpm1ch1 void interruptSensorLeft (void)
   return;   
 }
 
-
 interrupt VectorNumber_Vtpm1ch2 void interruptSensorRight (void)                        
 {
-  
-  
   (void)(TPM1C2SC==0);//Borra el flag de interrupcion
   TPM1C2SC_CH2F = 0;
   
@@ -208,8 +211,6 @@ interrupt VectorNumber_Vtpm1ch2 void interruptSensorRight (void)
   return;   
 }
 
-
-
 /*==================[internal functions definition]==========================*/
 
 void triggerDelay(void){
@@ -218,9 +219,4 @@ void triggerDelay(void){
   while(t!=0){
     t--;
   } 
-  
 }
-
-
-
-

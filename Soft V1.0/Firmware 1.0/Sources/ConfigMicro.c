@@ -1,6 +1,6 @@
 /*==================[inclusions]=============================================*/
-#include "ConfigMicro.h"
 
+#include "ConfigMicro.h"
 
 /*==================[macros and definitions]=================================*/
 
@@ -17,14 +17,11 @@ void InitADC(void);
 void InitPorts(void);
 void InitRtc(void);
 
-
 /*==================[internal data definition]===============================*/
 
 /*==================[external data definition]===============================*/
 
-
 /*==================[external functions definition]==========================*/
-
 
 extern void InitDevice(void){
   DisableInterrupts;
@@ -42,21 +39,20 @@ extern void InitDevice(void){
   InitRtc();
 }
 
+/*==================[internal functions definition]==========================*/
+
+/**
+@brief Inicializa interrupciones.
+*/
 void InitReg(void){
   EnableInterrupts;
   SOPT1=0X06;
   USBCTL0_USBVREN=1;
-  
 }
-
-
-/*==================[internal functions definition]==========================*/
-
 
 /**
 @brief Inicializa y ajusta el reloj interno del microcontrolador
 */
-
 void InitClock(void){
  if (*(unsigned char*)0xFFAF != 0xFF) { /* Test if the device trim value is stored on the specified address */
     MCGTRM = *(unsigned char*)0xFFAF;  /* Initialize MCGTRM register from a non volatile memory */
@@ -71,8 +67,6 @@ void InitClock(void){
   while(!MCGSC_LOCK) {                 /* Wait until FLL is locked */
   }
   return;
-  
-  
 }
 
 /**
@@ -80,62 +74,57 @@ void InitClock(void){
 la comunicacion serie del microcontrolador
 */
 void InitComunication(void){ 
-
   SCI1S2=0x00;  //Configura el bit rate del SCI
   SCI1BDH=0x00;
   SCI1BDL=0x0A;//115200
-  
   SCI1C1=0x00;  
   SCI1C3=0x00;  
   SCI1C2=0x2C;
-  (void)(SCI1S1); //borra posibles flags activados    
-  
-
+  (void)(SCI1S1); //borra posibles flags activados     
   return;
 }
 
-
+/**
+@brief Establece configuracion del canal y el timer,
+inicializa imput compare.
+*/
 void InitInputCompare(){
-  ////CONFIGURACION DE CANAL Y TIMER
-
+  //CONFIGURACION DE CANAL Y TIMER
  TPM1SC=0B00001100;  
  TPM1C0SC=0B00001100; 
  TPM1C1SC=0B00001100;
  TPM1C2SC=0B00001100;
- TPM1C3SC=0B00001100; 
- 
- 
+ TPM1C3SC=0B00001100;  
 }
 
+/**
+@brief Inicializa los registros relacionados con 
+el PWM.
+*/
 void InitPwm(){
-
-  
   TPM2SC=0B00001111; 
   TPM2MODH=PWM_FREQ_HIGH;
-  TPM2MODL=PWM_FREQ_LOW;
-            
+  TPM2MODL=PWM_FREQ_LOW;          
 }
 
-
-
+/**
+@brief Inicializa los registros relacionados con 
+el modulo ADC.
+*/
 void InitADC(){
-  
   APCTL1=0x03;
   APCTL2=0x03;
   ADCCFG=0b00010000;
   ADCSC2=0b10000000;
   ADCSC1=0b11011111;
   (void)ADCRH;
-  (void)ADCRL;
-  
-  
-  
-  
+  (void)ADCRL; 
 }
   
-
-void InitPorts(){
-  
+/**
+@brief Inicializa los puertos.
+*/
+void InitPorts(){ 
   PTADD=0X00;
   PTBDD=0XFF;
   PTCDD=0X03;
@@ -146,8 +135,11 @@ void InitPorts(){
   PTEPE=0B10000000;
 }
 
+/**
+@brief Inicializa los registros relacionados con 
+el RTC.
+*/
 void InitRtc(){
   RTCMOD=0x00;
   RTCSC=0xD8;
-  
 }

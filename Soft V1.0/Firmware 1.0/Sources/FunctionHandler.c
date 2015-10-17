@@ -2,33 +2,18 @@
 
 #include "FunctionHandler.h"
 
-
-
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data declaration]==============================*/
 
 /*==================[internal functions declaration]=========================*/
 
-
-
 /*==================[internal data definition]===============================*/
 
 /*==================[external data definition]===============================*/
 
-
 /*==================[external functions definition]==========================*/
 
-
-
-/**
-  @brief Toma una instruccion del buffer de entrada y selecciona la funcion a ejecutar
-
-  @returns void
-
-  */
-// desarrollar todas las funciones internas!!
-  
 void functionHandler(void){
 
   long time = 0,t=0;
@@ -312,10 +297,6 @@ void functionHandler(void){
 		  	break;
 	}
 	}
-
 }
 
-
 /*==================[internal functions definition]==========================*/
-
-

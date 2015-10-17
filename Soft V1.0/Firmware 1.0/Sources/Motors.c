@@ -1,4 +1,5 @@
 /*==================[inclusions]=============================================*/
+
 #include "Motors.h"
 
 /*==================[macros and definitions]=================================*/
@@ -10,26 +11,24 @@
 
 /*==================[internal data declaration]==============================*/
 
-uint16_t calculateValueRight=0,calculateValueLeft=0;
-uint16_t actualValueRight=0,actualValueLeft=0,lastValueRight=0,lastValueLeft=0;
+uint16_t calculateValueRight=0;
+uint16_t calculateValueLeft=0;
+uint16_t actualValueRight=0;
+uint16_t actualValueLeft=0;
+uint16_t lastValueRight=0;
+uint16_t lastValueLeft=0;
 uint8_t lowValue=0;
 
 /*==================[internal functions declaration]=========================*/
-
 
 /*==================[internal data definition]===============================*/
 
 /*==================[external data definition]===============================*/
 
-
 /*==================[external functions definition]==========================*/
 
- 
-
 extern void setPwmValue(int valueToSetRight,int valueToSetLeft){
- uint8_t highValue=0;
- 
- 
+ uint8_t highValue=0; 
  calculateValueRight=PENDIENTE*valueToSetRight;
  calculateValueLeft=PENDIENTE*valueToSetLeft;
  

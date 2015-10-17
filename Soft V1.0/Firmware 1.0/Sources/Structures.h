@@ -1,6 +1,3 @@
-
-
-
 #ifndef STRUCTURES_H_
 #define STRUCTURES_H_
 
@@ -10,38 +7,33 @@
 
 /*==================[macros]=================================================*/
 
-
 /*==================[typedef]================================================*/
 
-
-
 typedef struct  
 {
-uint8_t readPointer;
-uint8_t writePointer;
-uint8_t Buffer[ BUFFER_SIZE ];
-uint8_t BufferFlags[ BUFFER_SIZE ];
+  uint8_t readPointer;
+  uint8_t writePointer;
+  uint8_t Buffer[ BUFFER_SIZE ];
+  uint8_t BufferFlags[ BUFFER_SIZE ];
 }BufferStruct;
 
-
 typedef struct  
 {
-uint8_t IDNumber;
-uint8_t functionParameter;
-uint8_t functionId;
-uint8_t status;
-uint16_t timerCount;
-uint8_t data[BUFFER_DATA_SIZE];
-uint8_t dataSize;
-uint8_t root;
+  uint8_t IDNumber;
+  uint8_t functionParameter;
+  uint8_t functionId;
+  uint8_t status;
+  uint16_t timerCount;
+  uint8_t data[BUFFER_DATA_SIZE];
+  uint8_t dataSize;
+  uint8_t root;
 }FunctionStruct;
 
 typedef struct  
 {
-FunctionStruct vector[EXECUTING_STRUCT_SIZE];
-uint8_t pointer;
-uint8_t readPointer;
-
+  FunctionStruct vector[EXECUTING_STRUCT_SIZE];
+  uint8_t pointer;
+  uint8_t readPointer;
 }ExecutingStruct;
 
 
@@ -117,14 +109,51 @@ uint8_t getSpaceOfBuffer(BufferStruct* BufferToCalculate);
 
   */
 uint8_t setBufferOnBuffer(BufferStruct* BufferGet, BufferStruct* BufferAdd);
-FunctionStruct* getFromExecutingVector(void);
-uint8_t getExecutingVectorPointer(void);
-void initExecutingVector(void);
-FunctionStruct* getFromExecutingVectorOnIndex(uint8_t position);
-FunctionStruct* getChildOf(uint8_t);
-uint8_t isDataAvailable(BufferStruct *);
-FunctionStruct* setFunctionToExecutingVector(FunctionStruct);
-uint8_t isFunctionOnExecutingVector(FunctionStruct);
 
+
+/**
+  @brief obtiene puntero de la estructura executingVector.
+
+  @returns uint8_t con el valor del puntero.
+
+  */
+uint8_t getExecutingVectorPointer(void);
+
+/**
+  @brief inicializa el vector de ejecucion.
+
+  */
+void initExecutingVector(void);
+
+/**
+  @brief obtiene una funcion del vector de ejecucion apartir de un indice.
+
+  @param position indice en el cual buscar la funcion.
+
+  @returns functionStruct puntero a funcion requerida del vector de ejecucion.
+
+  */
+FunctionStruct* getFromExecutingVectorOnIndex(uint8_t position);
+
+//FunctionStruct* getChildOf(uint8_t);
+
+/**
+  @brief devuelve 1 si hay datos en el buffer y 0 si no lo hay.
+
+  @param BufferStruct puntero al buffer al cual queremos verificar.
+
+  @returns valor 1 o 0 dependiendo si hay o no datos en el buffer.
+
+  */
+uint8_t isDataAvailable(BufferStruct *);
+
+/**
+  @brief agrega una funcion al vector de ejecucion.
+  @param FunctionStruct funcion a agregar al vector.
+
+  @returns FunctionStruct retorna puntero a la funcion agregada al vector.
+
+  */
+FunctionStruct* setFunctionToExecutingVector(FunctionStruct);
 
 #endif

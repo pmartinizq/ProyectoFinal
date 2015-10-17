@@ -1,10 +1,6 @@
 /*==================[inclusions]=============================================*/
+
 #include "Dispatcher.h"
-
-
-
-
-
 
 /*==================[macros and definitions]=================================*/
 
@@ -12,12 +8,9 @@
 
 /*==================[internal functions declaration]=========================*/
 
-
-
 /*==================[internal data definition]===============================*/
 
 /*==================[external data definition]===============================*/
-
 
 /*==================[external functions definition]==========================*/
 
@@ -127,6 +120,5 @@ void dispatcher(ExecutingStruct* executingVector, BufferStruct* functionBuffer){
 	}
 	
 }
-
 
 /*==================[internal functions definition]==========================*/

@@ -8,41 +8,44 @@
 
 /*==================[internal functions declaration]=========================*/
 
-
-
 /*==================[internal data definition]===============================*/
 
 /*==================[external data definition]===============================*/
 
 //ADC
- Bool adcEnable=TRUE;
- Bool isAdcRunning=FALSE;
+
+Bool adcEnable=TRUE;
+Bool isAdcRunning=FALSE;
 
 //Velocidad
-uint16_t leftWheelVelocity=0,rightWheelVelocity=0;
 
+uint16_t leftWheelVelocity=0;
+uint16_t rightWheelVelocity=0;
 
 //Motores
-uint8_t pwmLeftValue=0,pwmRightValue=0;
+
+uint8_t pwmLeftValue=0;
+uint8_t pwmRightValue=0;
 
 //Tipo de movimiento
+
 uint8_t moveBy=NO_MOVE;
 
+//IDnumber
 
-// IDnumber
 uint8_t IDNumberExtern=0;
 
-
-///PASOS
-uint16_t leftWheelStepValue=0,rightWheelStepValue=0;
-int leftWheelStepValueToSet=0,rightWheelStepValueToSet=0;
+//Pasos
+uint16_t leftWheelStepValue=0;
+uint16_t rightWheelStepValue=0;
+int leftWheelStepValueToSet=0;
+int rightWheelStepValueToSet=0;
 
 /*==================[external functions definition]==========================*/
 
 void initIDNumber(void){
   IDNumberExtern = 1;
 }
-
 
 uint8_t getIDNumber(){
  uint8_t var = 0;
@@ -57,9 +60,3 @@ uint8_t getIDNumber(){
 }
 
 /*==================[internal functions definition]==========================*/
-
-      
-
-  
-  
-

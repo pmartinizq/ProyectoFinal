@@ -2,53 +2,23 @@
 
 /*==================[inclusions]=============================================*/
 
-
-
 /*==================[macros and definitions]=================================*/
 
 /*==================[internal data declaration]==============================*/
 
 /*==================[internal functions declaration]=========================*/
 
-
-
 /*==================[internal data definition]===============================*/
 
 /*==================[external data definition]===============================*/
 
-
 /*==================[external functions definition]==========================*/
 
-
-
-
-/**
-  \brief Inicializacion de buffer. 
-
-  	Inicializa los parametros 'readPointer', 'writePointer' y 'buffer' de la estructura 'bufferStruct'.
-
-  \param *BufferToInit es el puntero a  bufferStruct a inicializar.
-
-  \returns void
-
-  */
 void InitBuffer(BufferStruct* BufferToInit){
 	BufferToInit->readPointer = 0;
 	BufferToInit->writePointer = 0;
 }
 
-/**
-  \brief toma dato del buffer. 
-
-  	toma un dato uint8_t del buffer e incrementa el puntero 'readPointer'.
-  	Si no hay datos que leer no incrementa el puntero.
-  	Lipia la celda luego de leerla.
-
-  \param BufferToGet es el buffer (struct bufferStruct) a leer.
-
-  \returns data Parametro uint8_t con el valor de la celda tomada del buffer.
-
-  */
 uint8_t getFromBuffer(BufferStruct* BufferToGet){
 	
 	//controla que el buffer tenga algun valor cargado
@@ -70,17 +40,6 @@ uint8_t getFromBuffer(BufferStruct* BufferToGet){
 	return 0;
 }
 
-/**
-  @brief Setea un dato en el buffer. 
-
-  	setea un dato uint8_t en el buffer e incrementa el puntero 'writePointer'.
-  	Si no hay lugar en el buffer en donde setear el dato, lo descarta.
-
-  @param BufferToSet es el buffer (struct bufferStruct) a escribir.
-
-  @returns void.
-
-  */
 void setToBuffer(uint8_t data, BufferStruct* BufferToSet){
 	//controla si la celda del buffer esta vacia
 	
@@ -98,16 +57,7 @@ void setToBuffer(uint8_t data, BufferStruct* BufferToSet){
 		}
 	}
 }
-/**
-  @brief devuelve el espacio disponible en el buffer. 
 
-  	calcula el espacio disponible para almacenamiento en el buffer.
-
-  @param BufferToCalculate es el buffer (struct bufferStruct) a calcular.
-
-  @returns data Parametro uint8_t con el valor del espacio disponible para almacenamiento en el buffer.
-
-  */
 uint8_t getSpaceOfBuffer(BufferStruct* BufferToCalculate){
 	uint8_t data = 0,rp,wp,r;
 	rp=BufferToCalculate->readPointer;
@@ -121,7 +71,6 @@ uint8_t getSpaceOfBuffer(BufferStruct* BufferToCalculate){
 	}
 	return data;
 }
-
 
 uint8_t isFunctionOnExecutingVector(FunctionStruct FunctionToSet){
   uint8_t flag = 0;
@@ -212,7 +161,6 @@ else{
 }
 }
       
-
 FunctionStruct* getFromExecutingVector(){
   FunctionStruct  functionToReturn;
   functionToReturn=executingVector.vector[executingVector.readPointer];
@@ -230,7 +178,6 @@ uint8_t getExecutingVectorPointer(){
   
 }
 
-
 FunctionStruct* getFromExecutingVectorOnIndex(uint8_t position){
   
   
@@ -241,7 +188,6 @@ FunctionStruct* getFromExecutingVectorOnIndex(uint8_t position){
   }
   
 }
-
 
 void initExecutingVector(void){
   
@@ -266,7 +212,6 @@ FunctionStruct* getChildOf(uint8_t id){
   }
   return &childVector;
 }
-
 
 uint8_t setBufferOnBuffer(BufferStruct* BufferGet, BufferStruct* BufferAdd){
 	uint8_t space = getSpaceOfBuffer(BufferGet);
@@ -295,16 +240,4 @@ uint8_t isDataAvailable(BufferStruct *bufferToEvaluate){
   }
 }
 
-
-
-
 /*==================[internal functions definition]==========================*/
-
-
-
-
-      
-
-  
-  
-

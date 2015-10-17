@@ -7,7 +7,6 @@
  * \hideinitializer */
 #define WHEEL_RADIUS 37
 
-
 /** \def HALF_WHEEL_DISTANCE
  * \brief Mitad de la distancia entre las ruedas del robot mil&iacute;metros.
  * \hideinitializer */

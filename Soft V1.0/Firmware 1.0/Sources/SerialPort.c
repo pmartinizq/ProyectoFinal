@@ -2,14 +2,15 @@
 
 #include "SerialPort.h" 
 
-
 /*==================[macros and definitions]=================================*/
 
 //Definiciones Trama de datos
+
 #define FRAME_START 0xAA
 #define DATA_IN_SIZE 0x1D;
 
 //COMUNICACION
+
 #define serialData SCI1D
 #define clockRegister(x,y) (y=SCI1BDL,x=SCI1BDH)
 #define enableTxInterrupt (SCI1C2_TCIE=1)
@@ -26,7 +27,6 @@ uint8_t function;
 static uint8_t dataPointer=0;
 static uint8_t txDataLength=0;
 
-
 BufferStruct bufferTx;
 BufferStruct bufferRx;
 
@@ -35,10 +35,10 @@ BufferStruct bufferRx;
 void SendByte(byte);
 void beginComunication();
 
-
 /*==================[internal data definition]===============================*/
 
 /*==================[external data definition]===============================*/
+
 uint8_t STATUS_MEF=MEF_WAIT;
 
 /*==================[external functions definition]==========================*/
@@ -57,7 +57,6 @@ if(txDataLength>0&&isDataAvailable(&bufferTx)){
 }
 return;
 }
-
 
 interrupt VectorNumber_Vsci1rx  void RxInterrupt (void) {  //Rutina para recepcion de datos por interrupciones
 
@@ -115,16 +114,11 @@ if((inByte==FRAME_START)&&(STATUS_MEF==MEF_WAIT)){
   }
 }
 
-
 interrupt VectorNumber_Vsci1err  void ErrorInterrupt (void) {
 
 (void)(SCI1S1==0);
 
-
 }
-
-
-
 
 void frameGenerator(){
   
@@ -170,14 +164,11 @@ void frameGenerator(){
 
 /*==================[internal functions definition]==========================*/
 
-
 /**
-@brief Envia una trama de datos por el puerto serial obtenida por el buffer de salida
-
+  @brief Envia una trama de datos por el puerto serial obtenida por el buffer de salida
+  @param dato byte a ser enviado
 */
-
 void SendByte(byte dato){
-
 
 (void)statusSerialRegister1;
 serialData=dato;
@@ -186,11 +177,9 @@ return;
 
 }
 
+/**
+  @brief inicializa la MEF de recepcion de datos.
+*/
 void beginComunication(){
   STATUS_MEF=MEF_WAIT;
 }
-
-
-
-
-

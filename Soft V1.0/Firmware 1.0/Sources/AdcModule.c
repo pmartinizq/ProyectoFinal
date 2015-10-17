@@ -1,9 +1,9 @@
-
 /*==================[inclusions]=============================================*/
+
 #include "AdcModule.h"
 
-
 /*==================[macros and definitions]=================================*/
+
 #define SENSOR_META_1 1
 #define SENSOR_META_2 2
 #define SENSOR_RUEDA_1 3
@@ -12,31 +12,48 @@
 /*==================[internal data declaration]==============================*/
 
 static uint8_t sensorNumber=1;
-
 static int varSensorLeft;
 static int varSensorRight;
-
-static uint8_t adcWheelSensor1,adcWheelSensor2; 
-
+static uint8_t adcWheelSensor1;
+static uint8_t adcWheelSensor2; 
 static int varSensorLeftRef;
 static int varSensorRightRef;
 static int varSensorLeftRefMargin = 20;
 static int varSensorRightRefMargin = 4;
+static int sensorStatus = 1;
+
 int left;
 int right;
 int whileFlag;
-
 int goalSensorStatus;
 
-static int sensorStatus = 1;
 /*==================[internal functions declaration]=========================*/
 
+/**
+  @brief establece el estado obtenido desde la capa superior en la variable global 'sensorStatus'. 
+
+  @param parameter representa el estado obtenido desde la capa superior.
+
+  @returns void.
+
+  */
 void setSensorStatus(int parameter);
 
+/**
+  @brief establece el valor medido en el sensor derecho del modulo sensor de meta. 
+
+  @returns retorna el valor establecido.
+
+  */
 uint8_t getGoalRightStatus(void);
 
-uint8_t getGoalLeftStatus(void);
+/**
+  @brief establece el valor medido en el sensor izquierdo del modulo sensor de meta. 
 
+  @returns retorna el valor establecido.
+
+  */
+uint8_t getGoalLeftStatus(void);
 
 /*==================[internal data definition]===============================*/
 
@@ -47,14 +64,9 @@ static uint8_t lastSignSlopeSensor1,lastSignSlopeSensor2;
 
 /*==================[external data definition]===============================*/
 
-
 /*==================[external functions definition]==========================*/
 
-
-
 /*==================[internal functions definition]==========================*/
-
-
 
 interrupt VectorNumber_Vadc void adcInterrupt (void){
 //uint8_t adcWheelSensor1,adcWheelSensor2; 
