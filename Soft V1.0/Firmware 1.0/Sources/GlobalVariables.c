@@ -61,22 +61,22 @@ uint8_t getIDNumber(){
 
 void initGlobalVariables(void){
 	//ADC
-Bool adcEnable=TRUE;
-Bool isAdcRunning=FALSE;
+adcEnable=TRUE;
+isAdcRunning=FALSE;
 //Velocidad
-uint16_t leftWheelVelocity=0;
-uint16_t rightWheelVelocity=0;
+leftWheelVelocity=0;
+rightWheelVelocity=0;
 //Motores
-uint8_t pwmLeftValue=0;
-uint8_t pwmRightValue=0;
+pwmLeftValue=0;
+pwmRightValue=0;
 //Tipo de movimiento
-uint8_t moveBy=NO_MOVE;
+moveBy=NO_MOVE;
 //IDnumber
-uint8_t IDNumberExtern=0;
+IDNumberExtern=0;
 //Pasos
-uint16_t leftWheelStepValue=0;
-uint16_t rightWheelStepValue=0;
-int leftWheelStepValueToSet=0;
-int rightWheelStepValueToSet=0;
+leftWheelStepValue=0;
+rightWheelStepValue=0;
+leftWheelStepValueToSet=0;
+rightWheelStepValueToSet=0;
 }
 /*==================[internal functions definition]==========================*/
