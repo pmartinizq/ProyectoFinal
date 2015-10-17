@@ -61,4 +61,11 @@ extern void initIDNumber(void);
   */
 extern uint8_t getIDNumber();
 
+/**
+  @brief inicializa las variables globales;
+
+  @returns void
+
+  */
+void initGlobalVariables(void);
 #endif
