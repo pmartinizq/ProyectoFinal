@@ -74,11 +74,11 @@ void functionHandler(void){
 				  	}
 				  	else if(lastFunction->status==TIMEOUT){
 				  	  rootFunction->status=TIMEOUT;
-				  	  break;
+				  	  return;
 				  	}
 				  	else if(lastFunction->status==INACCESSIBLE_DEVICE){
 				  	  rootFunction->status=INACCESSIBLE_DEVICE;
-				  	  break;  
+				  	  return;  
 				  	}
 				  
 				    functionStructInstance.IDNumber = IDnumber; 
@@ -98,11 +98,11 @@ void functionHandler(void){
 				  	}
 				  	else if(lastFunction->status==TIMEOUT){
 				  	  rootFunction->status=TIMEOUT;
-				  	  break;
+				  	  return;
 				  	}
 				  	else if(lastFunction->status==INACCESSIBLE_DEVICE){
 				  	  rootFunction->status=INACCESSIBLE_DEVICE;
-				  	  break;  
+				  	  return;  
 				  	}
 				 
 				    functionStructInstance.IDNumber = IDnumber; 
@@ -123,11 +123,11 @@ void functionHandler(void){
 				  	}
 				  	else if(lastFunction->status==TIMEOUT){
 				  	  rootFunction->status=TIMEOUT;
-				  	  break;
+				  	  return;
 				  	}
 				  	else if(lastFunction->status==INACCESSIBLE_DEVICE){
 				  	  rootFunction->status=INACCESSIBLE_DEVICE;
-				  	  break;				  	  
+				  	  return;				  	  
 				  	}
 				  	break;
 

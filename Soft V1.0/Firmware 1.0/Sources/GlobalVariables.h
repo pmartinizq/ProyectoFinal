@@ -41,6 +41,10 @@ extern uint16_t rightWheelStepValue;
 extern int leftWheelStepValueToSet;
 extern int rightWheelStepValueToSet; 
 
+//Serial Port
+
+extern uint8_t serialErrorType;
+
 /*==================[external functions declaration]=========================*/
 
 /**

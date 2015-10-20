@@ -41,6 +41,9 @@ uint16_t rightWheelStepValue=0;
 int leftWheelStepValueToSet=0;
 int rightWheelStepValueToSet=0;
 
+//Serial Error
+uint8_t serialErrorType=0;
+
 /*==================[external functions definition]==========================*/
 
 void initIDNumber(void){
@@ -78,5 +81,7 @@ leftWheelStepValue=0;
 rightWheelStepValue=0;
 leftWheelStepValueToSet=0;
 rightWheelStepValueToSet=0;
+setPwmValue(0,0);
+serialErrorType=0;
 }
 /*==================[internal functions definition]==========================*/

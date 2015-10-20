@@ -77,9 +77,30 @@ void InitComunication(void){
   SCI1S2=0x00;  //Configura el bit rate del SCI
   SCI1BDH=0x00;
   SCI1BDL=0x0A;//115200
-  SCI1C1=0x00;  
+  
+  SCI1C1=0x00;
   SCI1C3=0x00;  
   SCI1C2=0x2C;
+   
+  #ifdef PARITY_CHECK
+    SCI1C1_PE=1;
+    SCI1C1_PT=0;
+    SCI1C1_M=1;
+    SCI1C3_PEIE=1;
+  #else
+    SCI1C1_PE=0;
+    SCI1C1_PT=0;
+    SCI1C1_M=0;
+    SCI1C3_PEIE=0;
+  #endif
+  
+  #ifdef FRAMMING_CHECK
+    SCI1C3_FEIE=1;
+  #else
+    SCI1C3_FEIE=0;
+  #endif
+   
+  
   (void)(SCI1S1); //borra posibles flags activados     
   return;
 }

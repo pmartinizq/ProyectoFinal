@@ -7,6 +7,8 @@
 
 /*==================[macros]=================================================*/
 
+
+
 //-------------------estados globales-------------//
 
 #define STATUS_START 0xB0
@@ -61,6 +63,11 @@
 # define INACCESSIBLE_DEVICE 18
 # define ERROR_TIMEOUT 19
 # define ERROR_FUNCTION 130
+# define ERROR_PARITY 20
+# define ERROR_FRAMMING 21
+# define COMMUNICATION_ERROR 22
+# define ERROR_LINE_BREAK 23
+# define NO_ERROR 0
 
 //Estados de funciones
 

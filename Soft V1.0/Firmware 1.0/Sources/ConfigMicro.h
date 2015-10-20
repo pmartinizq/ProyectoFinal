@@ -20,6 +20,12 @@
 #define SENSOR_DE_META_ON PTBD_PTBD2=1
 #define SENSOR_DE_META_OFF PTBD_PTBD2=0
 
+
+//-------------------FUSES-------------//
+#define PARITY_CHECK
+#define FRAMMING_CHECK
+
+
 /*==================[typedef]================================================*/
 
 /*==================[external data declaration]==============================*/
