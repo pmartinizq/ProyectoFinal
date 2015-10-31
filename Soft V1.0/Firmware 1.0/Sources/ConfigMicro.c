@@ -58,6 +58,7 @@ void InitClock(void){
     MCGTRM = *(unsigned char*)0xFFAF;  /* Initialize MCGTRM register from a non volatile memory */
     MCGSC = *(unsigned char*)0xFFAE;   /* Initialize MCGSC register from a non volatile memory */
   }
+  MCGTRM =0xBB;
   /* MCGC2: BDIV=0,RANGE=0,HGO=0,LP=0,EREFS=0,ERCLKEN=0,EREFSTEN=0 */
   MCGC2= 0x00;                /* Set MCGC2 register */ 
   /* MCGC1: CLKS=0,RDIV=0,IREFS=1,IRCLKEN=1,IREFSTEN=0 */
@@ -151,6 +152,7 @@ void InitPorts(){
   PTCDD=0X03;
   PTDDD=0X08;
   PTEDD=0X70;
+  PTEDD_PTEDD4=1;
   PTFDD=0XFF;
   PTGDD=0XFF;
   PTEPE=0B10000000;
@@ -162,5 +164,5 @@ el RTC.
 */
 void InitRtc(){
   RTCMOD=0x00;
-  RTCSC=0xD8;
+  RTCSC=0x58;
 }

@@ -11,6 +11,9 @@
 
 /*==================[external data declaration]==============================*/
 
+//Variables de tiempo
+extern uint32_t tickTime;
+
 //ADC
 
 extern Bool adcEnable;
@@ -25,6 +28,10 @@ extern uint16_t rightWheelVelocity;
 
 extern uint8_t pwmLeftValue;
 extern uint8_t pwmRightValue;
+/*
+extern int dpwmLeftValue,dpwmRightValue;
+extern int derrorLeftWheel,derrorRightWheel;
+extern int errorLeftWheel,errorRightWheel;*/
 
 //Tipo de movimiento
 

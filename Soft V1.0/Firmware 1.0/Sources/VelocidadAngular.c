@@ -5,12 +5,12 @@
 /** \def WHEEL_RADIUS
  * \brief Radio de las ruedas del robot en mil&iacute;metros.
  * \hideinitializer */
-#define WHEEL_RADIUS 37
+#define WHEEL_RADIUS 39
 
 /** \def HALF_WHEEL_DISTANCE
  * \brief Mitad de la distancia entre las ruedas del robot mil&iacute;metros.
  * \hideinitializer */
-#define HALF_WHEEL_DISTANCE 64
+#define HALF_WHEEL_DISTANCE 60
 
 #define MAX_LEFT_WHEEL_PWM  255
 #define MAX_RIGHT_WHEEL_PWM 255
@@ -22,7 +22,7 @@
 #define THRESHOLD_LEFT_WHEEL_PWM    18
 #define THRESHOLD_RIGHT_WHEEL_PWM   16
 
-#define MAX_TANGENTIAL_SPEED 120
+#define MAX_TANGENTIAL_SPEED 116
 
 /** \def MAX_WHEEL_ANGULAR_SPEED
  * \brief M&aacute;xima velocidad angular de los motores en miliradianes por
@@ -56,10 +56,10 @@
  * \param right_wheel_angular_speed Puntero a la direcci&oacute;n donde se
  * devolver&aacute; la velocidad angular de la rueda derecha
  */
-static void _robot_speed_to_wheel_speed(
+void _robot_speed_to_wheel_speed(
     /* parametros */
-    int32_t tangential_speed,
-    int32_t angular_speed,
+    int16_t tangential_speed,
+    int16_t angular_speed,
     int32_t *left_wheel_angular_speed,
     int32_t *right_wheel_angular_speed ) {
 
@@ -68,7 +68,7 @@ static void _robot_speed_to_wheel_speed(
      * robot */
     int32_t mw_ang_speed;
 
-    mw_ang_speed    = tangential_speed  * 1000  / WHEEL_RADIUS; /* [mrad/s] */
+    mw_ang_speed    = (int32_t)tangential_speed  * 1000  / WHEEL_RADIUS; /* [mrad/s] */
    *left_wheel_angular_speed   =mw_ang_speed  + (angular_speed     * HALF_WHEEL_DISTANCE  + ( WHEEL_RADIUS    >> 1 ) )  / WHEEL_RADIUS; /* [mrad/s] */
    *right_wheel_angular_speed  =mw_ang_speed  - (angular_speed     * HALF_WHEEL_DISTANCE  + ( WHEEL_RADIUS    >> 1 ) )  / WHEEL_RADIUS; /* [mrad/s] */
 }
@@ -165,8 +165,8 @@ static int _wheel_speed_to_pwm(
  * proporcionalmente. */
 int robot_speed_to_pwm(
     /* parametros */
-    int tangential_speed,
-    int angular_speed,
+    int16_t tangential_speed,
+    int16_t angular_speed,
     uint8_t *left_wheel_pwm,
     uint8_t *right_wheel_pwm ) {
 

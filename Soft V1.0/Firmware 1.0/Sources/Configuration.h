@@ -4,6 +4,7 @@
 /*==================[inclusions]=============================================*/
 
 #include "ConfigMicro.h"
+#include <stdint.h>
 
 /*==================[macros]=================================================*/
 
@@ -128,7 +129,7 @@
 
 //-------------------ADC-------------//
 
-#define ADC_SAMPLE_FREQUENCY 1000
+#define ADC_SAMPLE_FREQUENCY 100
 
 //-------------------Parametros de velocidad y pasos-------------//
 
@@ -138,11 +139,11 @@
 #define DEGREES_FOR_STEP 9
 
 /*==================[typedef]================================================*/
-
+/*
 #define uint8_t byte
 #define uint16_t word
 #define int32_t long
-#define int32   long
+#define int32   long*/
 
 /*==================[external data declaration]==============================*/
 

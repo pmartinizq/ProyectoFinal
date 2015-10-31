@@ -26,6 +26,10 @@ int left;
 int right;
 int whileFlag;
 int goalSensorStatus;
+uint32_t tiempoActual,tiempoAnterior;
+uint32_t tiempoEntrePasos;
+uint8_t newStepLeftWheel;
+uint16_t datos[6];
 
 /*==================[internal functions declaration]=========================*/
 
@@ -178,11 +182,15 @@ isAdcRunning=1;
           
           if(signSlopeSensor2==1&&lastSignSlopeSensor2==0){
               leftWheelStepValue++;
+              newStepLeftWheel=1;
               lastSignSlopeSensor2=signSlopeSensor2;
+              getVelocity();
               
           }else if(signSlopeSensor2==0&&lastSignSlopeSensor2==1){
               leftWheelStepValue++;
+              newStepLeftWheel=1;
               lastSignSlopeSensor2=signSlopeSensor2;
+              getVelocity();
           
           }
           
@@ -208,6 +216,41 @@ isAdcRunning=0;
 
 int getVelocity(){
   
+  uint8_t k=0;
+  static uint8_t flag=0;
+  uint32_t timeAux,suma=0;
+  static i=0,velocidad;
+ 
+    newStepLeftWheel=0;
+    if(flag==0){
+      tiempoAnterior=tickTime;
+      flag=1;
+    }else{
+      flag=0;
+      tiempoActual=tickTime;     
+      tiempoEntrePasos=tiempoActual-tiempoAnterior;
+      
+    }
+    
+      if(tiempoEntrePasos>0){
+        
+        velocidad=1570000/tiempoEntrePasos;
+        if(i<6){
+          datos[i]=velocidad;;
+          i++;
+        }else{
+          i=0;
+        }
+      }
+      
+    for(k=0;k<6;k++){
+      suma=suma+datos[k];
+    }
+    leftWheelVelocity=suma/6;
+      
+        
+ 
+    
   
 }
 

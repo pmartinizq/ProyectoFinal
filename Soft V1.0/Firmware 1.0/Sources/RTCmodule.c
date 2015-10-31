@@ -4,16 +4,18 @@
 
 /*==================[macros and definitions]=================================*/
 
-#define VELOCITY_MEASSURE_FREQ 12000
-
+#define VELOCITY_MEASSURE_FREQ 3 //36857 ->1seg   18428->0.5seg
+#define VELOCITY_TIME 500
 /*==================[internal data declaration]==============================*/
 
-uint8_t timeCounter;
+uint8_t timeCounter,j=0;
 uint16_t kbiTime,adcTime;
 uint16_t velocityMeassureTimer;
-uint16_t diferencia; 
+uint16_t actualLeftStep,actualRightStep; 
 uint8_t lastStatus;
-uint16_t lastPasos=0;
+uint16_t lastLeftStep=0,lastRightStep=0;
+uint16_t lastLeftWheelVelocity=0;
+uint16_t valores[100];
 
 /*==================[internal functions declaration]=========================*/
 
@@ -26,42 +28,57 @@ void decreaseTimer(FunctionStruct*);
 /*==================[external functions definition]==========================*/
 
 interrupt VectorNumber_Vrtc   void RTCInterrupt (void){
-  unsigned long long leftWheelVelocityAux=0,leftWheelVelocityAux1=0;
+  unsigned long long velocityAux=0;
+  
   uint8_t i=0;
-
+  
   static calibrar,apagar=0;
   RTCSC_RTIF=1;
-  RTCMOD=0x00;
-  //tickTime++;
+  
   adcTime++;
   velocityMeassureTimer++;
-   
+  
   if(velocityMeassureTimer==VELOCITY_MEASSURE_FREQ){
-    
+    tickTime++;
     velocityMeassureTimer=0;
-    diferencia=(leftWheelStepValue-lastPasos);
-   /* 
+  }
+    /*
+    velocityMeassureTimer=0;
+    actualLeftStep=(leftWheelStepValue-lastLeftStep);
+    actualRightStep=(rightWheelStepValue-lastRightStep);
+    /*
     calibrar++;
-    if(calibrar==10){
+    if(calibrar==5){
       calibrar=0;
       if(apagar==1){
-        setPwmValue(0,0);
+        PTED_PTED4=0;
       }else{
         
-        setPwmValue(pwmRightValue,pwmLeftValue);
+        PTED_PTED4=1;
         apagar=1;
       }
-    }*/
+    }*/ 
 
-    leftWheelVelocityAux=diferencia;
-    leftWheelVelocityAux1=(diferencia*58)/10;
-    leftWheelVelocityAux1=(leftWheelVelocityAux1*10);
-    leftWheelVelocity=leftWheelVelocityAux1;
-    /*
-    leftWheelVelocityAux=9*diferencia;
-    leftWheelVelocityAux=10000*leftWheelVelocityAux;
-    leftWheelVelocity=leftWheelVelocityAux/3125;*/
-    lastPasos=leftWheelStepValue;
+   /*
+    velocityAux=(actualLeftStep*9);
+    velocityAux=velocityAux*3142;
+    velocityAux=velocityAux/180;
+    velocityAux=(velocityAux*1000)/VELOCITY_TIME;
+    
+    leftWheelVelocity=velocityAux;    
+    lastLeftWheelVelocity=velocityAux;
+    valores[j]=actualLeftStep;
+    if(j<100){
+      j++;
+    }
+    lastLeftStep=leftWheelStepValue;
+    
+    velocityAux=(actualRightStep*9);
+    velocityAux=velocityAux*3142;
+    velocityAux=velocityAux/180;
+    velocityAux=(velocityAux*1000)/VELOCITY_TIME;
+    rightWheelVelocity=velocityAux;    
+    lastRightStep=rightWheelStepValue;
     
   }
 

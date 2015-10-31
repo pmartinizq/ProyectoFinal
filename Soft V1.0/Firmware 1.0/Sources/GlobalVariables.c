@@ -12,6 +12,9 @@
 
 /*==================[external data definition]===============================*/
 
+//Variables de tiempo
+uint32_t tickTime=0;
+
 //ADC
 
 Bool adcEnable=TRUE;

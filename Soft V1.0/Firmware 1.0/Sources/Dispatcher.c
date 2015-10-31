@@ -101,6 +101,9 @@ void dispatcher(ExecutingStruct* executingVector, BufferStruct* functionBuffer){
 				case INACCESSIBLE_DEVICE:
 							setToBuffer(error, functionBuffer);
 							setToBuffer(2,functionBuffer);
+							if(functionParameter==getMeasureResponse){ 
+                functionParameter=getMeasure;
+              }
 							setToBuffer(functionParameter, functionBuffer);
 							setToBuffer(INACCESSIBLE_DEVICE, functionBuffer);
 							getFromExecutingVectorOnIndex(counter)->status = DONE;

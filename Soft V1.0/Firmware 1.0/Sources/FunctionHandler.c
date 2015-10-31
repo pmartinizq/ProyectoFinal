@@ -49,7 +49,7 @@ void functionHandler(void){
 				    
 				    IDnumber = getIDNumber();
 				    functionStructInstance.IDNumber = IDnumber; 
-            		functionStructInstance.functionParameter=getMeasureResponse;
+            functionStructInstance.functionParameter=getMeasureResponse;
 				  	functionStructInstance.functionId = ULTRASONIC_ALL;
 				  	functionStructInstance.status = READY;
 				  	functionStructInstance.timerCount = NO_TIMER;
@@ -71,14 +71,15 @@ void functionHandler(void){
 				  	if(lastFunction->status==AVAILABLE){
 				  	  rootFunction->data[0]=lastFunction->data[0];
 				  	  lastFunction->status=DONE;
+				  	  rootFunction->status=RUNNING;
 				  	}
 				  	else if(lastFunction->status==TIMEOUT){
 				  	  rootFunction->status=TIMEOUT;
-				  	  return;
+				  	  break;
 				  	}
 				  	else if(lastFunction->status==INACCESSIBLE_DEVICE){
 				  	  rootFunction->status=INACCESSIBLE_DEVICE;
-				  	  return;  
+				  	  break;  
 				  	}
 				  
 				    functionStructInstance.IDNumber = IDnumber; 
@@ -91,20 +92,23 @@ void functionHandler(void){
 				  	lastFunction=setFunctionToExecutingVector(functionStructInstance);
 				  	getUltrasonic(lastFunction);
 				  	
-				    while(lastFunction->status==RUNNING||lastFunction->status==READY);
-				  	if(lastFunction->status==AVAILABLE){
-				  	  rootFunction->data[1]=lastFunction->data[0];
-				  	  lastFunction->status=DONE;
+				  	if(rootFunction->status==RUNNING){
+				  	  
+  				    while(lastFunction->status==RUNNING||lastFunction->status==READY);
+  				  	if(lastFunction->status==AVAILABLE){
+  				  	  rootFunction->data[1]=lastFunction->data[0];
+  				  	  lastFunction->status=DONE;
+  				  	}
+  				  	else if(lastFunction->status==TIMEOUT){
+  				  	  rootFunction->status=TIMEOUT;
+  				  	  break;
+  				  	}
+  				  	else if(lastFunction->status==INACCESSIBLE_DEVICE){
+  				  	  rootFunction->status=INACCESSIBLE_DEVICE;
+  				  	  break;  
+  				  	}
 				  	}
-				  	else if(lastFunction->status==TIMEOUT){
-				  	  rootFunction->status=TIMEOUT;
-				  	  return;
-				  	}
-				  	else if(lastFunction->status==INACCESSIBLE_DEVICE){
-				  	  rootFunction->status=INACCESSIBLE_DEVICE;
-				  	  return;  
-				  	}
-				 
+  				 
 				    functionStructInstance.IDNumber = IDnumber; 
 				  	functionStructInstance.functionParameter=getMeasure;
 				  	functionStructInstance.functionId = ULTRASONIC_RIGHT;
@@ -115,20 +119,22 @@ void functionHandler(void){
 				  	lastFunction=setFunctionToExecutingVector(functionStructInstance);
 				  	getUltrasonic(lastFunction);
 				  
-				    while(lastFunction->status==RUNNING||lastFunction->status==READY);
-				  	if(lastFunction->status==AVAILABLE){
-				  	  rootFunction->data[2]=lastFunction->data[0];
-				  	  rootFunction->status=AVAILABLE;
-				  	  lastFunction->status=DONE;
-				  	}
-				  	else if(lastFunction->status==TIMEOUT){
-				  	  rootFunction->status=TIMEOUT;
-				  	  return;
-				  	}
-				  	else if(lastFunction->status==INACCESSIBLE_DEVICE){
-				  	  rootFunction->status=INACCESSIBLE_DEVICE;
-				  	  return;				  	  
-				  	}
+				    if(rootFunction->status==RUNNING){
+  				    while(lastFunction->status==RUNNING||lastFunction->status==READY);
+  				  	if(lastFunction->status==AVAILABLE){
+  				  	  rootFunction->data[2]=lastFunction->data[0];
+  				  	  rootFunction->status=AVAILABLE;
+  				  	  lastFunction->status=DONE;
+  				  	}
+  				  	else if(lastFunction->status==TIMEOUT){
+  				  	  rootFunction->status=TIMEOUT;
+  				  	  break;
+  				  	}
+  				  	else if(lastFunction->status==INACCESSIBLE_DEVICE){
+  				  	  rootFunction->status=INACCESSIBLE_DEVICE;
+  				  	  break;				  	  
+  				  	}
+				    }
 				  	break;
 
 				case ULTRASONIC_LEFT:

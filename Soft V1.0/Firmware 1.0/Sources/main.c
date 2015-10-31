@@ -2,16 +2,17 @@
 
 #include "Linker.h"
 
-void main(void) {
 
+void main(void) {
+  
   InitDevice();  
-    
+
   for(;;) {
     
     if(adcEnable==TRUE){
       adcEnable=FALSE;
       switchSensor();    
-    } 
+    }   
     
     functionHandler();
     dispatcher(&executingVector,&bufferOut);

@@ -5,7 +5,7 @@
 
 #include <hidef.h> /* for EnableInterrupts macro */
 #include "derivative.h" /* include peripheral declarations */
-
+#include "stdint.h"
 /*==================[macros]=================================================*/
 
 //VALORES DE PWM
@@ -22,6 +22,7 @@
 
 
 //-------------------FUSES-------------//
+
 #define PARITY_CHECK
 #define FRAMMING_CHECK
 

@@ -26,6 +26,7 @@ static uint8_t nBytes;
 uint8_t function;
 static uint8_t dataPointer=0;
 static uint8_t txDataLength=0;
+uint8_t errorValue;
 
 BufferStruct bufferTx;
 BufferStruct bufferRx;
@@ -46,7 +47,6 @@ uint8_t STATUS_MEF=MEF_WAIT;
 interrupt VectorNumber_Vsci1tx  void TxInterrupt (void) {   //rutina para enviar datos por interrupciones
 
 (void)statusSerialRegister1;      //borra flags de interrupcion
-
 if(txDataLength>0&&isDataAvailable(&bufferTx)){
   enableTxInterrupt;  
   serialData=getFromBuffer(&bufferTx);
@@ -64,6 +64,8 @@ byte inByte=0;
 (void) statusSerialRegister1; //borra flags de interrupcion
 inByte=serialData;
 
+if(serialErrorType==NO_ERROR){
+  
 
 if((inByte==FRAME_START)&&(STATUS_MEF==MEF_WAIT)){
   STATUS_MEF=MEF_START;
@@ -112,11 +114,43 @@ if((inByte==FRAME_START)&&(STATUS_MEF==MEF_WAIT)){
       
   
   }
+}else{
+  serialErrorType==NO_ERROR;
+  InitBuffer(&bufferRx);
+  STATUS_MEF=MEF_WAIT;
+}
 }
 
 interrupt VectorNumber_Vsci1err  void ErrorInterrupt (void) {
 
-(void)(SCI1S1==0);
+uint8_t errorType=0;
+errorValue=SCI1S1;
+if((errorValue&0x02)==0x02){//FRAMMING
+  serialErrorType=ERROR_FRAMMING;
+  
+
+}else if((errorValue&0x01)==0x01){ //PARITY
+
+  serialErrorType=ERROR_PARITY;
+}
+
+if(SCI1S2_LBKDIF==1){
+  errorType=ERROR_LINE_BREAK;
+  initGlobalVariables();
+  
+}
+(void)(SCI1D==0);
+
+if(serialErrorType!=NO_ERROR){
+  
+  setToBuffer(error, &bufferOut);
+  setToBuffer(2,&bufferOut);
+  setToBuffer(COMMUNICATION_ERROR, &bufferOut);
+  setToBuffer(serialErrorType, &bufferOut);
+  if(serialErrorType==ERROR_FRAMMING){
+    initGlobalVariables();
+  }
+}
 
 }
 
